@@ -49,11 +49,11 @@ public class SystemSettingServiceImpl implements SystemSettingService {
         int trainEffective = 0; //学徒能效时间
         int skillerEffective = 0; //熟手能效时间
         int earnTime = 0; //能效时间
-        //记录基本设置
+        //修改基本设置
         if (systemSetting.getId() != null) {
             flag = systemSettingMapper.updateByPrimaryKeySelective(systemSetting) > 0;
         }
-        //修改基本设置
+        //插入基本设置
         else {
             flag = systemSettingMapper.insertSelective(systemSetting) > 0;
         }
@@ -62,7 +62,7 @@ public class SystemSettingServiceImpl implements SystemSettingService {
             // 开工之前设置
             if (systemSetting.getSubmitTime().before(systemSetting.getServiceStartTime())) {
                 //当日剩余时间
-                lefTime = DateUtil.getMin(systemSetting.getServiceEndTime(), systemSetting.getServiceStartTime());
+                lefTime = DateUtil.getMin(systemSetting.getServiceStartTime(), systemSetting.getServiceEndTime());
                 //当日工作时常
                 totalTime = getTotalTime(systemSetting.getServiceStartTime(),systemSetting.getServiceEndTime());
                 //学徒能效时间
@@ -75,8 +75,8 @@ public class SystemSettingServiceImpl implements SystemSettingService {
             } else {
             //  开工之后设置
                 SystemSetting lastSetting = systemSettingMapper.getSySettingByShopIdAndTime(systemSetting.getShopId(),systemSetting.getWorkTime());
-                int lasTime = DateUtil.getMin(lastSetting.getSubmitTime(), lastSetting.getServiceStartTime());
-                lefTime = DateUtil.getMin(lastSetting.getServiceEndTime(), lastSetting.getSubmitTime());
+                int lasTime = DateUtil.getMin(lastSetting.getServiceStartTime(), lastSetting.getSubmitTime());
+                lefTime = DateUtil.getMin(lastSetting.getSubmitTime(), lastSetting.getServiceEndTime());
                 //当日工作时常
                 totalTime = getTotalTime(systemSetting.getServiceStartTime(),systemSetting.getServiceEndTime());
                 //学徒能效时间
@@ -100,16 +100,14 @@ public class SystemSettingServiceImpl implements SystemSettingService {
                 flag = providerCountMapper.updateByPrimaryKeySelective(providerCount) > 0;
             }else {
                 //新建预约总表
-                providerCount.setEarnTime(earnTime);
-                providerCount.setTotalTime(totalTime);
-                providerCount.setWorkTime(systemSetting.getWorkTime());
-                providerCount.setShopId(systemSetting.getShopId());
-                flag = providerCountMapper.insertSelective(providerCount) > 0;
-
+                ProviderCount providerCount2 = new ProviderCount();
+                providerCount2.setEarnTime(earnTime);
+                providerCount2.setTotalTime(totalTime);
+                providerCount2.setWorkTime(systemSetting.getWorkTime());
+                providerCount2.setShopId(systemSetting.getShopId());
+                flag = providerCountMapper.insertSelective(providerCount2) > 0;
             }
-
         }
-
         return flag;
     }
 
@@ -147,6 +145,6 @@ public class SystemSettingServiceImpl implements SystemSettingService {
      * @return
      */
     public int getTotalTime(Date serviceStartTime, Date serviceEndTime) {
-        return DateUtil.getMin(serviceEndTime, serviceStartTime);
+        return DateUtil.getMin(serviceStartTime, serviceEndTime);
     }
 }

@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,7 +41,7 @@ public class SystemController {
      * @return
      */
     @ResponseBody
-    @RequestMapping("/provider/saveOrUptSetting.do")
+    @RequestMapping(value = "/provider/saveOrUptSetting.do",  method = {RequestMethod.GET, RequestMethod.POST}, produces = {"application/json;charset=UTF-8"} )
     public String calculateServiceTime(SystemSetting systemSetting) {
         log.info("接收到基本设置参数：" + systemSetting.toString());
         //记录/修改基本设置

@@ -27,14 +27,12 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.kingmao.dog.appointment.provider.model.ProviderCount">
-    insert into provider_count (id, shop_id, total_time, 
-      left_time, earn_time, consume_time,
+    insert into provider_count (id, shop_id, total_time,earn_time, consume_time,
       work_time)
-    values (#{id,jdbcType=INTEGER}, #{shopId,jdbcType=VARCHAR}, #{totalTime,jdbcType=INTEGER}, 
-      #{leftTime,jdbcType=INTEGER}, #{earnTime,jdbcType=INTEGER}, #{consumeTime,jdbcType=INTEGER},
+    values (#{id,jdbcType=INTEGER}, #{shopId,jdbcType=VARCHAR}, #{totalTime,jdbcType=INTEGER}, #{earnTime,jdbcType=INTEGER}, #{consumeTime,jdbcType=INTEGER},
       #{workTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.kingmao.dog.appointment.test.model.ProviderCount">
+  <insert id="insertSelective" parameterType="com.kingmao.dog.appointment.provider.model.ProviderCount">
     insert into provider_count
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -104,13 +102,10 @@
       <if test="totalTime != null">
         total_time = #{totalTime,jdbcType=INTEGER},
       </if>
-      <if test="leftTime != null">
-        left_time = #{leftTime,jdbcType=INTEGER},
-      </if>
       <if test="earnTime != null">
         earn_time = #{earnTime,jdbcType=INTEGER},
       </if>
-      <if test="consumeTiime != null">
+      <if test="consumeTime != null">
         consume_time = #{consumeTime,jdbcType=INTEGER},
       </if>
       <if test="workTime != null">
@@ -123,28 +118,27 @@
     update provider_count
     set shop_id = #{shopId,jdbcType=VARCHAR},
       total_time = #{totalTime,jdbcType=INTEGER},
-      left_time = #{leftTime,jdbcType=INTEGER},
       earn_time = #{earnTime,jdbcType=INTEGER},
       consume_time = #{consumeTime,jdbcType=INTEGER},
       work_time = #{workTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <select id="getPorivderCountInfo" resultType="com.kingmao.dog.appointment.provider.model.ProviderCount">
+  <select id="getPorivderCountInfo"  resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List" />
     FROM provider_count
     WHERE shop_id = #{shopId,jdbcType=VARCHAR} and work_time = #{workTime,jdbcType=TIMESTAMP} and dtype = #{dtype,jdbcType=VARCHAR}
   </select>
 
-  <select id="getPorivderCountInfoNoType" resultType="com.kingmao.dog.appointment.provider.model.ProviderCount">
+  <select id="getPorivderCountInfoNoType"  resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List" />
     FROM provider_count
     WHERE shop_id = #{shopId,jdbcType=VARCHAR} and work_time = #{workTime,jdbcType=TIMESTAMP}
   </select>
 
-  <update id="updateByShopIdAndTime" >
+  <update id="updateByShopIdAndTime" parameterType="com.kingmao.dog.appointment.provider.model.ProviderCount">
     UPDATE provider_count
     SET consume_tiime = (SELECT sum(consume_time) from customer_appointment where shop_id = #{shopId} and work_time = #{workTime})
     where shop_id = #{shopId} and work_time = #{workTime} and dtype = #{dtype}
