@@ -11,47 +11,27 @@ public class SystemSetting {
 
     private Date serviceEndTime;
 
-    private Date submitTime;
-
     private Integer timeout;
 
     private Integer limite;
 
     private Integer traineeNum;
 
-    private Integer skillerNum;
-
     private Double traineeFactor;
+
+    private Integer skillerNum;
 
     private Double skillerFactor;
 
     private Date workTime;
 
-    private Integer switchStatue;
+    private Date submitTime;
 
-    public Integer getSwitchStatue() {
-        return switchStatue;
-    }
+    private Short isAppTow;
 
-    public void setSwitchStatue(Integer switchStatue) {
-        this.switchStatue = switchStatue;
-    }
+    private Short switchStatue;
 
-    public Date getWorkTime() {
-        return workTime;
-    }
-
-    public void setWorkTime(Date workTime) {
-        this.workTime = workTime;
-    }
-
-    public Date getSubmitTime() {
-        return submitTime;
-    }
-
-    public void setSubmitTime(Date submitTime) {
-        this.submitTime = submitTime;
-    }
+    private Short enabled;
 
     public Integer getId() {
         return id;
@@ -109,20 +89,20 @@ public class SystemSetting {
         this.traineeNum = traineeNum;
     }
 
-    public Integer getSkillerNum() {
-        return skillerNum;
-    }
-
-    public void setSkillerNum(Integer skillerNum) {
-        this.skillerNum = skillerNum;
-    }
-
     public Double getTraineeFactor() {
         return traineeFactor;
     }
 
     public void setTraineeFactor(Double traineeFactor) {
         this.traineeFactor = traineeFactor;
+    }
+
+    public Integer getSkillerNum() {
+        return skillerNum;
+    }
+
+    public void setSkillerNum(Integer skillerNum) {
+        this.skillerNum = skillerNum;
     }
 
     public Double getSkillerFactor() {
@@ -133,6 +113,46 @@ public class SystemSetting {
         this.skillerFactor = skillerFactor;
     }
 
+    public Date getWorkTime() {
+        return workTime;
+    }
+
+    public void setWorkTime(Date workTime) {
+        this.workTime = workTime;
+    }
+
+    public Date getSubmitTime() {
+        return submitTime;
+    }
+
+    public void setSubmitTime(Date submitTime) {
+        this.submitTime = submitTime;
+    }
+
+    public Short getIsAppTow() {
+        return isAppTow;
+    }
+
+    public void setIsAppTow(Short isAppTow) {
+        this.isAppTow = isAppTow;
+    }
+
+    public Short getSwitchStatue() {
+        return switchStatue;
+    }
+
+    public void setSwitchStatue(Short switchStatue) {
+        this.switchStatue = switchStatue;
+    }
+
+    public Short getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Short enabled) {
+        this.enabled = enabled;
+    }
+
     @Override
     public String toString() {
         return "SystemSetting{" +
@@ -140,13 +160,17 @@ public class SystemSetting {
                 ", shopId='" + shopId + '\'' +
                 ", serviceStartTime=" + serviceStartTime +
                 ", serviceEndTime=" + serviceEndTime +
-                ", submitTime=" + submitTime +
                 ", timeout=" + timeout +
                 ", limite=" + limite +
                 ", traineeNum=" + traineeNum +
-                ", skillerNum=" + skillerNum +
                 ", traineeFactor=" + traineeFactor +
+                ", skillerNum=" + skillerNum +
                 ", skillerFactor=" + skillerFactor +
+                ", workTime=" + workTime +
+                ", submitTime=" + submitTime +
+                ", isAppTow=" + isAppTow +
+                ", switchStatue=" + switchStatue +
+                ", enabled=" + enabled +
                 '}';
     }
 }

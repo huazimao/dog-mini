@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kingmao.dog.appointment.provider.mapper.SystemSettingMapper">
   <resultMap id="BaseResultMap" type="com.kingmao.dog.appointment.provider.model.SystemSetting">
+  <resultMap id="BaseResultMap" type="com.kingmao.dog.appointment.test.model.SystemSetting">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="shop_id" jdbcType="VARCHAR" property="shopId" />
     <result column="service_start_time" jdbcType="TIMESTAMP" property="serviceStartTime" />
@@ -9,22 +10,22 @@
     <result column="timeout" jdbcType="INTEGER" property="timeout" />
     <result column="limite" jdbcType="INTEGER" property="limite" />
     <result column="trainee_num" jdbcType="INTEGER" property="traineeNum" />
+    <result column="trainee_factor" jdbcType="DOUBLE" property="traineeFactor" />
     <result column="skiller_num" jdbcType="INTEGER" property="skillerNum" />
-    <result column="factor" jdbcType="DOUBLE" property="factor" />
+    <result column="skiller_factor" jdbcType="DOUBLE" property="skillerFactor" />
+    <result column="work_time" jdbcType="TIMESTAMP" property="workTime" />
+    <result column="submit_time" jdbcType="TIMESTAMP" property="submitTime" />
+    <result column="is_app_tow" jdbcType="SMALLINT" property="isAppTow" />
+    <result column="switch_statue" jdbcType="SMALLINT" property="switchStatue" />
+    <result column="enabled" jdbcType="SMALLINT" property="enabled" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, shop_id, service_start_time, service_end_time, timeout, limite, trainee_num, 
-    skiller_num, factor
+    id, shop_id, service_start_time, service_end_time, timeout, limite, trainee_num,
+    trainee_factor, skiller_num, skiller_factor, work_time, submit_time, is_app_tow,
+    switch_statue, enabled
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from system_setting
-    where shop_id = #{shopId,jdbcType=INTEGER}
-  </select>
 
-
-  <insert id="insertSelective" parameterType="com.kingmao.dog.appointment.provider.model.SystemSetting">
+  <insert id="insertSelective" parameterType="com.kingmao.dog.appointment.test.model.SystemSetting">
     insert into system_setting
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -48,11 +49,29 @@
       <if test="traineeNum != null">
         trainee_num,
       </if>
+      <if test="traineeFactor != null">
+        trainee_factor,
+      </if>
       <if test="skillerNum != null">
         skiller_num,
       </if>
-      <if test="factor != null">
-        factor,
+      <if test="skillerFactor != null">
+        skiller_factor,
+      </if>
+      <if test="workTime != null">
+        work_time,
+      </if>
+      <if test="submitTime != null">
+        submit_time,
+      </if>
+      <if test="isAppTow != null">
+        is_app_tow,
+      </if>
+      <if test="switchStatue != null">
+        switch_statue,
+      </if>
+      <if test="enabled != null">
+        enabled,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -77,18 +96,39 @@
       <if test="traineeNum != null">
         #{traineeNum,jdbcType=INTEGER},
       </if>
+      <if test="traineeFactor != null">
+        #{traineeFactor,jdbcType=DOUBLE},
+      </if>
       <if test="skillerNum != null">
         #{skillerNum,jdbcType=INTEGER},
       </if>
-      <if test="factor != null">
-        #{factor,jdbcType=DOUBLE},
+      <if test="skillerFactor != null">
+        #{skillerFactor,jdbcType=DOUBLE},
+      </if>
+      <if test="workTime != null">
+        #{workTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="submitTime != null">
+        #{submitTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isAppTow != null">
+        #{isAppTow,jdbcType=SMALLINT},
+      </if>
+      <if test="switchStatue != null">
+        #{switchStatue,jdbcType=SMALLINT},
+      </if>
+      <if test="enabled != null">
+        #{enabled,jdbcType=SMALLINT},
       </if>
     </trim>
   </insert>
 
-  <update id="updateByPrimaryKeySelective" parameterType="com.kingmao.dog.appointment.provider.model.SystemSetting">
+  <update id="updateByPrimaryKeySelective" parameterType="com.kingmao.dog.appointment.test.model.SystemSetting">
     update system_setting
     <set>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=VARCHAR},
+      </if>
       <if test="serviceStartTime != null">
         service_start_time = #{serviceStartTime,jdbcType=TIMESTAMP},
       </if>
@@ -104,14 +144,32 @@
       <if test="traineeNum != null">
         trainee_num = #{traineeNum,jdbcType=INTEGER},
       </if>
+      <if test="traineeFactor != null">
+        trainee_factor = #{traineeFactor,jdbcType=DOUBLE},
+      </if>
       <if test="skillerNum != null">
         skiller_num = #{skillerNum,jdbcType=INTEGER},
       </if>
-      <if test="factor != null">
-        factor = #{factor,jdbcType=DOUBLE},
+      <if test="skillerFactor != null">
+        skiller_factor = #{skillerFactor,jdbcType=DOUBLE},
+      </if>
+      <if test="workTime != null">
+        work_time = #{workTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="submitTime != null">
+        submit_time = #{submitTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isAppTow != null">
+        is_app_tow = #{isAppTow,jdbcType=SMALLINT},
+      </if>
+      <if test="switchStatue != null">
+        switch_statue = #{switchStatue,jdbcType=SMALLINT},
+      </if>
+      <if test="enabled != null">
+        enabled = #{enabled,jdbcType=SMALLINT},
       </if>
     </set>
-    where shop_id = #{shopId,jdbcType=VARCHAR},
+    where id = #{id,jdbcType=INTEGER}
   </update>
 
   <select id="getSySettingByShopIdAndTime"  resultMap="BaseResultMap">
