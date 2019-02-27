@@ -67,13 +67,17 @@ public class CustomerServiceImpl implements CustomerService {
         }
         //更新商家预约总表
         if (flag) {
-            ProviderCount providerCount = providerCountMapper.getPorivderCountInfo(customerAppointment.getShopId(),customerAppointment.getWorkTime());
+            ProviderCount providerCount = providerCountMapper.getPorivderCountInfo(customerAppointment.getShopId(),customerAppointment.getWorkTime(),customerAppointment.getDtype());
             //更新
-            if (providerCount.getId() != null) {
-                providerCountMapper.updateByShopIdAndTime(customerAppointment.getShopId(), customerAppointment.getWorkTime());
+            if (null != providerCount) {
+                providerCountMapper.updateByShopIdAndTime(customerAppointment.getShopId(), customerAppointment.getWorkTime(),customerAppointment.getDtype());
             //插入
             }else {
-                providerCountMapper.insertByShopIdAdnTime(customerAppointment.getShopId(), customerAppointment.getWorkTime());
+                providerCount.setWorkTime(customerAppointment.getWorkTime());
+                providerCount.setShopId(customerAppointment.getShopId());
+                providerCount.setConsumeTiime(consumeTime); //新建p表时，只会有一个consume，所以只能从这里拿就可以了
+                providerCount.setDtype(customerAppointment.getDtype());
+                flag = providerCountMapper.insertSelective(providerCount) > 0;
             }
         }
 

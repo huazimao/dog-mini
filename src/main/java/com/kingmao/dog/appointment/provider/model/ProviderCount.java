@@ -17,6 +17,26 @@ public class ProviderCount {
 
     private Date workTime;
 
+    private Integer enabled;
+
+    private String dtype;
+
+    public Integer getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Integer enabled) {
+        this.enabled = enabled;
+    }
+
+    public String getDtype() {
+        return dtype;
+    }
+
+    public void setDtype(String dtype) {
+        this.dtype = dtype;
+    }
+
     public Integer getId() {
         return id;
     }

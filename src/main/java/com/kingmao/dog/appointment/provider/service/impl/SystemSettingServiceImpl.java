@@ -90,13 +90,27 @@ public class SystemSettingServiceImpl implements SystemSettingService {
                 log.info("当日能效时间为：" + earnTime);
 
             }
+            /**
+             * 区分了上午和下午时段，新建和更新商家预约表时在客户预约时操作
+             */
+            /*ProviderCount providerCount = providerCountMapper.getPorivderCountInfo(systemSetting.getShopId(),systemSetting.getWorkTime());
+            if (null != providerCount) {
+                //更新商家预约总表
+                providerCount.setEarnTime(earnTime);
+                providerCount.setTotalTime(totalTime);
+                providerCount.setWorkTime(systemSetting.getWorkTime());
+                providerCount.setShopId(systemSetting.getShopId());
+                flag = providerCountMapper.updateByPrimaryKeySelective(providerCount) > 0;
+            }else {
+                //新建预约总表
+                providerCount.setEarnTime(earnTime);
+                providerCount.setTotalTime(totalTime);
+                providerCount.setWorkTime(systemSetting.getWorkTime());
+                providerCount.setShopId(systemSetting.getShopId());
+                flag = providerCountMapper.insertSelective(providerCount) > 0;
 
-            ProviderCount providerCount = new ProviderCount();
-            providerCount.setEarnTime(earnTime);
-            providerCount.setTotalTime(totalTime);
-            providerCount.setWorkTime(systemSetting.getWorkTime());
-            providerCount.setShopId(systemSetting.getShopId());
-            flag = providerCountMapper.updateByPrimaryKeySelective(providerCount) > 0;
+            }*/
+
         }
 
         return flag;

@@ -15,5 +15,5 @@ public interface ProviderService {
 
     int updateProviderCount(ProviderCount providerCount);
 
-    ProviderCount getPorivderCountInfo(String shopId, Date workTime);
+    ProviderCount getPorivderCountInfo(String shopId, Date workTime,String dtype);
 }

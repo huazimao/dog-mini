@@ -17,11 +17,11 @@ public interface ProviderCountMapper {
 
     int updateByPrimaryKeySelective(ProviderCount record);
 
-    int updateByShopIdAndTime(@Param("shopId") String shopId, @Param("workTime")Date workTine);
+    int updateByShopIdAndTime(@Param("shopId") String shopId, @Param("workTime")Date workTine,@Param("dtype") String dtype);
 
     int updateByPrimaryKey(ProviderCount record);
 
-    ProviderCount getPorivderCountInfo(@Param("shopId") String shopId, @Param("workTime")Date workTine);
+    ProviderCount getPorivderCountInfo(@Param("shopId") String shopId, @Param("workTime")Date workTine,@Param("dtype") String dtype);
 
-    int insertByShopIdAdnTime(@Param("shopId") String shopId, @Param("workTime")Date workTine);
+    int insertByShopIdAdnTime(@Param("shopId") String shopId, @Param("workTime")Date workTine,@Param("dtype") String dtype);
 }

@@ -48,15 +48,14 @@ public class CustomerController {
     public String appointmentPage(HttpServletRequest request, CustomerAppointment customerAppointment) {
         log.info("进入到客户预约界面，收到参数为：" + "shopId=" + customerAppointment.getShopId() + "workTime=" + customerAppointment.getWorkTime());
         Gson gson = new Gson();
-        customerAppointment.setOpenid("openId");
-        CustomerAppointment retApp = null;
         Map<String, Object> map = new HashMap<String, Object>();
+        customerAppointment.setOpenid("openId");
 
         //查询客户是否预约和预约详情
-        retApp = customerService.getAppInfo(customerAppointment);
-        if (null != retApp) {
+        customerAppointment = customerService.getAppInfo(customerAppointment);
+        if (null != customerAppointment) {
             request.setAttribute("isApp",1); //isApp 是否预约过
-            request.setAttribute("CustomerAppointment",retApp);
+            request.setAttribute("CustomerAppointment",customerAppointment);
         } else {
             request.setAttribute("isApp",0);
         }
@@ -66,18 +65,31 @@ public class CustomerController {
         int sysStatue = systemSetting.getSwitchStatue();
         request.setAttribute("sysStatue",sysStatue);
 
-        //查询当日该店是否已约满，及可预约时间
-        ProviderCount providerCount = providerService.getPorivderCountInfo(customerAppointment.getShopId(), customerAppointment.getWorkTime());
-        Integer appStatue = 0; //当日该店是否可以预约 1 可以，0不可以
-        Integer earnTime = providerCount.getEarnTime();
-        Integer consumeTime = providerCount.getConsumeTiime();
-        if (consumeTime < earnTime) {
-            appStatue = 1;
-            Date appTime = DateUtil.countRat(systemSetting.getServiceStartTime(),systemSetting.getServiceEndTime(),earnTime, consumeTime);
+        //查询某日某店上午是否已约满，及可预约时间
+        ProviderCount providerCountAm = providerService.getPorivderCountInfo(customerAppointment.getShopId(), customerAppointment.getWorkTime(),"am");
+        Integer appStatueAm = 0; //某日某店上午时段是否可以预约 1 可以，0不可以
+        Integer earnTimeAm = providerCountAm.getEarnTime();
+        Integer consumeTimeAm = providerCountAm.getConsumeTiime();
+        if (consumeTimeAm < earnTimeAm) {
+            appStatueAm = 1;
+            Date appTimeAm = DateUtil.countRat(systemSetting.getServiceStartTime(),systemSetting.getServiceEndTime(),earnTimeAm, consumeTimeAm);
             Gson gson1 = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm").create();
-            request.setAttribute("appTime",gson1.toJson(appTime));
+            request.setAttribute("appTimeAm",gson1.toJson(appTimeAm));
         }
-        request.setAttribute("appStatue",appStatue);
+        request.setAttribute("appStatueAm",appStatueAm);
+
+        //查询某日某店下午是否已约满，及可预约时间
+        ProviderCount providerCountPm = providerService.getPorivderCountInfo(customerAppointment.getShopId(), customerAppointment.getWorkTime(),"pm");
+        Integer appStatuePm = 0; //某日某店上午时段是否可以预约 1 可以，0不可以
+        Integer earnTimePm = providerCountPm.getEarnTime();
+        Integer consumeTimePm = providerCountPm.getConsumeTiime();
+        if (consumeTimePm< earnTimePm) {
+            appStatuePm = 1;
+            Date appTimePm = DateUtil.countRat(systemSetting.getServiceStartTime(),systemSetting.getServiceEndTime(),earnTimePm, consumeTimePm);
+            Gson gson2= new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm").create();
+            request.setAttribute("appTimePm",gson2.toJson(appTimePm));
+        }
+        request.setAttribute("appStatuePm",appStatuePm);
 
         return "customer/appointment";
     }
@@ -98,7 +110,7 @@ public class CustomerController {
 
         //预约前进行二次校验
         CustomerAppointment retApp = null;
-        ProviderCount providerCount = providerService.getPorivderCountInfo(customerAppointment.getShopId(), customerAppointment.getWorkTime());
+        ProviderCount providerCount = providerService.getPorivderCountInfo(customerAppointment.getShopId(), customerAppointment.getWorkTime(),customerAppointment.getDtype());
         Integer earnTime = providerCount.getEarnTime();
         Integer consumeTime = providerCount.getConsumeTiime();
         if (consumeTime < earnTime) {

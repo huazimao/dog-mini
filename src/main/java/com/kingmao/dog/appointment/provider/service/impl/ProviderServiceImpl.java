@@ -30,7 +30,7 @@ public class ProviderServiceImpl implements ProviderService {
     }
 
     @Override
-    public ProviderCount getPorivderCountInfo(String shopId, Date workTime) {
-        return providerCountMapper.getPorivderCountInfo(shopId,workTime);
+    public ProviderCount getPorivderCountInfo(String shopId, Date workTime,String dtype) {
+        return providerCountMapper.getPorivderCountInfo(shopId,workTime,dtype);
     }
 }

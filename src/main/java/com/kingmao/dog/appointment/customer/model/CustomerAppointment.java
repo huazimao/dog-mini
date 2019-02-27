@@ -40,7 +40,17 @@ public class CustomerAppointment {
 
     private Date accFinishedTime;
 
+    private String dtype;
+
     private List<PetAppointment> petLists;
+
+    public String getDtype() {
+        return dtype;
+    }
+
+    public void setDtype(String dtype) {
+        this.dtype = dtype;
+    }
 
     public Date getCountFinishedTime() {
         return countFinishedTime;

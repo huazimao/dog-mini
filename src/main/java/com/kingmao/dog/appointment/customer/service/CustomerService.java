@@ -16,6 +16,6 @@ public interface CustomerService {
     //记录预约
     boolean insertAppointment(CustomerAppointment customerAppointment);
 
-    //查询该客户在某天某店的预约详情
+    //查询该客户在某天某店某时段的预约详情
     CustomerAppointment getAppInfo(CustomerAppointment customerAppointment);
 }

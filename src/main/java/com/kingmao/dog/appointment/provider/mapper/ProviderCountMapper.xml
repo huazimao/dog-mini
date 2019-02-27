@@ -119,18 +119,18 @@
     SELECT
     <include refid="Base_Column_List" />
     FROM provider_count
-    WHERE shop_id = #{shopId,jdbcType=VARCHAR} and work_time = #{workTime,jdbcType=TIMESTAMP}
+    WHERE shop_id = #{shopId,jdbcType=VARCHAR} and work_time = #{workTime,jdbcType=TIMESTAMP} and dtype = #{dtype,jdbcType=VARCHAR}
   </select>
 
   <update id="updateByShopIdAndTime" >
     UPDATE provider_count
     SET consume_tiime = (SELECT sum(consume_time) from customer_appointment where shop_id = #{shopId} and work_time = #{workTime})
-    where shop_id = #{shopId} and work_time = #{workTime}
+    where shop_id = #{shopId} and work_time = #{workTime} and dtype = #{dtype}
   </update>
 
   <insert id="insertByShopIdAdnTime">
     INSERT INTO provider_count
-    (consume_tiime,shop_id,work_time) VALUES
-    ((SELECT sum(consume_time) from customer_appointment where shop_id = #{shopId} and work_time = #{workTime}),#{shopId},#{workTime})
+    (consume_tiime,shop_id,work_time,dtype) VALUES
+    ((SELECT sum(consume_time) from customer_appointment where shop_id = #{shopId} and work_time = #{workTime}),#{shopId},#{workTime},#{dtype})
   </insert>
 </mapper>
