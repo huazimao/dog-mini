@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kingmao.dog.appointment.provider.mapper.ProviderCountMapper">
+  <resultMap id="BaseResultMap" type="com.kingmao.dog.appointment.provider.model.ProviderCount">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="shop_id" jdbcType="VARCHAR" property="shopId" />
+    <result column="total_time" jdbcType="INTEGER" property="totalTime" />
+    <result column="left_time" jdbcType="INTEGER" property="leftTime" />
+    <result column="earn_time" jdbcType="INTEGER" property="earnTime" />
+    <result column="consume_tiime" jdbcType="INTEGER" property="consumeTiime" />
+    <result column="work_time" jdbcType="TIMESTAMP" property="workTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, shop_id, total_time, left_time, earn_time, consume_tiime, work_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from provider_count
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from provider_count
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.kingmao.dog.appointment.provider.model.ProviderCount">
+    insert into provider_count (id, shop_id, total_time, 
+      left_time, earn_time, consume_tiime, 
+      work_time)
+    values (#{id,jdbcType=INTEGER}, #{shopId,jdbcType=VARCHAR}, #{totalTime,jdbcType=INTEGER}, 
+      #{leftTime,jdbcType=INTEGER}, #{earnTime,jdbcType=INTEGER}, #{consumeTiime,jdbcType=INTEGER}, 
+      #{workTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kingmao.dog.appointment.provider.model.ProviderCount">
+    insert into provider_count
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="totalTime != null">
+        total_time,
+      </if>
+      <if test="leftTime != null">
+        left_time,
+      </if>
+      <if test="earnTime != null">
+        earn_time,
+      </if>
+      <if test="consumeTiime != null">
+        consume_tiime,
+      </if>
+      <if test="workTime != null">
+        work_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="shopId != null">
+        #{shopId,jdbcType=VARCHAR},
+      </if>
+      <if test="totalTime != null">
+        #{totalTime,jdbcType=INTEGER},
+      </if>
+      <if test="leftTime != null">
+        #{leftTime,jdbcType=INTEGER},
+      </if>
+      <if test="earnTime != null">
+        #{earnTime,jdbcType=INTEGER},
+      </if>
+      <if test="consumeTiime != null">
+        #{consumeTiime,jdbcType=INTEGER},
+      </if>
+      <if test="workTime != null">
+        #{workTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kingmao.dog.appointment.provider.model.ProviderCount">
+    update provider_count
+    <set>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=VARCHAR},
+      </if>
+      <if test="totalTime != null">
+        total_time = #{totalTime,jdbcType=INTEGER},
+      </if>
+      <if test="leftTime != null">
+        left_time = #{leftTime,jdbcType=INTEGER},
+      </if>
+      <if test="earnTime != null">
+        earn_time = #{earnTime,jdbcType=INTEGER},
+      </if>
+      <if test="consumeTiime != null">
+        consume_tiime = #{consumeTiime,jdbcType=INTEGER},
+      </if>
+      <if test="workTime != null">
+        work_time = #{workTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kingmao.dog.appointment.provider.model.ProviderCount">
+    update provider_count
+    set shop_id = #{shopId,jdbcType=VARCHAR},
+      total_time = #{totalTime,jdbcType=INTEGER},
+      left_time = #{leftTime,jdbcType=INTEGER},
+      earn_time = #{earnTime,jdbcType=INTEGER},
+      consume_tiime = #{consumeTiime,jdbcType=INTEGER},
+      work_time = #{workTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getPorivderCountInfo" resultType="com.kingmao.dog.appointment.provider.model.ProviderCount">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM provider_count
+    WHERE shop_id = #{shopId,jdbcType=VARCHAR} and work_time = #{workTime,jdbcType=TIMESTAMP}
+  </select>
+
+  <update id="updateByShopIdAndTime" >
+    UPDATE provider_count
+    SET consume_tiime = (SELECT sum(consume_time) from customer_appointment where shop_id = #{shopId} and work_time = #{workTime})
+    where shop_id = #{shopId} and work_time = #{workTime}
+  </update>
+
+  <insert id="insertByShopIdAdnTime">
+    INSERT INTO provider_count
+    (consume_tiime,shop_id,work_time) VALUES
+    ((SELECT sum(consume_time) from customer_appointment where shop_id = #{shopId} and work_time = #{workTime}),#{shopId},#{workTime})
+  </insert>
+</mapper>

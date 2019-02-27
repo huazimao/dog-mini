@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kingmao.dog.appointment.customer.mapper.CustomerAppointmentMapper">
+  <resultMap id="BaseResultMap" type="com.kingmao.dog.appointment.customer.model.CustomerAppointment">
+    <id column="appointment_id" jdbcType="INTEGER" property="appointmentId" />
+    <result column="shop_id" jdbcType="VARCHAR" property="shopId" />
+    <result column="work_time" jdbcType="TIMESTAMP" property="workTime" />
+    <result column="service_end_time" jdbcType="TIMESTAMP" property="serviceEndTime" />
+    <result column="service_start_time" jdbcType="TIMESTAMP" property="serviceStartTime" />
+    <result column="openid" jdbcType="VARCHAR" property="openid" />
+    <result column="client_name" jdbcType="VARCHAR" property="clientName" />
+    <result column="client_wx_img" jdbcType="VARCHAR" property="clientWxImg" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="ispickup" jdbcType="SMALLINT" property="ispickup" />
+    <result column="oppointment_time" jdbcType="TIMESTAMP" property="oppointmentTime" />
+    <result column="finished_time" jdbcType="TIMESTAMP" property="finishedTime" />
+    <result column="appointment_state" jdbcType="SMALLINT" property="appointmentState" />
+    <result column="enabled" jdbcType="INTEGER" property="enabled" />
+    <collection property="petLists" ofType="com.kingmao.dog.appointment.customer.model.PetAppointment"
+                javaType="java.util.ArrayList">
+      <id column="id" jdbcType="INTEGER" property="id" />
+      <result column="openid" jdbcType="VARCHAR" property="openid" />
+      <result column="kind_pet" jdbcType="VARCHAR" property="kindPet" />
+      <result column="size" jdbcType="INTEGER" property="size" />
+      <result column="kind_service" jdbcType="VARCHAR" property="kindService" />
+      <result column="comment" jdbcType="VARCHAR" property="comment" />
+      <result column="name_pet" jdbcType="VARCHAR" property="namePet" />
+      <result column="photo_pet" jdbcType="VARCHAR" property="photoPet" />
+      <result column="enabled" jdbcType="INTEGER" property="enabled" />
+      <result column="appointment_id" jdbcType="INTEGER" property="appointmentId" />
+    </collection>
+  </resultMap>
+  <sql id="Base_Column_List">
+    appointment_id, shop_id, work_time, service_end_time, service_start_time, openid, 
+    client_name, client_wx_img, phone, address, ispickup, oppointment_time, finished_time, 
+    appointment_state, enabled
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from customer_appointment
+    where appointment_id = #{appointmentId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from customer_appointment
+    where appointment_id = #{appointmentId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.kingmao.dog.appointment.customer.model.CustomerAppointment">
+    insert into customer_appointment (appointment_id, shop_id, work_time, 
+      service_end_time, service_start_time, openid, 
+      client_name, client_wx_img, phone, 
+      address, ispickup, oppointment_time, 
+      finished_time, appointment_state, enabled
+      )
+    values (#{appointmentId,jdbcType=INTEGER}, #{shopId,jdbcType=VARCHAR}, #{workTime,jdbcType=TIMESTAMP}, 
+      #{serviceEndTime,jdbcType=TIMESTAMP}, #{serviceStartTime,jdbcType=TIMESTAMP}, #{openid,jdbcType=VARCHAR}, 
+      #{clientName,jdbcType=VARCHAR}, #{clientWxImg,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{ispickup,jdbcType=SMALLINT}, #{oppointmentTime,jdbcType=TIMESTAMP}, 
+      #{finishedTime,jdbcType=TIMESTAMP}, #{appointmentState,jdbcType=SMALLINT}, #{enabled,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.kingmao.dog.appointment.customer.model.CustomerAppointment">
+    insert into customer_appointment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="workTime != null">
+        work_time,
+      </if>
+      <if test="serviceEndTime != null">
+        service_end_time,
+      </if>
+      <if test="serviceStartTime != null">
+        service_start_time,
+      </if>
+      <if test="openid != null">
+        openid,
+      </if>
+      <if test="clientName != null">
+        client_name,
+      </if>
+      <if test="clientWxImg != null">
+        client_wx_img,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="ispickup != null">
+        ispickup,
+      </if>
+      <if test="oppointmentTime != null">
+        oppointment_time,
+      </if>
+      <if test="finishedTime != null">
+        finished_time,
+      </if>
+      <if test="appointmentState != null">
+        appointment_state,
+      </if>
+      <if test="enabled != null">
+        enabled,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        #{shopId,jdbcType=VARCHAR},
+      </if>
+      <if test="workTime != null">
+        #{workTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="serviceEndTime != null">
+        #{serviceEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="serviceStartTime != null">
+        #{serviceStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="openid != null">
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="clientName != null">
+        #{clientName,jdbcType=VARCHAR},
+      </if>
+      <if test="clientWxImg != null">
+        #{clientWxImg,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="ispickup != null">
+        #{ispickup,jdbcType=SMALLINT},
+      </if>
+      <if test="oppointmentTime != null">
+        #{oppointmentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finishedTime != null">
+        #{finishedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="appointmentState != null">
+        #{appointmentState,jdbcType=SMALLINT},
+      </if>
+      <if test="enabled != null">
+        #{enabled,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kingmao.dog.appointment.customer.model.CustomerAppointment">
+    update customer_appointment
+    <set>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=VARCHAR},
+      </if>
+      <if test="workTime != null">
+        work_time = #{workTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="serviceEndTime != null">
+        service_end_time = #{serviceEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="serviceStartTime != null">
+        service_start_time = #{serviceStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="openid != null">
+        openid = #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="clientName != null">
+        client_name = #{clientName,jdbcType=VARCHAR},
+      </if>
+      <if test="clientWxImg != null">
+        client_wx_img = #{clientWxImg,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="ispickup != null">
+        ispickup = #{ispickup,jdbcType=SMALLINT},
+      </if>
+      <if test="oppointmentTime != null">
+        oppointment_time = #{oppointmentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finishedTime != null">
+        finished_time = #{finishedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="appointmentState != null">
+        appointment_state = #{appointmentState,jdbcType=SMALLINT},
+      </if>
+      <if test="enabled != null">
+        enabled = #{enabled,jdbcType=INTEGER},
+      </if>
+    </set>
+    where appointment_id = #{appointmentId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kingmao.dog.appointment.customer.model.CustomerAppointment">
+    update customer_appointment
+    set shop_id = #{shopId,jdbcType=VARCHAR},
+      work_time = #{workTime,jdbcType=TIMESTAMP},
+      service_end_time = #{serviceEndTime,jdbcType=TIMESTAMP},
+      service_start_time = #{serviceStartTime,jdbcType=TIMESTAMP},
+      openid = #{openid,jdbcType=VARCHAR},
+      client_name = #{clientName,jdbcType=VARCHAR},
+      client_wx_img = #{clientWxImg,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      ispickup = #{ispickup,jdbcType=SMALLINT},
+      oppointment_time = #{oppointmentTime,jdbcType=TIMESTAMP},
+      finished_time = #{finishedTime,jdbcType=TIMESTAMP},
+      appointment_state = #{appointmentState,jdbcType=SMALLINT},
+      enabled = #{enabled,jdbcType=INTEGER}
+    where appointment_id = #{appointmentId,jdbcType=INTEGER}
+  </update>
+
+  <select id="getAll" resultMap="BaseResultMap">
+    SELECT c.*,p.*
+    FROM customer_appointment c LEFT JOIN pet_appointment p ON c.appointment_id = p.appointment_id
+  </select>
+
+  <select id="getAppInfo" parameterType="com.kingmao.dog.appointment.customer.model.CustomerAppointment" resultType="com.kingmao.dog.appointment.customer.model.CustomerAppointment">
+    SELECT *
+    FROM customer_appointment
+    where openid = #{openid,jdbcType=VARCHAR} and shop_id = #{shopId,jdbcType=VARCHAR},and work_time = #{workTime,jdbcType=TIMESTAMP},
+  </select>
+</mapper>

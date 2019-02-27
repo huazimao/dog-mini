@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kingmao.dog.appointment.provider.mapper.ProviderAppointmentMapper">
+  <resultMap id="BaseResultMap" type="com.kingmao.dog.appointment.provider.model.ProviderAppointment">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="shop_id" jdbcType="VARCHAR" property="shopId" />
+    <result column="service_start_time" jdbcType="TIMESTAMP" property="serviceStartTime" />
+    <result column="service_end_time" jdbcType="TIMESTAMP" property="serviceEndTime" />
+    <result column="timeout" jdbcType="INTEGER" property="timeout" />
+    <result column="limite" jdbcType="INTEGER" property="limite" />
+    <result column="trainee_num" jdbcType="INTEGER" property="traineeNum" />
+    <result column="skiller_num" jdbcType="INTEGER" property="skillerNum" />
+    <result column="factor" jdbcType="DOUBLE" property="factor" />
+    <result column="work_time" jdbcType="TIMESTAMP" property="workTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, shop_id, service_start_time, service_end_time, timeout, limite, trainee_num, 
+    skiller_num, factor, work_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from provider_appointment
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from provider_appointment
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.kingmao.dog.appointment.provider.model.ProviderAppointment">
+    insert into provider_appointment (id, shop_id, service_start_time, 
+      service_end_time, timeout, limite, 
+      trainee_num, skiller_num, factor, 
+      work_time)
+    values (#{id,jdbcType=INTEGER}, #{shopId,jdbcType=VARCHAR}, #{serviceStartTime,jdbcType=TIMESTAMP}, 
+      #{serviceEndTime,jdbcType=TIMESTAMP}, #{timeout,jdbcType=INTEGER}, #{limite,jdbcType=INTEGER}, 
+      #{traineeNum,jdbcType=INTEGER}, #{skillerNum,jdbcType=INTEGER}, #{factor,jdbcType=DOUBLE}, 
+      #{workTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kingmao.dog.appointment.provider.model.ProviderAppointment">
+    insert into provider_appointment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="serviceStartTime != null">
+        service_start_time,
+      </if>
+      <if test="serviceEndTime != null">
+        service_end_time,
+      </if>
+      <if test="timeout != null">
+        timeout,
+      </if>
+      <if test="limite != null">
+        limite,
+      </if>
+      <if test="traineeNum != null">
+        trainee_num,
+      </if>
+      <if test="skillerNum != null">
+        skiller_num,
+      </if>
+      <if test="factor != null">
+        factor,
+      </if>
+      <if test="workTime != null">
+        work_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="shopId != null">
+        #{shopId,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceStartTime != null">
+        #{serviceStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="serviceEndTime != null">
+        #{serviceEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="timeout != null">
+        #{timeout,jdbcType=INTEGER},
+      </if>
+      <if test="limite != null">
+        #{limite,jdbcType=INTEGER},
+      </if>
+      <if test="traineeNum != null">
+        #{traineeNum,jdbcType=INTEGER},
+      </if>
+      <if test="skillerNum != null">
+        #{skillerNum,jdbcType=INTEGER},
+      </if>
+      <if test="factor != null">
+        #{factor,jdbcType=DOUBLE},
+      </if>
+      <if test="workTime != null">
+        #{workTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kingmao.dog.appointment.provider.model.ProviderAppointment">
+    update provider_appointment
+    <set>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceStartTime != null">
+        service_start_time = #{serviceStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="serviceEndTime != null">
+        service_end_time = #{serviceEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="timeout != null">
+        timeout = #{timeout,jdbcType=INTEGER},
+      </if>
+      <if test="limite != null">
+        limite = #{limite,jdbcType=INTEGER},
+      </if>
+      <if test="traineeNum != null">
+        trainee_num = #{traineeNum,jdbcType=INTEGER},
+      </if>
+      <if test="skillerNum != null">
+        skiller_num = #{skillerNum,jdbcType=INTEGER},
+      </if>
+      <if test="factor != null">
+        factor = #{factor,jdbcType=DOUBLE},
+      </if>
+      <if test="workTime != null">
+        work_time = #{workTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kingmao.dog.appointment.provider.model.ProviderAppointment">
+    update provider_appointment
+    set shop_id = #{shopId,jdbcType=VARCHAR},
+      service_start_time = #{serviceStartTime,jdbcType=TIMESTAMP},
+      service_end_time = #{serviceEndTime,jdbcType=TIMESTAMP},
+      timeout = #{timeout,jdbcType=INTEGER},
+      limite = #{limite,jdbcType=INTEGER},
+      trainee_num = #{traineeNum,jdbcType=INTEGER},
+      skiller_num = #{skillerNum,jdbcType=INTEGER},
+      factor = #{factor,jdbcType=DOUBLE},
+      work_time = #{workTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
