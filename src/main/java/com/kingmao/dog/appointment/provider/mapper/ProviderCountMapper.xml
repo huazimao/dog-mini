@@ -5,13 +5,16 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="shop_id" jdbcType="VARCHAR" property="shopId" />
     <result column="total_time" jdbcType="INTEGER" property="totalTime" />
-    <result column="left_time" jdbcType="INTEGER" property="leftTime" />
     <result column="earn_time" jdbcType="INTEGER" property="earnTime" />
-    <result column="consume_tiime" jdbcType="INTEGER" property="consumeTiime" />
+    <result column="consume_time" jdbcType="INTEGER" property="consumeTime" />
     <result column="work_time" jdbcType="TIMESTAMP" property="workTime" />
+    <result column="model_statue" jdbcType="SMALLINT" property="modelStatue" />
+    <result column="dtype" jdbcType="VARCHAR" property="dtype" />
+    <result column="enabled" jdbcType="SMALLINT" property="enabled" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, shop_id, total_time, left_time, earn_time, consume_tiime, work_time
+    id, shop_id, total_time, earn_time, consume_time, work_time, model_statue, dtype,
+    enabled
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -25,13 +28,13 @@
   </delete>
   <insert id="insert" parameterType="com.kingmao.dog.appointment.provider.model.ProviderCount">
     insert into provider_count (id, shop_id, total_time, 
-      left_time, earn_time, consume_tiime, 
+      left_time, earn_time, consume_time,
       work_time)
     values (#{id,jdbcType=INTEGER}, #{shopId,jdbcType=VARCHAR}, #{totalTime,jdbcType=INTEGER}, 
-      #{leftTime,jdbcType=INTEGER}, #{earnTime,jdbcType=INTEGER}, #{consumeTiime,jdbcType=INTEGER}, 
+      #{leftTime,jdbcType=INTEGER}, #{earnTime,jdbcType=INTEGER}, #{consumeTime,jdbcType=INTEGER},
       #{workTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.kingmao.dog.appointment.provider.model.ProviderCount">
+  <insert id="insertSelective" parameterType="com.kingmao.dog.appointment.test.model.ProviderCount">
     insert into provider_count
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -43,17 +46,23 @@
       <if test="totalTime != null">
         total_time,
       </if>
-      <if test="leftTime != null">
-        left_time,
-      </if>
       <if test="earnTime != null">
         earn_time,
       </if>
-      <if test="consumeTiime != null">
-        consume_tiime,
+      <if test="consumeTime != null">
+        consume_time,
       </if>
       <if test="workTime != null">
         work_time,
+      </if>
+      <if test="modelStatue != null">
+        model_statue,
+      </if>
+      <if test="dtype != null">
+        dtype,
+      </if>
+      <if test="enabled != null">
+        enabled,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -66,17 +75,23 @@
       <if test="totalTime != null">
         #{totalTime,jdbcType=INTEGER},
       </if>
-      <if test="leftTime != null">
-        #{leftTime,jdbcType=INTEGER},
-      </if>
       <if test="earnTime != null">
         #{earnTime,jdbcType=INTEGER},
       </if>
-      <if test="consumeTiime != null">
-        #{consumeTiime,jdbcType=INTEGER},
+      <if test="consumeTime != null">
+        #{consumeTime,jdbcType=INTEGER},
       </if>
       <if test="workTime != null">
         #{workTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modelStatue != null">
+        #{modelStatue,jdbcType=SMALLINT},
+      </if>
+      <if test="dtype != null">
+        #{dtype,jdbcType=VARCHAR},
+      </if>
+      <if test="enabled != null">
+        #{enabled,jdbcType=SMALLINT},
       </if>
     </trim>
   </insert>
@@ -96,7 +111,7 @@
         earn_time = #{earnTime,jdbcType=INTEGER},
       </if>
       <if test="consumeTiime != null">
-        consume_tiime = #{consumeTiime,jdbcType=INTEGER},
+        consume_time = #{consumeTime,jdbcType=INTEGER},
       </if>
       <if test="workTime != null">
         work_time = #{workTime,jdbcType=TIMESTAMP},
@@ -110,7 +125,7 @@
       total_time = #{totalTime,jdbcType=INTEGER},
       left_time = #{leftTime,jdbcType=INTEGER},
       earn_time = #{earnTime,jdbcType=INTEGER},
-      consume_tiime = #{consumeTiime,jdbcType=INTEGER},
+      consume_time = #{consumeTime,jdbcType=INTEGER},
       work_time = #{workTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -122,6 +137,13 @@
     WHERE shop_id = #{shopId,jdbcType=VARCHAR} and work_time = #{workTime,jdbcType=TIMESTAMP} and dtype = #{dtype,jdbcType=VARCHAR}
   </select>
 
+  <select id="getPorivderCountInfoNoType" resultType="com.kingmao.dog.appointment.provider.model.ProviderCount">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM provider_count
+    WHERE shop_id = #{shopId,jdbcType=VARCHAR} and work_time = #{workTime,jdbcType=TIMESTAMP}
+  </select>
+
   <update id="updateByShopIdAndTime" >
     UPDATE provider_count
     SET consume_tiime = (SELECT sum(consume_time) from customer_appointment where shop_id = #{shopId} and work_time = #{workTime})
@@ -130,7 +152,7 @@
 
   <insert id="insertByShopIdAdnTime">
     INSERT INTO provider_count
-    (consume_tiime,shop_id,work_time,dtype) VALUES
+    (consume_time,shop_id,work_time,dtype) VALUES
     ((SELECT sum(consume_time) from customer_appointment where shop_id = #{shopId} and work_time = #{workTime}),#{shopId},#{workTime},#{dtype})
   </insert>
 </mapper>

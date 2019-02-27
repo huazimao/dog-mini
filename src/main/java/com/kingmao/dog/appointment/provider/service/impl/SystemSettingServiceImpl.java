@@ -90,10 +90,7 @@ public class SystemSettingServiceImpl implements SystemSettingService {
                 log.info("当日能效时间为：" + earnTime);
 
             }
-            /**
-             * 区分了上午和下午时段，新建和更新商家预约表时在客户预约时操作
-             */
-            /*ProviderCount providerCount = providerCountMapper.getPorivderCountInfo(systemSetting.getShopId(),systemSetting.getWorkTime());
+            ProviderCount providerCount = providerCountMapper.getPorivderCountInfoNoType(systemSetting.getShopId(),systemSetting.getWorkTime());
             if (null != providerCount) {
                 //更新商家预约总表
                 providerCount.setEarnTime(earnTime);
@@ -109,7 +106,7 @@ public class SystemSettingServiceImpl implements SystemSettingService {
                 providerCount.setShopId(systemSetting.getShopId());
                 flag = providerCountMapper.insertSelective(providerCount) > 0;
 
-            }*/
+            }
 
         }
 

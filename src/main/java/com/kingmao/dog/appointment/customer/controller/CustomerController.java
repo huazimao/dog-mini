@@ -69,7 +69,7 @@ public class CustomerController {
         ProviderCount providerCountAm = providerService.getPorivderCountInfo(customerAppointment.getShopId(), customerAppointment.getWorkTime(),"am");
         Integer appStatueAm = 0; //某日某店上午时段是否可以预约 1 可以，0不可以
         Integer earnTimeAm = providerCountAm.getEarnTime();
-        Integer consumeTimeAm = providerCountAm.getConsumeTiime();
+        Integer consumeTimeAm = providerCountAm.getConsumeTime();
         if (consumeTimeAm < earnTimeAm) {
             appStatueAm = 1;
             Date appTimeAm = DateUtil.countRat(systemSetting.getServiceStartTime(),systemSetting.getServiceEndTime(),earnTimeAm, consumeTimeAm,"am");
@@ -82,7 +82,7 @@ public class CustomerController {
         ProviderCount providerCountPm = providerService.getPorivderCountInfo(customerAppointment.getShopId(), customerAppointment.getWorkTime(),"pm");
         Integer appStatuePm = 0; //某日某店上午时段是否可以预约 1 可以，0不可以
         Integer earnTimePm = providerCountPm.getEarnTime();
-        Integer consumeTimePm = providerCountPm.getConsumeTiime();
+        Integer consumeTimePm = providerCountPm.getConsumeTime();
         if (consumeTimePm< earnTimePm) {
             appStatuePm = 1;
             Date appTimePm = DateUtil.countRat(systemSetting.getServiceStartTime(),systemSetting.getServiceEndTime(),earnTimePm, consumeTimePm,"pm");
@@ -112,7 +112,7 @@ public class CustomerController {
         CustomerAppointment retApp = null;
         ProviderCount providerCount = providerService.getPorivderCountInfo(customerAppointment.getShopId(), customerAppointment.getWorkTime(),customerAppointment.getDtype());
         Integer earnTime = providerCount.getEarnTime();
-        Integer consumeTime = providerCount.getConsumeTiime();
+        Integer consumeTime = providerCount.getConsumeTime();
         if (consumeTime < earnTime) {
             if (customerService.insertAppointment(customerAppointment)){
                 retApp = customerService.getAppInfo(customerAppointment);

@@ -23,5 +23,7 @@ public interface ProviderCountMapper {
 
     ProviderCount getPorivderCountInfo(@Param("shopId") String shopId, @Param("workTime")Date workTine,@Param("dtype") String dtype);
 
+    ProviderCount getPorivderCountInfoNoType(@Param("shopId") String shopId, @Param("workTime")Date workTine);
+
     int insertByShopIdAdnTime(@Param("shopId") String shopId, @Param("workTime")Date workTine,@Param("dtype") String dtype);
 }

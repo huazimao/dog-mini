@@ -73,10 +73,12 @@ public class CustomerServiceImpl implements CustomerService {
                 providerCountMapper.updateByShopIdAndTime(customerAppointment.getShopId(), customerAppointment.getWorkTime(),customerAppointment.getDtype());
             //插入
             }else {
+                ProviderCount providerCount2 = providerCountMapper.getPorivderCountInfoNoType(customerAppointment.getShopId(),customerAppointment.getWorkTime());
                 providerCount.setWorkTime(customerAppointment.getWorkTime());
                 providerCount.setShopId(customerAppointment.getShopId());
-                providerCount.setConsumeTiime(consumeTime); //新建p表时，只会有一个consume，所以只能从这里拿就可以了
+                providerCount.setConsumeTime(consumeTime); //新建p表时，只会有一个consume，所以只能从这里拿就可以了
                 providerCount.setDtype(customerAppointment.getDtype());
+                providerCount.setEarnTime(providerCount2.getEarnTime());
                 flag = providerCountMapper.insertSelective(providerCount) > 0;
             }
         }

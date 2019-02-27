@@ -9,33 +9,17 @@ public class ProviderCount {
 
     private Integer totalTime;
 
-    private Integer leftTime;
-
     private Integer earnTime;
 
-    private Integer consumeTiime;
+    private Integer consumeTime;
 
     private Date workTime;
 
-    private Integer enabled;
+    private Short modelStatue;
 
     private String dtype;
 
-    public Integer getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(Integer enabled) {
-        this.enabled = enabled;
-    }
-
-    public String getDtype() {
-        return dtype;
-    }
-
-    public void setDtype(String dtype) {
-        this.dtype = dtype;
-    }
+    private Short enabled;
 
     public Integer getId() {
         return id;
@@ -61,14 +45,6 @@ public class ProviderCount {
         this.totalTime = totalTime;
     }
 
-    public Integer getLeftTime() {
-        return leftTime;
-    }
-
-    public void setLeftTime(Integer leftTime) {
-        this.leftTime = leftTime;
-    }
-
     public Integer getEarnTime() {
         return earnTime;
     }
@@ -77,12 +53,12 @@ public class ProviderCount {
         this.earnTime = earnTime;
     }
 
-    public Integer getConsumeTiime() {
-        return consumeTiime;
+    public Integer getConsumeTime() {
+        return consumeTime;
     }
 
-    public void setConsumeTiime(Integer consumeTiime) {
-        this.consumeTiime = consumeTiime;
+    public void setConsumeTime(Integer consumeTime) {
+        this.consumeTime = consumeTime;
     }
 
     public Date getWorkTime() {
@@ -91,5 +67,44 @@ public class ProviderCount {
 
     public void setWorkTime(Date workTime) {
         this.workTime = workTime;
+    }
+
+    public Short getModelStatue() {
+        return modelStatue;
+    }
+
+    public void setModelStatue(Short modelStatue) {
+        this.modelStatue = modelStatue;
+    }
+
+    public String getDtype() {
+        return dtype;
+    }
+
+    public void setDtype(String dtype) {
+        this.dtype = dtype;
+    }
+
+    public Short getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Short enabled) {
+        this.enabled = enabled;
+    }
+
+    @Override
+    public String toString() {
+        return "ProviderCount{" +
+                "id=" + id +
+                ", shopId='" + shopId + '\'' +
+                ", totalTime=" + totalTime +
+                ", earnTime=" + earnTime +
+                ", consumeTime=" + consumeTime +
+                ", workTime=" + workTime +
+                ", modelStatue=" + modelStatue +
+                ", dtype='" + dtype + '\'' +
+                ", enabled=" + enabled +
+                '}';
     }
 }
