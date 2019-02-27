@@ -47,7 +47,7 @@ public class CustomerServiceImpl implements CustomerService {
     public boolean insertAppointment(CustomerAppointment customerAppointment) {
         List<PetAppointment> petAppointmentList = customerAppointment.getPetLists();
         Integer consumeTime = getConsumeTime(petAppointmentList);
-        log.info(customerAppointment.getClientName() + "用户洗护预计耗时：" + consumeTime);
+        log.info(  "用户洗护预计耗时：" + consumeTime);
         customerAppointment.setConsumeTime(consumeTime);
         Date appointmenTime = DateUtil.getYMD(new Date());
         customerAppointment.setOppointmentTime(appointmenTime);

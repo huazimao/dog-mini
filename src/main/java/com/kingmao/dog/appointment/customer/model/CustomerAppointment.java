@@ -16,10 +16,6 @@ public class CustomerAppointment {
 
     private String openid;
 
-    private String clientName;
-
-    private String clientWxImg;
-
     private String phone;
 
     private String address;
@@ -28,53 +24,19 @@ public class CustomerAppointment {
 
     private Date oppointmentTime;
 
-    private Date finishedTime;
+    private Date countFinishedTime;
 
     private Short appointmentState;
 
     private Integer consumeTime;
 
-    private Integer enabled;
-
-    private Date countFinishedTime;
+    private String dtype;
 
     private Date accFinishedTime;
 
-    private String dtype;
+    private Integer enabled;
 
     private List<PetAppointment> petLists;
-
-    public String getDtype() {
-        return dtype;
-    }
-
-    public void setDtype(String dtype) {
-        this.dtype = dtype;
-    }
-
-    public Date getCountFinishedTime() {
-        return countFinishedTime;
-    }
-
-    public void setCountFinishedTime(Date countFinishedTime) {
-        this.countFinishedTime = countFinishedTime;
-    }
-
-    public Date getAccFinishedTime() {
-        return accFinishedTime;
-    }
-
-    public void setAccFinishedTime(Date accFinishedTime) {
-        this.accFinishedTime = accFinishedTime;
-    }
-
-    public Integer getConsumeTime() {
-        return consumeTime;
-    }
-
-    public void setConsumeTime(Integer consumeTime) {
-        this.consumeTime = consumeTime;
-    }
 
     public List<PetAppointment> getPetLists() {
         return petLists;
@@ -132,22 +94,6 @@ public class CustomerAppointment {
         this.openid = openid;
     }
 
-    public String getClientName() {
-        return clientName;
-    }
-
-    public void setClientName(String clientName) {
-        this.clientName = clientName;
-    }
-
-    public String getClientWxImg() {
-        return clientWxImg;
-    }
-
-    public void setClientWxImg(String clientWxImg) {
-        this.clientWxImg = clientWxImg;
-    }
-
     public String getPhone() {
         return phone;
     }
@@ -180,12 +126,12 @@ public class CustomerAppointment {
         this.oppointmentTime = oppointmentTime;
     }
 
-    public Date getFinishedTime() {
-        return finishedTime;
+    public Date getCountFinishedTime() {
+        return countFinishedTime;
     }
 
-    public void setFinishedTime(Date finishedTime) {
-        this.finishedTime = finishedTime;
+    public void setCountFinishedTime(Date countFinishedTime) {
+        this.countFinishedTime = countFinishedTime;
     }
 
     public Short getAppointmentState() {
@@ -194,6 +140,30 @@ public class CustomerAppointment {
 
     public void setAppointmentState(Short appointmentState) {
         this.appointmentState = appointmentState;
+    }
+
+    public Integer getConsumeTime() {
+        return consumeTime;
+    }
+
+    public void setConsumeTime(Integer consumeTime) {
+        this.consumeTime = consumeTime;
+    }
+
+    public String getDtype() {
+        return dtype;
+    }
+
+    public void setDtype(String dtype) {
+        this.dtype = dtype;
+    }
+
+    public Date getAccFinishedTime() {
+        return accFinishedTime;
+    }
+
+    public void setAccFinishedTime(Date accFinishedTime) {
+        this.accFinishedTime = accFinishedTime;
     }
 
     public Integer getEnabled() {
@@ -213,14 +183,15 @@ public class CustomerAppointment {
                 ", serviceEndTime=" + serviceEndTime +
                 ", serviceStartTime=" + serviceStartTime +
                 ", openid='" + openid + '\'' +
-                ", clientName='" + clientName + '\'' +
-                ", clientWxImg='" + clientWxImg + '\'' +
                 ", phone='" + phone + '\'' +
                 ", address='" + address + '\'' +
                 ", ispickup=" + ispickup +
                 ", oppointmentTime=" + oppointmentTime +
-                ", finishedTime=" + finishedTime +
+                ", countFinishedTime=" + countFinishedTime +
                 ", appointmentState=" + appointmentState +
+                ", consumeTime=" + consumeTime +
+                ", dtype='" + dtype + '\'' +
+                ", accFinishedTime=" + accFinishedTime +
                 ", enabled=" + enabled +
                 ", petLists=" + petLists +
                 '}';

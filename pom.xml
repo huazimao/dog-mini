@@ -110,7 +110,7 @@
 
 		</plugins>
 
-		<resources>
+		<!--<resources>
 			<resource>
 				<directory>src/main/java</directory>
 				<includes>
@@ -130,7 +130,7 @@
 					<include>**/*.*</include>
 				</includes>
 			</resource>
-		</resources>
+		</resources>-->
 
 
 	</build>

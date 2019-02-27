@@ -8,14 +8,15 @@
     <result column="service_end_time" jdbcType="TIMESTAMP" property="serviceEndTime" />
     <result column="service_start_time" jdbcType="TIMESTAMP" property="serviceStartTime" />
     <result column="openid" jdbcType="VARCHAR" property="openid" />
-    <result column="client_name" jdbcType="VARCHAR" property="clientName" />
-    <result column="client_wx_img" jdbcType="VARCHAR" property="clientWxImg" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="address" jdbcType="VARCHAR" property="address" />
     <result column="ispickup" jdbcType="SMALLINT" property="ispickup" />
     <result column="oppointment_time" jdbcType="TIMESTAMP" property="oppointmentTime" />
-    <result column="finished_time" jdbcType="TIMESTAMP" property="finishedTime" />
+    <result column="count_finished_time" jdbcType="TIMESTAMP" property="countFinishedTime" />
     <result column="appointment_state" jdbcType="SMALLINT" property="appointmentState" />
+    <result column="consume_time" jdbcType="INTEGER" property="consumeTime" />
+    <result column="dtype" jdbcType="VARCHAR" property="dtype" />
+    <result column="acc_finished_time" jdbcType="TIMESTAMP" property="accFinishedTime" />
     <result column="enabled" jdbcType="INTEGER" property="enabled" />
     <collection property="petLists" ofType="com.kingmao.dog.appointment.customer.model.PetAppointment"
                 javaType="java.util.ArrayList">
@@ -33,11 +34,11 @@
   </resultMap>
   <sql id="Base_Column_List">
     appointment_id, shop_id, work_time, service_end_time, service_start_time, openid, 
-    client_name, client_wx_img, phone, address, ispickup, oppointment_time, finished_time, 
-    appointment_state, enabled
+    phone, address, ispickup, oppointment_time, count_finished_time, appointment_state,
+    consume_time, dtype, acc_finished_time, enabled
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from customer_appointment
     where appointment_id = #{appointmentId,jdbcType=INTEGER}
@@ -46,23 +47,26 @@
     delete from customer_appointment
     where appointment_id = #{appointmentId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.kingmao.dog.appointment.customer.model.CustomerAppointment">
-    insert into customer_appointment (appointment_id, shop_id, work_time, 
-      service_end_time, service_start_time, openid, 
-      client_name, client_wx_img, phone, 
-      address, ispickup, oppointment_time, 
-      finished_time, appointment_state, enabled
-      )
-    values (#{appointmentId,jdbcType=INTEGER}, #{shopId,jdbcType=VARCHAR}, #{workTime,jdbcType=TIMESTAMP}, 
-      #{serviceEndTime,jdbcType=TIMESTAMP}, #{serviceStartTime,jdbcType=TIMESTAMP}, #{openid,jdbcType=VARCHAR}, 
-      #{clientName,jdbcType=VARCHAR}, #{clientWxImg,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
-      #{address,jdbcType=VARCHAR}, #{ispickup,jdbcType=SMALLINT}, #{oppointmentTime,jdbcType=TIMESTAMP}, 
-      #{finishedTime,jdbcType=TIMESTAMP}, #{appointmentState,jdbcType=SMALLINT}, #{enabled,jdbcType=INTEGER}
-      )
+  <insert id="insert" parameterType="com.kingmao.dog.appointment.test.model.CustomerAppointment">
+    insert into customer_appointment (appointment_id, shop_id, work_time,
+    service_end_time, service_start_time, openid,
+    phone, address, ispickup,
+    oppointment_time, count_finished_time,
+    appointment_state, consume_time, dtype,
+    acc_finished_time, enabled)
+    values (#{appointmentId,jdbcType=INTEGER}, #{shopId,jdbcType=VARCHAR}, #{workTime,jdbcType=TIMESTAMP},
+    #{serviceEndTime,jdbcType=TIMESTAMP}, #{serviceStartTime,jdbcType=TIMESTAMP}, #{openid,jdbcType=VARCHAR},
+    #{phone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{ispickup,jdbcType=SMALLINT},
+    #{oppointmentTime,jdbcType=TIMESTAMP}, #{countFinishedTime,jdbcType=TIMESTAMP},
+    #{appointmentState,jdbcType=SMALLINT}, #{consumeTime,jdbcType=INTEGER}, #{dtype,jdbcType=VARCHAR},
+    #{accFinishedTime,jdbcType=TIMESTAMP}, #{enabled,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.kingmao.dog.appointment.customer.model.CustomerAppointment">
+  <insert id="insertSelective" parameterType="com.kingmao.dog.appointment.test.model.CustomerAppointment">
     insert into customer_appointment
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="appointmentId != null">
+        appointment_id,
+      </if>
       <if test="shopId != null">
         shop_id,
       </if>
@@ -78,12 +82,6 @@
       <if test="openid != null">
         openid,
       </if>
-      <if test="clientName != null">
-        client_name,
-      </if>
-      <if test="clientWxImg != null">
-        client_wx_img,
-      </if>
       <if test="phone != null">
         phone,
       </if>
@@ -96,17 +94,29 @@
       <if test="oppointmentTime != null">
         oppointment_time,
       </if>
-      <if test="finishedTime != null">
-        finished_time,
+      <if test="countFinishedTime != null">
+        count_finished_time,
       </if>
       <if test="appointmentState != null">
         appointment_state,
+      </if>
+      <if test="consumeTime != null">
+        consume_time,
+      </if>
+      <if test="dtype != null">
+        dtype,
+      </if>
+      <if test="accFinishedTime != null">
+        acc_finished_time,
       </if>
       <if test="enabled != null">
         enabled,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="appointmentId != null">
+        #{appointmentId,jdbcType=INTEGER},
+      </if>
       <if test="shopId != null">
         #{shopId,jdbcType=VARCHAR},
       </if>
@@ -122,12 +132,6 @@
       <if test="openid != null">
         #{openid,jdbcType=VARCHAR},
       </if>
-      <if test="clientName != null">
-        #{clientName,jdbcType=VARCHAR},
-      </if>
-      <if test="clientWxImg != null">
-        #{clientWxImg,jdbcType=VARCHAR},
-      </if>
       <if test="phone != null">
         #{phone,jdbcType=VARCHAR},
       </if>
@@ -140,18 +144,27 @@
       <if test="oppointmentTime != null">
         #{oppointmentTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="finishedTime != null">
-        #{finishedTime,jdbcType=TIMESTAMP},
+      <if test="countFinishedTime != null">
+        #{countFinishedTime,jdbcType=TIMESTAMP},
       </if>
       <if test="appointmentState != null">
         #{appointmentState,jdbcType=SMALLINT},
+      </if>
+      <if test="consumeTime != null">
+        #{consumeTime,jdbcType=INTEGER},
+      </if>
+      <if test="dtype != null">
+        #{dtype,jdbcType=VARCHAR},
+      </if>
+      <if test="accFinishedTime != null">
+        #{accFinishedTime,jdbcType=TIMESTAMP},
       </if>
       <if test="enabled != null">
         #{enabled,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.kingmao.dog.appointment.customer.model.CustomerAppointment">
+  <update id="updateByPrimaryKeySelective" parameterType="com.kingmao.dog.appointment.test.model.CustomerAppointment">
     update customer_appointment
     <set>
       <if test="shopId != null">
@@ -169,12 +182,6 @@
       <if test="openid != null">
         openid = #{openid,jdbcType=VARCHAR},
       </if>
-      <if test="clientName != null">
-        client_name = #{clientName,jdbcType=VARCHAR},
-      </if>
-      <if test="clientWxImg != null">
-        client_wx_img = #{clientWxImg,jdbcType=VARCHAR},
-      </if>
       <if test="phone != null">
         phone = #{phone,jdbcType=VARCHAR},
       </if>
@@ -187,11 +194,20 @@
       <if test="oppointmentTime != null">
         oppointment_time = #{oppointmentTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="finishedTime != null">
-        finished_time = #{finishedTime,jdbcType=TIMESTAMP},
+      <if test="countFinishedTime != null">
+        count_finished_time = #{countFinishedTime,jdbcType=TIMESTAMP},
       </if>
       <if test="appointmentState != null">
         appointment_state = #{appointmentState,jdbcType=SMALLINT},
+      </if>
+      <if test="consumeTime != null">
+        consume_time = #{consumeTime,jdbcType=INTEGER},
+      </if>
+      <if test="dtype != null">
+        dtype = #{dtype,jdbcType=VARCHAR},
+      </if>
+      <if test="accFinishedTime != null">
+        acc_finished_time = #{accFinishedTime,jdbcType=TIMESTAMP},
       </if>
       <if test="enabled != null">
         enabled = #{enabled,jdbcType=INTEGER},
@@ -199,21 +215,22 @@
     </set>
     where appointment_id = #{appointmentId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.kingmao.dog.appointment.customer.model.CustomerAppointment">
+  <update id="updateByPrimaryKey" parameterType="com.kingmao.dog.appointment.test.model.CustomerAppointment">
     update customer_appointment
     set shop_id = #{shopId,jdbcType=VARCHAR},
       work_time = #{workTime,jdbcType=TIMESTAMP},
       service_end_time = #{serviceEndTime,jdbcType=TIMESTAMP},
       service_start_time = #{serviceStartTime,jdbcType=TIMESTAMP},
       openid = #{openid,jdbcType=VARCHAR},
-      client_name = #{clientName,jdbcType=VARCHAR},
-      client_wx_img = #{clientWxImg,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
       address = #{address,jdbcType=VARCHAR},
       ispickup = #{ispickup,jdbcType=SMALLINT},
       oppointment_time = #{oppointmentTime,jdbcType=TIMESTAMP},
-      finished_time = #{finishedTime,jdbcType=TIMESTAMP},
+      count_finished_time = #{countFinishedTime,jdbcType=TIMESTAMP},
       appointment_state = #{appointmentState,jdbcType=SMALLINT},
+      consume_time = #{consumeTime,jdbcType=INTEGER},
+      dtype = #{dtype,jdbcType=VARCHAR},
+      acc_finished_time = #{accFinishedTime,jdbcType=TIMESTAMP},
       enabled = #{enabled,jdbcType=INTEGER}
     where appointment_id = #{appointmentId,jdbcType=INTEGER}
   </update>
