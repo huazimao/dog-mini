@@ -72,7 +72,7 @@ public class CustomerController {
         Integer consumeTimeAm = providerCountAm.getConsumeTiime();
         if (consumeTimeAm < earnTimeAm) {
             appStatueAm = 1;
-            Date appTimeAm = DateUtil.countRat(systemSetting.getServiceStartTime(),systemSetting.getServiceEndTime(),earnTimeAm, consumeTimeAm);
+            Date appTimeAm = DateUtil.countRat(systemSetting.getServiceStartTime(),systemSetting.getServiceEndTime(),earnTimeAm, consumeTimeAm,"am");
             Gson gson1 = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm").create();
             request.setAttribute("appTimeAm",gson1.toJson(appTimeAm));
         }
@@ -85,7 +85,7 @@ public class CustomerController {
         Integer consumeTimePm = providerCountPm.getConsumeTiime();
         if (consumeTimePm< earnTimePm) {
             appStatuePm = 1;
-            Date appTimePm = DateUtil.countRat(systemSetting.getServiceStartTime(),systemSetting.getServiceEndTime(),earnTimePm, consumeTimePm);
+            Date appTimePm = DateUtil.countRat(systemSetting.getServiceStartTime(),systemSetting.getServiceEndTime(),earnTimePm, consumeTimePm,"pm");
             Gson gson2= new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm").create();
             request.setAttribute("appTimePm",gson2.toJson(appTimePm));
         }
