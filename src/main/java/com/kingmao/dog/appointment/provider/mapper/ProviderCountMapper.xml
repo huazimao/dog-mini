@@ -140,7 +140,7 @@
 
   <update id="updateByShopIdAndTime" parameterType="com.kingmao.dog.appointment.provider.model.ProviderCount">
     UPDATE provider_count
-    SET consume_tiime = (SELECT sum(consume_time) from customer_appointment where shop_id = #{shopId} and work_time = #{workTime})
+    SET consume_time = (SELECT sum(consume_time) from customer_appointment where shop_id = #{shopId} and work_time = #{workTime})
     where shop_id = #{shopId} and work_time = #{workTime} and dtype = #{dtype}
   </update>
 

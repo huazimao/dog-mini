@@ -151,16 +151,14 @@
     (appointment_id,openid,kind_pet,size,kind_service,comment,name_pet,photo_pet)
     values
     <foreach collection="list" item="item" index="index" separator=",">
-      (
-      #{item.appointment_id},
+      (#{item.appointmentId},
       #{item.openid},
-      #{item.kind_pet},
+      #{item.kindPet},
       #{item.size},
-      #{item.kind_service},
+      #{item.kindService},
       #{item.comment},
-      #{item.name_pet},
-      #{item.photo_pet},
-      )
+      #{item.namePet},
+      #{item.photoPet})
     </foreach>
   </insert>
 

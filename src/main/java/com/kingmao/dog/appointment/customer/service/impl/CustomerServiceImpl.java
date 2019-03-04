@@ -56,6 +56,9 @@ public class CustomerServiceImpl implements CustomerService {
         if (customerAppointment.getAppointmentId() == null) {
             //插入客户预约表
             flag = customerAppointmentMapper.insertSelective(customerAppointment) > 0;
+            //todo 插入c表之后，需要将c表的id查出来，放入pet表中
+            Integer appId = customerAppointmentMapper.getAppInfo(customerAppointment).getAppointmentId();
+            customerAppointment.setAppointmentId(appId);
         }else {
             //先删除该客户之前的宠物预约记录
             int appointmentId = customerAppointment.getAppointmentId();
@@ -63,6 +66,10 @@ public class CustomerServiceImpl implements CustomerService {
         }
         //更新宠物表和客户预约表中的消耗时间
         if (flag) {
+            //todo 更新c表之后，需要将c表的id查出来，放入pet表中
+            for (int x = 0;x<petAppointmentList.size();x++) {
+                petAppointmentList.get(x).setAppointmentId(customerAppointment.getAppointmentId());
+            }
             flag = petAppointmentMapper.insertPetAppList(petAppointmentList)>0 && customerAppointmentMapper.updateByPrimaryKeySelective(customerAppointment) >0;
         }
         //更新商家预约总表
@@ -73,19 +80,26 @@ public class CustomerServiceImpl implements CustomerService {
                 providerCountMapper.updateByShopIdAndTime(customerAppointment.getShopId(), customerAppointment.getWorkTime(),customerAppointment.getDtype());
             //插入
             }else {
+                // 从默认设置表中生成的p表查出来，然后再设置新的内容
+                // todo 待测
                 ProviderCount providerCount2 = providerCountMapper.getPorivderCountInfoNoType(customerAppointment.getShopId(),customerAppointment.getWorkTime());
-                providerCount.setWorkTime(customerAppointment.getWorkTime());
-                providerCount.setShopId(customerAppointment.getShopId());
-                providerCount.setConsumeTime(consumeTime); //新建p表时，只会有一个consume，所以只能从这里拿就可以了
-                providerCount.setDtype(customerAppointment.getDtype());
-                providerCount.setEarnTime(providerCount2.getEarnTime());
-                flag = providerCountMapper.insertSelective(providerCount) > 0;
+                providerCount2.setWorkTime(customerAppointment.getWorkTime());
+                providerCount2.setShopId(customerAppointment.getShopId());
+                providerCount2.setConsumeTime(consumeTime); //新建p表时，只会有一个consume，所以只能从这里拿就可以了
+                providerCount2.setDtype(customerAppointment.getDtype());
+                providerCount2.setEarnTime(providerCount2.getEarnTime());
+                flag = providerCountMapper.insertSelective(providerCount2) > 0;
             }
         }
 
         return flag;
     }
 
+    /**
+     * 查询客户是否预约和预约详情
+     * @param customerAppointment
+     * @return
+     */
     @Override
     public CustomerAppointment getAppInfo(CustomerAppointment customerAppointment) {
         return customerAppointmentMapper.getAppInfo(customerAppointment);
@@ -101,15 +115,15 @@ public class CustomerServiceImpl implements CustomerService {
         for (int x = 0; x < petAppointmentList.size(); x++) {
             PetAppointment pet = petAppointmentList.get(x);
             if (pet.getKindPet().equals("cat")) {
-                consumeTime += 30;
+                consumeTime += 100;
             } else if (pet.getKindPet().equals("dog")) {
                 if (pet.getKindService().equals("wash")) {
                     if (pet.getSize().equals("mini")) {
-                        consumeTime += 30;
+                        consumeTime += 60;
                     } else if (pet.getSize().equals("normal")) {
-                        consumeTime += 40;
+                        consumeTime += 90;
                     } else if (pet.getSize().equals("large")) {
-                        consumeTime += 50;
+                        consumeTime += 120;
                     }
                 } else if (pet.getKindService().equals("modeling")) {
                     consumeTime += 120;

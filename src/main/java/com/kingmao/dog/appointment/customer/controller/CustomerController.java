@@ -12,6 +12,7 @@ import com.kingmao.dog.utils.DateUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -40,6 +41,8 @@ public class CustomerController {
      * 进入预约页面，展示详情
      * 客户是否预约了，预计开始服务时间
      * 总开关，是否约满
+     *
+     * 第一位客户测试已通
      * @param request
      * @param customerAppointment
      * @return
@@ -47,9 +50,11 @@ public class CustomerController {
     @RequestMapping("/customer/appointmentPage.do")
     public String appointmentPage(HttpServletRequest request, CustomerAppointment customerAppointment) {
         log.info("进入到客户预约界面，收到参数为：" + "shopId=" + customerAppointment.getShopId() + "workTime=" + customerAppointment.getWorkTime());
+        String shopId = customerAppointment.getShopId();
+        Date workTime = customerAppointment.getWorkTime();
         Gson gson = new Gson();
         Map<String, Object> map = new HashMap<String, Object>();
-        customerAppointment.setOpenid("openId");
+        customerAppointment.setOpenid("opend");
 
         //查询客户是否预约和预约详情
         customerAppointment = customerService.getAppInfo(customerAppointment);
@@ -61,33 +66,44 @@ public class CustomerController {
         }
 
         //查询当日该店总开关
-        SystemSetting systemSetting = systemSettingService.getSySettingByShopIdAndTime(customerAppointment.getShopId(), customerAppointment.getWorkTime());
+        SystemSetting systemSetting = systemSettingService.getSySettingByShopIdAndTime(shopId, workTime);
         int sysStatue = systemSetting.getSwitchStatue();
         request.setAttribute("sysStatue",sysStatue);
 
         //查询某日某店上午是否已约满，及可预约时间
-        ProviderCount providerCountAm = providerService.getPorivderCountInfo(customerAppointment.getShopId(), customerAppointment.getWorkTime(),"am");
+        ProviderCount providerCountAm = providerService.getPorivderCountInfo(shopId, workTime,"am");
         Integer appStatueAm = 0; //某日某店上午时段是否可以预约 1 可以，0不可以
-        Integer earnTimeAm = providerCountAm.getEarnTime();
-        Integer consumeTimeAm = providerCountAm.getConsumeTime();
-        if (consumeTimeAm < earnTimeAm) {
+
+        if (null == providerCountAm) {
             appStatueAm = 1;
-            Date appTimeAm = DateUtil.countRat(systemSetting.getServiceStartTime(),systemSetting.getServiceEndTime(),earnTimeAm, consumeTimeAm,"am");
-            Gson gson1 = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm").create();
-            request.setAttribute("appTimeAm",gson1.toJson(appTimeAm));
+            request.setAttribute("appTimeAm", new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm").create().toJson(systemSetting.getServiceStartTime()));
+        } else {
+            Integer earnTimeAm = providerCountAm.getEarnTime();
+            Integer consumeTimeAm = providerCountAm.getConsumeTime();
+            if (consumeTimeAm < earnTimeAm) {
+                appStatueAm = 1;
+                Date appTimeAm = DateUtil.countRat(systemSetting.getServiceStartTime(),systemSetting.getServiceEndTime(),earnTimeAm, consumeTimeAm,"am");
+                Gson gson1 = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm").create();
+                request.setAttribute("appTimeAm",gson1.toJson(appTimeAm));
+            }
         }
         request.setAttribute("appStatueAm",appStatueAm);
 
         //查询某日某店下午是否已约满，及可预约时间
-        ProviderCount providerCountPm = providerService.getPorivderCountInfo(customerAppointment.getShopId(), customerAppointment.getWorkTime(),"pm");
+        ProviderCount providerCountPm = providerService.getPorivderCountInfo(shopId, workTime,"pm");
         Integer appStatuePm = 0; //某日某店上午时段是否可以预约 1 可以，0不可以
-        Integer earnTimePm = providerCountPm.getEarnTime();
-        Integer consumeTimePm = providerCountPm.getConsumeTime();
-        if (consumeTimePm< earnTimePm) {
+        if (null == providerCountPm) {
             appStatuePm = 1;
-            Date appTimePm = DateUtil.countRat(systemSetting.getServiceStartTime(),systemSetting.getServiceEndTime(),earnTimePm, consumeTimePm,"pm");
-            Gson gson2= new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm").create();
-            request.setAttribute("appTimePm",gson2.toJson(appTimePm));
+            request.setAttribute("appTimePm", new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm").create().toJson(systemSetting.getServiceStartTime()));
+        } else {
+            Integer earnTimePm = providerCountPm.getEarnTime();
+            Integer consumeTimePm = providerCountPm.getConsumeTime();
+            if (consumeTimePm< earnTimePm) {
+                appStatuePm = 1;
+                Date appTimePm = DateUtil.countRat(systemSetting.getServiceStartTime(),systemSetting.getServiceEndTime(),earnTimePm, consumeTimePm,"pm");
+                Gson gson2= new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm").create();
+                request.setAttribute("appTimePm",gson2.toJson(appTimePm));
+            }
         }
         request.setAttribute("appStatuePm",appStatuePm);
 
@@ -96,31 +112,32 @@ public class CustomerController {
 
     /**
      * 客户预约洗护服务
-     * 先进行二次校验，再进行预约
      * @param customerAppointment
      * @return
      */
     @ResponseBody
-    @RequestMapping("/customer/appointment.do")
-    public String getAppointment(CustomerAppointment customerAppointment){
+    @RequestMapping(value = "/customer/appointment.do" ,produces = {"application/json;charset=UTF-8"})
+    public String getAppointment(@RequestBody CustomerAppointment customerAppointment){
         log.info("客户预约接收到的参数为：" + customerAppointment.toString());
-        customerAppointment.setOpenid("openId");
+        customerAppointment.setOpenid("aaaaaaa");
         Gson gson = new Gson();
         Map<String, Object> map = new HashMap<String, Object>();
 
+        CustomerAppointment retApp = new CustomerAppointment();
+        if (customerService.insertAppointment(customerAppointment)){
+            map.put("type", 1);
+            //retApp = customerService.getAppInfo(customerAppointment);
+        }
+
         //预约前进行二次校验
-        CustomerAppointment retApp = null;
+        //不进行校验，乐于接受预约超的情况
+        /*
         ProviderCount providerCount = providerService.getPorivderCountInfo(customerAppointment.getShopId(), customerAppointment.getWorkTime(),customerAppointment.getDtype());
         Integer earnTime = providerCount.getEarnTime();
         Integer consumeTime = providerCount.getConsumeTime();
         if (consumeTime < earnTime) {
-            if (customerService.insertAppointment(customerAppointment)){
-                retApp = customerService.getAppInfo(customerAppointment);
-            }
-        }
-        if (null != retApp) {
-            map.put("type", 1);
-        }
+        }*/
+
         return gson.toJson(map);
     }
 

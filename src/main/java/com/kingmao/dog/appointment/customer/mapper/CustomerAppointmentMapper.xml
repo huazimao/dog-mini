@@ -240,9 +240,10 @@
     FROM customer_appointment c LEFT JOIN pet_appointment p ON c.appointment_id = p.appointment_id
   </select>
 
-  <select id="getAppInfo" parameterType="com.kingmao.dog.appointment.customer.model.CustomerAppointment" resultType="com.kingmao.dog.appointment.customer.model.CustomerAppointment">
-    SELECT *
+  <select id="getAppInfo" parameterType="com.kingmao.dog.appointment.customer.model.CustomerAppointment" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
     FROM customer_appointment
-    where openid = #{openid,jdbcType=VARCHAR} and shop_id = #{shopId,jdbcType=VARCHAR},and work_time = #{workTime,jdbcType=TIMESTAMP}
+    where openid = #{openid,jdbcType=VARCHAR} and shop_id = #{shopId,jdbcType=VARCHAR} and work_time = #{workTime,jdbcType=TIMESTAMP}
   </select>
 </mapper>
