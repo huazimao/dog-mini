@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * Paceage:com.kingmao.dog.test
  * Description:
  * Date:2019/2/20
- * Author: 伊秦轩
+ * Author: KingMao
  **/
 @Controller
 public class DogTestController {

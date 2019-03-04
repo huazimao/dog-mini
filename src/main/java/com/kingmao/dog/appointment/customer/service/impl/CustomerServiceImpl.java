@@ -19,7 +19,7 @@ import java.util.List;
  * Paceage:com.kingmao.dog.appointment.customer.service.impl
  * Description:
  * Date:2019/2/21
- * Author: 伊秦轩
+ * Author: KingMao
  **/
 @Service
 public class CustomerServiceImpl implements CustomerService {

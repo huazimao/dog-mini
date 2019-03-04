@@ -65,7 +65,13 @@
             <groupId>org.apache.tomcat</groupId>
             <artifactId>tomcat-jsp-api</artifactId>
         </dependency>
-        <!--jstl标签依赖的jar包end -->
+        <dependency>
+            <groupId>net.sf.json-lib</groupId>
+            <artifactId>json-lib</artifactId>
+            <version>2.4</version>
+            <classifier>jdk15</classifier>
+        </dependency>
+		<!--jstl标签依赖的jar包end -->
 	</dependencies>
 
 	<build>

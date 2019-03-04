@@ -12,7 +12,7 @@ import java.util.Date;
  * Paceage:com.kingmao.dog.appointment.provider.service.impl
  * Description:
  * Date:2019/2/25
- * Author: 伊秦轩
+ * Author: KingMao
  **/
 @Service
 public class ProviderServiceImpl implements ProviderService {

@@ -8,7 +8,7 @@ import java.util.Date;
  * Paceage:com.kingmao.dog.appointment.provider.service
  * Description:
  * Date:2019/2/25
- * Author: 伊秦轩
+ * Author: KingMao
  **/
 public interface ProviderService {
     int insertProviderCount(ProviderCount providerCount);

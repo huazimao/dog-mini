@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
  * Paceage:com.kingmao.dog.appointment.cacha
  * Description:
  * Date:2019/2/22
- * Author: 伊秦轩
+ * Author: KingMao
  **/
 @Component
 public class SysCacha {

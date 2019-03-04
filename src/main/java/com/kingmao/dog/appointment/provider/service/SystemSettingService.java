@@ -9,7 +9,7 @@ import java.util.Date;
  * Paceage:com.kingmao.dog.appointment.provider.service
  * Description:
  * Date:2019/2/21
- * Author: 伊秦轩
+ * Author: KingMao
  **/
 public interface SystemSettingService {
     boolean insertSysSetting(SystemSetting systemSetting);

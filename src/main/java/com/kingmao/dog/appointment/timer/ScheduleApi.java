@@ -13,7 +13,7 @@ import java.util.Date;
  * Description:
  *  计算店铺能效与当前剩余时间
  * Date:2019/2/22
- * Author: 伊秦轩
+ * Author: KingMao
  **/
 @Component
 public class ScheduleApi {

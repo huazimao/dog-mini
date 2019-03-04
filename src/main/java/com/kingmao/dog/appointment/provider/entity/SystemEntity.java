@@ -6,7 +6,7 @@ import com.kingmao.dog.appointment.provider.model.SystemSetting;
  * Paceage:com.kingmao.dog.appointment.provider
  * Description:
  * Date:2019/2/25
- * Author: 伊秦轩
+ * Author: KingMao
  **/
 public class SystemEntity extends SystemSetting {
     private Integer totalTime;   //总工作时间  早9晚9 = 12
