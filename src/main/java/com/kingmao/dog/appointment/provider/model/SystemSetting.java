@@ -27,11 +27,11 @@ public class SystemSetting {
 
     private Date submitTime;
 
-    private Short isAppTow;
+    private Integer isAppTow;
 
-    private Short switchStatue;
+    private Integer switchStatue;
 
-    private Short enabled;
+    private Integer enabled;
 
     public Integer getId() {
         return id;
@@ -129,27 +129,27 @@ public class SystemSetting {
         this.submitTime = submitTime;
     }
 
-    public Short getIsAppTow() {
+    public Integer getIsAppTow() {
         return isAppTow;
     }
 
-    public void setIsAppTow(Short isAppTow) {
+    public void setIsAppTow(Integer isAppTow) {
         this.isAppTow = isAppTow;
     }
 
-    public Short getSwitchStatue() {
+    public Integer getSwitchStatue() {
         return switchStatue;
     }
 
-    public void setSwitchStatue(Short switchStatue) {
+    public void setSwitchStatue(Integer switchStatue) {
         this.switchStatue = switchStatue;
     }
 
-    public Short getEnabled() {
+    public Integer getEnabled() {
         return enabled;
     }
 
-    public void setEnabled(Short enabled) {
+    public void setEnabled(Integer enabled) {
         this.enabled = enabled;
     }
 

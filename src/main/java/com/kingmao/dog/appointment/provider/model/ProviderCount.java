@@ -15,11 +15,11 @@ public class ProviderCount {
 
     private Date workTime;
 
-    private Short modelStatue;
+    private Integer modelStatue;
 
     private String dtype;
 
-    private Short enabled;
+    private Integer enabled;
 
     public Integer getId() {
         return id;
@@ -69,11 +69,11 @@ public class ProviderCount {
         this.workTime = workTime;
     }
 
-    public Short getModelStatue() {
+    public Integer getModelStatue() {
         return modelStatue;
     }
 
-    public void setModelStatue(Short modelStatue) {
+    public void setModelStatue(Integer modelStatue) {
         this.modelStatue = modelStatue;
     }
 
@@ -85,11 +85,11 @@ public class ProviderCount {
         this.dtype = dtype;
     }
 
-    public Short getEnabled() {
+    public Integer getEnabled() {
         return enabled;
     }
 
-    public void setEnabled(Short enabled) {
+    public void setEnabled(Integer enabled) {
         this.enabled = enabled;
     }
 

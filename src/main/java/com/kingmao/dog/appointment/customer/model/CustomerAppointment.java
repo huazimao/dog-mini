@@ -20,13 +20,13 @@ public class CustomerAppointment {
 
     private String address;
 
-    private Short ispickup;
+    private Integer ispickup;
 
     private Date oppointmentTime;
 
     private Date countFinishedTime;
 
-    private Short appointmentState;
+    private Integer appointmentState;
 
     private Integer consumeTime;
 
@@ -110,11 +110,11 @@ public class CustomerAppointment {
         this.address = address;
     }
 
-    public Short getIspickup() {
+    public Integer getIspickup() {
         return ispickup;
     }
 
-    public void setIspickup(Short ispickup) {
+    public void setIspickup(Integer ispickup) {
         this.ispickup = ispickup;
     }
 
@@ -134,11 +134,11 @@ public class CustomerAppointment {
         this.countFinishedTime = countFinishedTime;
     }
 
-    public Short getAppointmentState() {
+    public Integer getAppointmentState() {
         return appointmentState;
     }
 
-    public void setAppointmentState(Short appointmentState) {
+    public void setAppointmentState(Integer appointmentState) {
         this.appointmentState = appointmentState;
     }
 

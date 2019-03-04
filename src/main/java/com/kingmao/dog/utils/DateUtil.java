@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -41,6 +42,35 @@ public class DateUtil {
             e.printStackTrace();
         }
         return date1;
+    }
+
+    /**
+     * 返回时间，只包含年月日 2019-02-26
+     * @param date
+     * @return
+     */
+    public static Date getYMD2(Date date){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String str = sdf.format(new Date());
+        Date date1 = null;
+        try {
+            date1 =  sdf.parse(str);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date1;
+    }
+
+    public static Date getDatePlus(Date date){
+        //计算两天后的时间
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar c = Calendar.getInstance();
+
+        c.setTime(date);
+
+        c.add(Calendar.DATE, 2);
+
+        return c.getTime();
     }
 
     /**
@@ -164,7 +194,7 @@ public class DateUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(get12(test2()));
+        System.out.println(getDatePlus(getYMD2(new Date())));
     }
 
     /**

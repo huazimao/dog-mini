@@ -14,9 +14,9 @@
     <result column="skiller_factor" jdbcType="DOUBLE" property="skillerFactor" />
     <result column="work_time" jdbcType="TIMESTAMP" property="workTime" />
     <result column="submit_time" jdbcType="TIMESTAMP" property="submitTime" />
-    <result column="is_app_tow" jdbcType="SMALLINT" property="isAppTow" />
-    <result column="switch_statue" jdbcType="SMALLINT" property="switchStatue" />
-    <result column="enabled" jdbcType="SMALLINT" property="enabled" />
+    <result column="is_app_tow" jdbcType="INTEGER" property="isAppTow" />
+    <result column="switch_statue" jdbcType="INTEGER" property="switchStatue" />
+    <result column="enabled" jdbcType="INTEGER" property="enabled" />
   </resultMap>
   <sql id="Base_Column_List">
     id, shop_id, service_start_time, service_end_time, timeout, limite, trainee_num,
@@ -111,13 +111,13 @@
                 #{submitTime,jdbcType=TIMESTAMP},
             </if>
             <if test="isAppTow != null">
-                #{isAppTow,jdbcType=SMALLINT},
+                #{isAppTow,jdbcType=INTEGER},
             </if>
             <if test="switchStatue != null">
-                #{switchStatue,jdbcType=SMALLINT},
+                #{switchStatue,jdbcType=INTEGER},
             </if>
             <if test="enabled != null">
-                #{enabled,jdbcType=SMALLINT},
+                #{enabled,jdbcType=INTEGER},
             </if>
         </trim>
     </insert>
@@ -159,13 +159,13 @@
         submit_time = #{submitTime,jdbcType=TIMESTAMP},
       </if>
       <if test="isAppTow != null">
-        is_app_tow = #{isAppTow,jdbcType=SMALLINT},
+        is_app_tow = #{isAppTow,jdbcType=INTEGER},
       </if>
       <if test="switchStatue != null">
-        switch_statue = #{switchStatue,jdbcType=SMALLINT},
+        switch_statue = #{switchStatue,jdbcType=INTEGER},
       </if>
       <if test="enabled != null">
-        enabled = #{enabled,jdbcType=SMALLINT},
+        enabled = #{enabled,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -173,7 +173,9 @@
 
   <select id="getSySettingByShopIdAndTime"  resultMap="BaseResultMap">
     select
-    <include refid="Base_Column_List" />
+    shop_id, service_start_time, service_end_time, timeout, limite, trainee_num,
+    trainee_factor, skiller_num, skiller_factor, work_time, submit_time, is_app_tow,
+    switch_statue, enabled
     from system_setting
     where shop_id = #{shopId,jdbcType=INTEGER} and work_time = #{workTime,jdbcType=TIMESTAMP}
   </select>

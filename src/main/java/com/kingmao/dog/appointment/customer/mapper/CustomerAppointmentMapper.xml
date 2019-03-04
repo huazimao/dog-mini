@@ -10,10 +10,10 @@
     <result column="openid" jdbcType="VARCHAR" property="openid" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="address" jdbcType="VARCHAR" property="address" />
-    <result column="ispickup" jdbcType="SMALLINT" property="ispickup" />
+    <result column="ispickup" jdbcType="INTEGER" property="ispickup" />
     <result column="oppointment_time" jdbcType="TIMESTAMP" property="oppointmentTime" />
     <result column="count_finished_time" jdbcType="TIMESTAMP" property="countFinishedTime" />
-    <result column="appointment_state" jdbcType="SMALLINT" property="appointmentState" />
+    <result column="appointment_state" jdbcType="INTEGER" property="appointmentState" />
     <result column="consume_time" jdbcType="INTEGER" property="consumeTime" />
     <result column="dtype" jdbcType="VARCHAR" property="dtype" />
     <result column="acc_finished_time" jdbcType="TIMESTAMP" property="accFinishedTime" />
@@ -56,9 +56,9 @@
     acc_finished_time, enabled)
     values (#{appointmentId,jdbcType=INTEGER}, #{shopId,jdbcType=VARCHAR}, #{workTime,jdbcType=TIMESTAMP},
     #{serviceEndTime,jdbcType=TIMESTAMP}, #{serviceStartTime,jdbcType=TIMESTAMP}, #{openid,jdbcType=VARCHAR},
-    #{phone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{ispickup,jdbcType=SMALLINT},
+    #{phone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{ispickup,jdbcType=INTEGER},
     #{oppointmentTime,jdbcType=TIMESTAMP}, #{countFinishedTime,jdbcType=TIMESTAMP},
-    #{appointmentState,jdbcType=SMALLINT}, #{consumeTime,jdbcType=INTEGER}, #{dtype,jdbcType=VARCHAR},
+    #{appointmentState,jdbcType=INTEGER}, #{consumeTime,jdbcType=INTEGER}, #{dtype,jdbcType=VARCHAR},
     #{accFinishedTime,jdbcType=TIMESTAMP}, #{enabled,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.kingmao.dog.appointment.test.model.CustomerAppointment">
@@ -139,7 +139,7 @@
         #{address,jdbcType=VARCHAR},
       </if>
       <if test="ispickup != null">
-        #{ispickup,jdbcType=SMALLINT},
+        #{ispickup,jdbcType=INTEGER},
       </if>
       <if test="oppointmentTime != null">
         #{oppointmentTime,jdbcType=TIMESTAMP},
@@ -148,7 +148,7 @@
         #{countFinishedTime,jdbcType=TIMESTAMP},
       </if>
       <if test="appointmentState != null">
-        #{appointmentState,jdbcType=SMALLINT},
+        #{appointmentState,jdbcType=INTEGER},
       </if>
       <if test="consumeTime != null">
         #{consumeTime,jdbcType=INTEGER},
@@ -189,7 +189,7 @@
         address = #{address,jdbcType=VARCHAR},
       </if>
       <if test="ispickup != null">
-        ispickup = #{ispickup,jdbcType=SMALLINT},
+        ispickup = #{ispickup,jdbcType=INTEGER},
       </if>
       <if test="oppointmentTime != null">
         oppointment_time = #{oppointmentTime,jdbcType=TIMESTAMP},
@@ -198,7 +198,7 @@
         count_finished_time = #{countFinishedTime,jdbcType=TIMESTAMP},
       </if>
       <if test="appointmentState != null">
-        appointment_state = #{appointmentState,jdbcType=SMALLINT},
+        appointment_state = #{appointmentState,jdbcType=INTEGER},
       </if>
       <if test="consumeTime != null">
         consume_time = #{consumeTime,jdbcType=INTEGER},
@@ -224,10 +224,10 @@
       openid = #{openid,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
       address = #{address,jdbcType=VARCHAR},
-      ispickup = #{ispickup,jdbcType=SMALLINT},
+      ispickup = #{ispickup,jdbcType=INTEGER},
       oppointment_time = #{oppointmentTime,jdbcType=TIMESTAMP},
       count_finished_time = #{countFinishedTime,jdbcType=TIMESTAMP},
-      appointment_state = #{appointmentState,jdbcType=SMALLINT},
+      appointment_state = #{appointmentState,jdbcType=INTEGER},
       consume_time = #{consumeTime,jdbcType=INTEGER},
       dtype = #{dtype,jdbcType=VARCHAR},
       acc_finished_time = #{accFinishedTime,jdbcType=TIMESTAMP},

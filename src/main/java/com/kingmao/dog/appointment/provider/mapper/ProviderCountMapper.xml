@@ -8,9 +8,9 @@
     <result column="earn_time" jdbcType="INTEGER" property="earnTime" />
     <result column="consume_time" jdbcType="INTEGER" property="consumeTime" />
     <result column="work_time" jdbcType="TIMESTAMP" property="workTime" />
-    <result column="model_statue" jdbcType="SMALLINT" property="modelStatue" />
+    <result column="model_statue" jdbcType="INTEGER" property="modelStatue" />
     <result column="dtype" jdbcType="VARCHAR" property="dtype" />
-    <result column="enabled" jdbcType="SMALLINT" property="enabled" />
+    <result column="enabled" jdbcType="INTEGER" property="enabled" />
   </resultMap>
   <sql id="Base_Column_List">
     id, shop_id, total_time, earn_time, consume_time, work_time, model_statue, dtype,
@@ -83,13 +83,13 @@
         #{workTime,jdbcType=TIMESTAMP},
       </if>
       <if test="modelStatue != null">
-        #{modelStatue,jdbcType=SMALLINT},
+        #{modelStatue,jdbcType=INTEGER},
       </if>
       <if test="dtype != null">
         #{dtype,jdbcType=VARCHAR},
       </if>
       <if test="enabled != null">
-        #{enabled,jdbcType=SMALLINT},
+        #{enabled,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
