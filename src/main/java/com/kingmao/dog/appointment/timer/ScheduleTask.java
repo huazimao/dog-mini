@@ -16,10 +16,20 @@ import java.util.Date;
 public class ScheduleTask{
     @Autowired
     private ScheduleApi scheduleApi;
+    @Autowired
+    private AccessTokenApi accessTokenApi;
+
+
     @Scheduled(cron = "0 0 0 * * ?")
     public void firstScheduledTasks(){
         System.out.println("定时任务执行，现在时间是 : "+ new Date());
         scheduleApi.getSchedul();
+    }
+
+    //项目启动后执行一次，每隔1h执行
+    @Scheduled(fixedRate = 60 * 1000 * 60)
+    public void secondScheduledTasks(){
+        accessTokenApi.getToken();
     }
 
 }

@@ -20,5 +20,8 @@ public interface CustomerService {
     //查询该客户在某天某店的预约详情
     CustomerAppointment getAppInfo(CustomerAppointment customerAppointment);
 
+    //查询某天某店服务详情
     List<CustomerAppointment> showAppointmentByTimeAndShop(String shopId, Date workTime);
+
+    boolean cancelOrDoneApponitment(CustomerAppointment customerAppointment);
 }

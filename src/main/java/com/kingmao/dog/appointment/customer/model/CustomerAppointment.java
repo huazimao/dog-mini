@@ -36,7 +36,17 @@ public class CustomerAppointment {
 
     private Integer enabled;
 
+    private String formId;
+
     private List<PetAppointment> petLists;
+
+    public String getFormId() {
+        return formId;
+    }
+
+    public void setFormId(String formId) {
+        this.formId = formId;
+    }
 
     public List<PetAppointment> getPetLists() {
         return petLists;

@@ -71,7 +71,12 @@
             <version>2.4</version>
             <classifier>jdk15</classifier>
         </dependency>
-		<!--jstl标签依赖的jar包end -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.2</version>
+        </dependency>
+        <!--jstl标签依赖的jar包end -->
 	</dependencies>
 
 	<build>

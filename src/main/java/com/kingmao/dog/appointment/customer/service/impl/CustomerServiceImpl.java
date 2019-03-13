@@ -141,4 +141,14 @@ public class CustomerServiceImpl implements CustomerService {
     public List<CustomerAppointment> showAppointmentByTimeAndShop(String shopId, Date workTime) {
         return customerAppointmentMapper.showAppointmentByTimeAndShop(shopId, workTime);
     }
+
+    /**
+     * 修改预约（修改，取消，完成预约都是这个接口）
+     * @param customerAppointment
+     * @return
+     */
+    @Override
+    public boolean cancelOrDoneApponitment(CustomerAppointment customerAppointment) {
+        return customerAppointmentMapper.updateByPrimaryKeySelective(customerAppointment) > 0;
+    }
 }

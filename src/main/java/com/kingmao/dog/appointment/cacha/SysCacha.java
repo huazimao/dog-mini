@@ -20,4 +20,14 @@ public class SysCacha {
     public static void setSystemEntity(SystemEntity systemEntity) {
         SysCacha.systemEntity = systemEntity;
     }
+
+    private static String accessToken = null;
+
+    public static void refreshToken(String token){
+        accessToken = token;
+    }
+
+    public static String getAccessToken(){
+        return accessToken;
+    }
 }

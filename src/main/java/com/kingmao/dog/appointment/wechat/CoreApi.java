@@ -1,6 +1,10 @@
 package com.kingmao.dog.appointment.wechat;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.kingmao.dog.appointment.cacha.SysCacha;
 import com.kingmao.dog.utils.CoreUrl;
 import com.kingmao.dog.utils.HttpUtil;
 import net.sf.json.JSONObject;
@@ -52,5 +56,28 @@ public class CoreApi {
             log.error("请求小程序API发生错误", e);
         }
         return gson.toJson(map);
+    }
+
+    /**
+     * 向客户发送模板消息
+     * @param textMsg
+     * @return
+     */
+    public static String sendTemplateMessage(String textMsg){
+        String jsonStr = "";
+        try {
+            jsonStr = HttpUtil.executeJsonParamHttpPost(CoreUrl.sendTemplateMessageURL() + SysCacha.getAccessToken(), textMsg);
+            JsonParser jsonParser = new JsonParser();
+            JsonObject jsonObject = jsonParser.parse(jsonStr).getAsJsonObject();
+            //System.out.println(new GsonBuilder().serializeNulls().setPrettyPrinting().create().toJson(jsonObject));
+            if (jsonObject.get("errcode").getAsString().equals("0")) {
+                log.info("发送模板消息成功！：");
+                return "success";
+            }
+        } catch (Exception e) {
+
+            log.info("调取微信接口向用户发送模板消息出错：" + jsonStr);
+        }
+        return "fail";
     }
 }

@@ -2,15 +2,18 @@ package com.kingmao.dog.appointment.customer.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.kingmao.dog.appointment.cacha.SysCacha;
 import com.kingmao.dog.appointment.customer.model.CustomerAppointment;
 import com.kingmao.dog.appointment.customer.service.CustomerService;
 import com.kingmao.dog.appointment.provider.model.ProviderCount;
 import com.kingmao.dog.appointment.provider.model.SystemSetting;
 import com.kingmao.dog.appointment.provider.service.ProviderService;
 import com.kingmao.dog.appointment.provider.service.SystemSettingService;
+import com.kingmao.dog.appointment.wechat.CoreApi;
 import com.kingmao.dog.utils.DateUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,6 +39,8 @@ public class CustomerController {
     private ProviderService providerService;
     @Autowired
     private SystemSettingService systemSettingService;
+    @Value("${mini.template_id}")
+    private String templateId;
 
     /**
      * 进入预约页面，展示详情
@@ -145,5 +150,48 @@ public class CustomerController {
     public String go2Index(){
         log.info("进入到店铺选择页");
         return "customer/index";
+    }
+
+    /**
+     * 客户取消预约/商家完成服务
+     * @param customerAppointment
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/customer/cancelOrDoneApponitment.do")
+    public String cancelOrDoneApponitment(@RequestBody CustomerAppointment customerAppointment){
+        Gson gson = new Gson();
+        String ret = "fail";
+        Map<String, Object> map = new HashMap<String, Object>();
+        boolean flag = customerService.cancelOrDoneApponitment(customerAppointment);
+        if (customerAppointment.getAppointmentState() == 3 && flag) {
+            map.put("type", 1);
+        } else {
+            map.put("type", 0);
+        }
+
+        //完成洗护，发送模板消息
+        if (customerAppointment.getAppointmentState() == 2 && flag) {
+
+            ret = CoreApi.sendTemplateMessage(dealMsg(customerAppointment));
+            if (ret.equals("success")) {
+                map.put("type", 1);
+            } else {
+                map.put("type", 0);
+            }
+        } else {
+            map.put("type", 0);
+        }
+
+
+        return gson.toJson(map);
+    }
+
+    public String dealMsg(CustomerAppointment customerAppointment){
+
+        String msg = "{\"access_token\":"+ SysCacha.getAccessToken()+",\"touser\":"+customerAppointment.getOpenid()+"," +
+                "\"template_id\":"+templateId+",\"form_id\":"+customerAppointment.getFormId()+"}";
+
+        return msg;
     }
 }

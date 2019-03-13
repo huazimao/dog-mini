@@ -1,6 +1,5 @@
 package com.kingmao.dog.appointment.timer;
 
-import com.kingmao.dog.appointment.cacha.SysCacha;
 import com.kingmao.dog.appointment.provider.model.SystemSetting;
 import com.kingmao.dog.appointment.provider.service.SystemSettingService;
 import com.kingmao.dog.utils.DateUtil;
@@ -8,8 +7,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 /**

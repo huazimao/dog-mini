@@ -1,10 +1,20 @@
 package com.kingmao.dog.utils;
 
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.UUID;
 
 /**
@@ -93,6 +103,33 @@ public class HttpUtil {
             throw new RuntimeException("调用api接口发生 错误", e);
         }
         return reslut;
+    }
+
+    public static String executeJsonParamHttpPost(String url, String textMsg) throws Exception {
+        CloseableHttpClient httpclient = HttpClients.createDefault();
+        String result = null;
+
+        try {
+            HttpPost httpPost = new HttpPost(url);
+            RequestConfig requestConfig = RequestConfig.custom()
+                    .setConnectTimeout(10000).setConnectionRequestTimeout(10000)
+                    .setSocketTimeout(30000).build();
+            httpPost.setConfig(requestConfig);
+            StringEntity stringEntity = new StringEntity(textMsg, ContentType.APPLICATION_JSON);
+            httpPost.setEntity(stringEntity);
+            CloseableHttpResponse response = httpclient.execute(httpPost);
+
+            try {
+                result = EntityUtils.toString(response.getEntity(), Charset.forName("UTF-8"));
+                httpPost.abort();
+            } finally {
+                response.close();
+            }
+        } finally {
+            httpclient.close();
+        }
+
+        return result;
     }
 
     public static byte[] byteMerger(byte[] byte_1, byte[] byte_2, int len) {
