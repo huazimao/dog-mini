@@ -2,6 +2,7 @@ package com.kingmao.dog.appointment.customer.service;
 
 import com.kingmao.dog.appointment.customer.model.CustomerAppointment;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,4 +19,6 @@ public interface CustomerService {
 
     //查询该客户在某天某店的预约详情
     CustomerAppointment getAppInfo(CustomerAppointment customerAppointment);
+
+    List<CustomerAppointment> showAppointmentByTimeAndShop(String shopId, Date workTime);
 }

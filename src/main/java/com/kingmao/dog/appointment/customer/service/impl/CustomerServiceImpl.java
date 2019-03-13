@@ -11,6 +11,7 @@ import com.kingmao.dog.utils.DateUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -22,6 +23,7 @@ import java.util.List;
  * Author: KingMao
  **/
 @Service
+@Transactional
 public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private CustomerAppointmentMapper customerAppointmentMapper;
@@ -85,7 +87,8 @@ public class CustomerServiceImpl implements CustomerService {
                 ProviderCount providerCount2 = providerCountMapper.getPorivderCountInfoNoType(customerAppointment.getShopId(),customerAppointment.getWorkTime());
                 providerCount2.setWorkTime(customerAppointment.getWorkTime());
                 providerCount2.setShopId(customerAppointment.getShopId());
-                providerCount2.setConsumeTime(consumeTime); //新建p表时，只会有一个consume，所以只能从这里拿就可以了
+                //新建p表时，只会有一个consume，所以从这里拿就可以了
+                providerCount2.setConsumeTime(consumeTime);
                 providerCount2.setDtype(customerAppointment.getDtype());
                 providerCount2.setEarnTime(providerCount2.getEarnTime());
                 flag = providerCountMapper.insertSelective(providerCount2) > 0;
@@ -132,5 +135,10 @@ public class CustomerServiceImpl implements CustomerService {
         }
 
         return consumeTime;
+    }
+
+    @Override
+    public List<CustomerAppointment> showAppointmentByTimeAndShop(String shopId, Date workTime) {
+        return customerAppointmentMapper.showAppointmentByTimeAndShop(shopId, workTime);
     }
 }
