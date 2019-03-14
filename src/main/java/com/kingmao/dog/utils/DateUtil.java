@@ -45,7 +45,7 @@ public class DateUtil {
     }
 
     /**
-     * 返回时间，只包含年月日 2019-02-26
+     * 返回时间，2019-02-26 10:36
      * @param date
      * @return
      */
@@ -59,6 +59,17 @@ public class DateUtil {
             e.printStackTrace();
         }
         return date1;
+    }
+
+    /**
+     * 返回字符串类型日期，
+     * @param date
+     * @return
+     */
+    public static String date2Str(Date date){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        String str = sdf.format(date);
+        return str;
     }
 
     public static Date getDatePlus(Date date){
@@ -194,7 +205,8 @@ public class DateUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(getDatePlus(getYMD2(new Date())));
+        String accTime = DateUtil.date2Str(DateUtil.getYMD(new Date()));
+        System.out.println(accTime);
     }
 
     /**

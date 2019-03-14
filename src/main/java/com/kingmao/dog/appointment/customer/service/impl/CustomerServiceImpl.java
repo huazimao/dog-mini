@@ -128,6 +128,14 @@ public class CustomerServiceImpl implements CustomerService {
                     } else if (pet.getSize().equals("large")) {
                         consumeTime += 120;
                     }
+                }else if (pet.getKindService().equals("spa")) {
+                    if (pet.getSize().equals("mini")) {
+                        consumeTime += 90;
+                    } else if (pet.getSize().equals("normal")) {
+                        consumeTime += 120;
+                    } else if (pet.getSize().equals("large")) {
+                        consumeTime += 150;
+                    }
                 } else if (pet.getKindService().equals("modeling")) {
                     consumeTime += 120;
                 }

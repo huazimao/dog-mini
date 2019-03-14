@@ -1,6 +1,8 @@
 package com.kingmao.dog.appointment.cacha;
 
 import com.kingmao.dog.appointment.provider.entity.SystemEntity;
+import com.kingmao.dog.appointment.timer.AccessTokenApi;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 /**
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Component;
  **/
 @Component
 public class SysCacha {
+    private static Logger log = Logger.getLogger(SysCacha.class);
     private static SystemEntity systemEntity;
 
     public static SystemEntity getSystemEntity() {
@@ -25,6 +28,7 @@ public class SysCacha {
 
     public static void refreshToken(String token){
         accessToken = token;
+        log.info("token刷新成功！");
     }
 
     public static String getAccessToken(){

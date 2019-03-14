@@ -47,7 +47,7 @@
     delete from customer_appointment
     where appointment_id = #{appointmentId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.kingmao.dog.appointment.test.model.CustomerAppointment">
+  <insert id="insert" parameterType="com.kingmao.dog.appointment.customer.model.CustomerAppointment">
     insert into customer_appointment (appointment_id, shop_id, work_time,
     service_end_time, service_start_time, openid,
     phone, address, ispickup,
@@ -61,7 +61,7 @@
     #{appointmentState,jdbcType=INTEGER}, #{consumeTime,jdbcType=INTEGER}, #{dtype,jdbcType=VARCHAR},
     #{accFinishedTime,jdbcType=TIMESTAMP}, #{enabled,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.kingmao.dog.appointment.test.model.CustomerAppointment">
+  <insert id="insertSelective" parameterType="com.kingmao.dog.appointment.customer.model.CustomerAppointment">
     insert into customer_appointment
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="appointmentId != null">
@@ -164,7 +164,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.kingmao.dog.appointment.test.model.CustomerAppointment">
+  <update id="updateByPrimaryKeySelective" parameterType="com.kingmao.dog.appointment.customer.model.CustomerAppointment">
     update customer_appointment
     <set>
       <if test="shopId != null">
@@ -215,7 +215,7 @@
     </set>
     where appointment_id = #{appointmentId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.kingmao.dog.appointment.test.model.CustomerAppointment">
+  <update id="updateByPrimaryKey" parameterType="com.kingmao.dog.appointment.customer.model.CustomerAppointment">
     update customer_appointment
     set shop_id = #{shopId,jdbcType=VARCHAR},
       work_time = #{workTime,jdbcType=TIMESTAMP},
@@ -248,10 +248,8 @@
   </select>
 
     <select id="showAppointmentByTimeAndShop" resultMap="BaseResultMap">
-        SELECT
-        <include refid="Base_Column_List"/>
-        FROM customer_appointment
-        WHERE shop_id = #{shopId,jdbcType=VARCHAR} and work_time = #{workTime,jdbcType=TIMESTAMP}
-        order by appoint
+       SELECT c.*,p.*
+        FROM customer_appointment c LEFT JOIN pet_appointment p ON c.appointment_id = p.appointment_id
+        order by oppointment_time
         </select>
 </mapper>

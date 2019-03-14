@@ -31,6 +31,7 @@ import java.util.Map;
  * Author: KingMao
  **/
 @Controller
+@RequestMapping("/customer/")
 public class CustomerController {
     private static Logger log = Logger.getLogger(CustomerController.class);
     @Autowired
@@ -52,7 +53,7 @@ public class CustomerController {
      * @param customerAppointment
      * @return
      */
-    @RequestMapping("/customer/appointmentPage.do")
+    @RequestMapping("appointmentPage.do")
     public String appointmentPage(HttpServletRequest request, CustomerAppointment customerAppointment) {
         log.info("进入到客户预约界面，收到参数为：" + "shopId=" + customerAppointment.getShopId() + "workTime=" + customerAppointment.getWorkTime());
         String shopId = customerAppointment.getShopId();
@@ -121,7 +122,7 @@ public class CustomerController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/customer/appointment.do" ,produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "appointment.do" ,produces = {"application/json;charset=UTF-8"})
     public String getAppointment(@RequestBody CustomerAppointment customerAppointment){
         log.info("客户预约接收到的参数为：" + customerAppointment.toString());
         customerAppointment.setOpenid("aaaaaaa");
@@ -153,7 +154,7 @@ public class CustomerController {
     }
 
     /**
-     * 客户取消预约/商家完成服务
+     * 客户取消预约
      * @param customerAppointment
      * @return
      */
@@ -164,34 +165,12 @@ public class CustomerController {
         String ret = "fail";
         Map<String, Object> map = new HashMap<String, Object>();
         boolean flag = customerService.cancelOrDoneApponitment(customerAppointment);
-        if (customerAppointment.getAppointmentState() == 3 && flag) {
+        if (flag) {
             map.put("type", 1);
         } else {
             map.put("type", 0);
         }
 
-        //完成洗护，发送模板消息
-        if (customerAppointment.getAppointmentState() == 2 && flag) {
-
-            ret = CoreApi.sendTemplateMessage(dealMsg(customerAppointment));
-            if (ret.equals("success")) {
-                map.put("type", 1);
-            } else {
-                map.put("type", 0);
-            }
-        } else {
-            map.put("type", 0);
-        }
-
-
         return gson.toJson(map);
-    }
-
-    public String dealMsg(CustomerAppointment customerAppointment){
-
-        String msg = "{\"access_token\":"+ SysCacha.getAccessToken()+",\"touser\":"+customerAppointment.getOpenid()+"," +
-                "\"template_id\":"+templateId+",\"form_id\":"+customerAppointment.getFormId()+"}";
-
-        return msg;
     }
 }
