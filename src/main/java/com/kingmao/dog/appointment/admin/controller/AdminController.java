@@ -65,14 +65,14 @@ public class AdminController {
     }
 
     /**
-     * 普通员工登陆中间页
+     * 管理员工登陆中间页
      * 管理员登陆后跳转选择店铺页面
      * @param request
      * @return
      */
     @RequestMapping("power.do")
     public String power(HttpServletRequest request){
-        log.info("进入到normal后台");
+        log.info("进入到powerl后台");
         return "/provider/index";
     }
 }

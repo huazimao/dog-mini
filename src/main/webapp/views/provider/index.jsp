@@ -28,40 +28,17 @@
     </a>
     <a class="weui-cell weui-cell_access" href="javascript:;"onclick="o3()">
         <div class="weui-cell__bd">
-            <p>北滘店</p>
+            <p>容桂店</p>
         </div>
         <div class="weui-cell__ft">
         </div>
     </a>
 </div>
+<script type="text/javascript" src="../../js/jquery-2.1.1.min.js"></script>
 <script src="../../js/zepto.min.js"></script>
 <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script src="https://res.wx.qq.com/open/libs/weuijs/1.0.0/weui.min.js"></script>
 <script src="../../js/example.js"></script>
-<script>
-    function o1() {
-       window.location.href= getRootPath_dc() + "/provider/showAppointmentByTimeAndShop.do?shopId=lj"
-    }
-
-    function o2() {
-        window.location.href= getRootPath_dc() + "/provider/showAppointmentByTimeAndShop.do?shopId=ls"
-    }
-
-    function o3() {
-        window.location.href= getRootPath_dc() + "/provider/showAppointmentByTimeAndShop.do?shopId=bj"
-    }
-
-
-    function getRootPath_dc() {
-        var pathName = window.location.pathname.substring(1);
-        var webName = pathName == '' ? '' : pathName.substring(0, pathName.indexOf('/'));
-        if (webName == "") {
-            return window.location.protocol + '//' + window.location.host;
-        }
-        else {
-            return window.location.protocol + '//' + window.location.host + '/' + webName;
-        }
-    }
-</script>
 </body>
+<script src="../js/login/t.js"></script>
 </html>

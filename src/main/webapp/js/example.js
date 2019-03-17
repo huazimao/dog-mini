@@ -175,10 +175,10 @@ $(function () {
     function preload(){
         $(window).on("load", function(){
             var imgList = [
-                "./images/layers/content.png",
-                "./images/layers/navigation.png",
-                "./images/layers/popout.png",
-                "./images/layers/transparent.gif"
+                "../images/layers/content.png",
+                "../images/layers/navigation.png",
+                "../images/layers/popout.png",
+                "../images/layers/transparent.gif"
             ];
             for (var i = 0, len = imgList.length; i < len; ++i) {
                 new Image().src = imgList[i];
@@ -249,44 +249,44 @@ $(function () {
             });
         });
     }
-    function setPageManager(){
-        var pages = {}, tpls = $('script[type="text/html"]');
-        var winH = $(window).height();
-
-        for (var i = 0, len = tpls.length; i < len; ++i) {
-            var tpl = tpls[i], name = tpl.id.replace(/tpl_/, '');
-            pages[name] = {
-                name: name,
-                url: '#' + name,
-                template: '#' + tpl.id
-            };
-        }
-        pages.home.url = '#';
-
-        for (var page in pages) {
-            pageManager.push(pages[page]);
-        }
-        pageManager
-            .setPageAppend(function($html){
-                var $foot = $html.find('.page__ft');
-                if($foot.length < 1) return;
-
-                if($foot.position().top + $foot.height() < winH){
-                    $foot.addClass('j_bottom');
-                }else{
-                    $foot.removeClass('j_bottom');
-                }
-            })
-            .setDefault('home')
-            .init();
-    }
+    // function setPageManager(){
+    //     var pages = {}, tpls = $('script[type="text/html"]');
+    //     var winH = $(window).height();
+    //
+    //     for (var i = 0, len = tpls.length; i < len; ++i) {
+    //         var tpl = tpls[i], name = tpl.id.replace(/tpl_/, '');
+    //         pages[name] = {
+    //             name: name,
+    //             url: '#' + name,
+    //             template: '#' + tpl.id
+    //         };
+    //     }
+    //     pages.home.url = '#';
+    //
+    //     for (var page in pages) {
+    //         pageManager.push(pages[page]);
+    //     }
+    //     pageManager
+    //         .setPageAppend(function($html){
+    //             var $foot = $html.find('.page__ft');
+    //             if($foot.length < 1) return;
+    //
+    //             if($foot.position().top + $foot.height() < winH){
+    //                 $foot.addClass('j_bottom');
+    //             }else{
+    //                 $foot.removeClass('j_bottom');
+    //             }
+    //         })
+    //         .setDefault('home')
+    //         .init();
+    // }
 
     function init(){
         preload();
         fastClick();
         androidInputBugFix();
         setJSAPI();
-        setPageManager();
+        //setPageManager();
 
         window.pageManager = pageManager;
         window.home = function(){

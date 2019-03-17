@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,8 +46,9 @@ public class ProviderController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "showAppointmentByTimeAndShop.do")
+    @RequestMapping(value = "showAppointmentByTimeAndShop.do", method = {RequestMethod.GET,RequestMethod.POST})
     public String showAppointmentByTimeAndShop(HttpServletRequest request,String shopId, Date workTime){
+        log.info("进入到商家后台");
         Gson gson = new Gson();
         Map map = new HashMap();
         if (null == workTime) {

@@ -1,6 +1,7 @@
 package com.kingmao.dog.appointment.interceptor;
 
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -13,7 +14,8 @@ import javax.servlet.http.HttpServletResponse;
  * Date:2019/3/15
  * Author: KingMao
  **/
-public class SysUserInterceptor implements HandlerInterceptor {
+@Component
+public  class SysUserInterceptor implements HandlerInterceptor {
     private static Logger log = Logger.getLogger(SysUserInterceptor.class);
 
     @Override

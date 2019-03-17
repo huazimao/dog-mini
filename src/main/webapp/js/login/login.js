@@ -26,10 +26,10 @@ $(function () {
                 }else if (data.type == 1){
                     window.location.href = getRootPath_dc() + "/provider/showAppointmentByTimeAndShop.do";
                 }else if (data.type == 2) {
-                    //window.location.href = "index.jsp";
-                    document.queryform.action = "/provider/index.jsp";
-                    document.queryform.target="displayFrame";
-                    document.queryform.submit();
+                    window.location.href = getRootPath_dc() + "/admin/power.do";
+
+
+                }
             }
 
         });
