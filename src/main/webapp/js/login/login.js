@@ -12,8 +12,8 @@ $(function () {
         var password = $("#password").val();
 
         $.ajax({
-            type:"post",
-            url:getRootPath_dc() + "/login/login",
+            type:"get",
+            url:getRootPath_dc() + "/admin/login.do",
             dataType:"json",
             data:{
                 "username":username,
@@ -21,11 +21,15 @@ $(function () {
             },
             success:function (data) {
                 console.log(data);
-                if (data.type == 1) {
-                    alert("ok");
-                }else {
-                    alert("fail");
-                }
+                if (data.type == 0) {
+                    alert(data.msg);
+                }else if (data.type == 1){
+                    window.location.href = getRootPath_dc() + "/provider/showAppointmentByTimeAndShop.do";
+                }else if (data.type == 2) {
+                    //window.location.href = "index.jsp";
+                    document.queryform.action = "/provider/index.jsp";
+                    document.queryform.target="displayFrame";
+                    document.queryform.submit();
             }
 
         });

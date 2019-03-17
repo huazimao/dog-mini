@@ -1,10 +1,12 @@
 package com.kingmao.dog.appointment.provider.controller;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.kingmao.dog.appointment.customer.model.CustomerAppointment;
 import com.kingmao.dog.appointment.customer.service.CustomerService;
 import com.kingmao.dog.appointment.wechat.CoreApi;
 import com.kingmao.dog.utils.DateUtil;
+import com.sun.xml.internal.ws.spi.db.DatabindingException;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -42,11 +44,17 @@ public class ProviderController {
      * @param workTime
      * @return
      */
+    @ResponseBody
     @RequestMapping(value = "showAppointmentByTimeAndShop.do")
     public String showAppointmentByTimeAndShop(HttpServletRequest request,String shopId, Date workTime){
+        Gson gson = new Gson();
+        Map map = new HashMap();
+        if (null == workTime) {
+            workTime = new Date();
+        }
         List<CustomerAppointment> customerAppointmentList = customerService.showAppointmentByTimeAndShop(shopId, workTime);
-        request.setAttribute("list",customerAppointmentList);
-        return "a/a";
+        map.put("list", customerAppointmentList);
+        return gson.toJson(map);
     }
 
 
@@ -107,7 +115,7 @@ public class ProviderController {
                 "\t\t\t\"color\": \"#9b9b9b\"\n" +
                 "\t\t},\n" +
                 "\t\t\"keyword3\": {\n" +
-                "\t\t\t\"value\": "+accTime+",\n" +
+                "\t\t\t\"value\": "+new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm").create().toJson(new Date())+",\n" +
                 "\t\t\t\"color\": \"#9b9b9b\"\n" +
                 "\t\t}\n" +
                 "\t}\n" +
