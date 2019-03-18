@@ -23,7 +23,7 @@ public  class SysUserInterceptor implements HandlerInterceptor {
         log.info("-------------进入拦截器-----------");
         if (request.getSession().getAttribute("sysUser") == null) {
             log.info("-------------无权限，返回登陆页-----------");
-            response.sendRedirect(request.getContextPath() + "/admin/login");
+            response.sendRedirect(request.getContextPath() + "/index.html");
             return false;
         } else {
             log.info("-------------有权限，执行下一步-----------");
