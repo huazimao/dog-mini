@@ -27,13 +27,34 @@ $(function () {
                     window.location.href = getRootPath_dc() + "/provider/showAppointmentByTimeAndShop.do";
                 }else if (data.type == 2) {
                     window.location.href = getRootPath_dc() + "/admin/power.do";
-
-
                 }
             }
 
         });
     })
+});
+
+jQuery(document).ready(function(){
+    var username = $("#username").val();
+    var password = $("#password").val();
+    $.ajax({
+        type:"get",
+        url:getRootPath_dc() + "/admin/loginCookie.do",
+        dataType:"json",
+        data:{
+            "username":username,
+            "password":password
+        },
+        success:function (data) {
+            console.log(data);
+            if (data.type == 1){
+                window.location.href = getRootPath_dc() + "/provider/showAppointmentByTimeAndShop.do";
+            }else if (data.type == 2) {
+                window.location.href = getRootPath_dc() + "/admin/power.do";
+            }
+        }
+
+    });
 });
 
 function getRootPath_dc() {

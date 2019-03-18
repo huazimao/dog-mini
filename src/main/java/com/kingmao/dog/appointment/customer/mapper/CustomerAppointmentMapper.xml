@@ -250,6 +250,7 @@
     <select id="showAppointmentByTimeAndShop" resultMap="BaseResultMap">
        SELECT c.*,p.*
         FROM customer_appointment c LEFT JOIN pet_appointment p ON c.appointment_id = p.appointment_id
+        WHERE shop_id = #{shopId} and work_time = #{workTime}
         order by oppointment_time
         </select>
 </mapper>
