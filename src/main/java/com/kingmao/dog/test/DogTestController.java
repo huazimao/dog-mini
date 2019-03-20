@@ -12,10 +12,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
  **/
 @Controller
 public class DogTestController {
-    @ResponseBody
+
+
     @RequestMapping("/dog/test1.do")
     public String getDog(){
         System.out.println("进入到dog-mini项目！");
-        return "进入到dog-mini项目！";
+        return "provider/sysetting";
     }
 }

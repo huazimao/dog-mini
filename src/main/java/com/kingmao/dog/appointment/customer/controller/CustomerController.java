@@ -163,7 +163,6 @@ public class CustomerController {
     @RequestMapping(value = "cancelOrDoneApponitment.do")
     public String cancelOrDoneApponitment(@RequestBody CustomerAppointment customerAppointment){
         Gson gson = new Gson();
-        String ret = "fail";
         Map<String, Object> map = new HashMap<String, Object>();
         boolean flag = customerService.cancelOrDoneApponitment(customerAppointment);
         if (flag) {
@@ -176,6 +175,7 @@ public class CustomerController {
     }
 
     /**
+     * 点击 预约时发出请求
      * 查询客户最近一次预约记录，并填充到预约信息中
      * @param shopId
      * @param openid
