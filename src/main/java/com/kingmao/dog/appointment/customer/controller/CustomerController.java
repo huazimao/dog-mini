@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -159,7 +160,7 @@ public class CustomerController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/customer/cancelOrDoneApponitment.do")
+    @RequestMapping(value = "cancelOrDoneApponitment.do")
     public String cancelOrDoneApponitment(@RequestBody CustomerAppointment customerAppointment){
         Gson gson = new Gson();
         String ret = "fail";
@@ -171,6 +172,27 @@ public class CustomerController {
             map.put("type", 0);
         }
 
+        return gson.toJson(map);
+    }
+
+    /**
+     * 查询客户最近一次预约记录，并填充到预约信息中
+     * @param shopId
+     * @param openid
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "showAppointHistory.do")
+    public String showAppointHistory(String shopId, String openid){
+        Gson gson = new Gson();
+        Map map = new HashMap();
+        List<CustomerAppointment> history = customerService.getLastAppointHistory(shopId,openid);
+        if (history.size() > 0) {
+            map.put("historyState", 1);
+            map.put("pets", history.get(0).getPetLists());
+        } else {
+            map.put("historyState", 0);
+        }
         return gson.toJson(map);
     }
 }

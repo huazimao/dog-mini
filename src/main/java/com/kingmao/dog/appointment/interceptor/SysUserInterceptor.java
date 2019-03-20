@@ -22,8 +22,8 @@ public  class SysUserInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
         log.info("-------------进入拦截器-----------");
         if (request.getSession().getAttribute("sysUser") == null) {
+            log.info("获取到路径：" + request.getRequestURI());
             log.info("-------------无权限，返回登陆页-----------");
-            log.info(request.getRequestURI() + "++++++++++++++++++++++++++");
             response.sendRedirect(request.getContextPath() + "/index.html");
             return false;
         } else {

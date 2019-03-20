@@ -28,4 +28,6 @@ public interface CustomerAppointmentMapper {
 
     List<CustomerAppointment> showAppointmentByTimeAndShop(@Param("shopId") String shopId, @Param("workTime")Date workTime);
 
+    //查询最后一次预约记录
+    List<CustomerAppointment> getLastAppointHistory(@Param("shopId") String shopId, @Param("openid")String openid);
 }

@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Paceage:com.kingmao.dog.appointment.provider.controller
@@ -30,8 +32,6 @@ import java.util.Date;
 public class SystemController {
     @Autowired
     private SystemSettingService systemSettingService;
-    @Autowired
-    private ProviderService providerService;
 
     private static Logger log = Logger.getLogger(ProviderController.class);
 
@@ -50,17 +50,18 @@ public class SystemController {
 
     /**
      * 根据店铺ID和生效时间查找默认设置
-     * @param request
      * @param shopId
      * @param workTime
      * @return
      */
+    @ResponseBody
     @RequestMapping("/provider/getSySettingByShopIdAndTime.do")
-    public String getSySettingByShopIdAndTime(HttpServletRequest request,String shopId, Date workTime){
+    public String getSySettingByShopIdAndTime(String shopId, Date workTime){
         log.info("接收到查询条件：shopId=" + shopId + "workTime=" + workTime);
         Gson gson = new Gson();
+        Map map = new HashMap();
         SystemSetting systemSetting = systemSettingService.getSySettingByShopIdAndTime(shopId,workTime);
-        request.setAttribute("systemSetting",systemSetting);
-        return "d/d";
+        map.put("systemSetting", systemSetting);
+        return gson.toJson(map);
     }
 }

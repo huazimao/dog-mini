@@ -159,4 +159,14 @@ public class CustomerServiceImpl implements CustomerService {
     public boolean cancelOrDoneApponitment(CustomerAppointment customerAppointment) {
         return customerAppointmentMapper.updateByPrimaryKeySelective(customerAppointment) > 0;
     }
+
+    /**
+     * 查询最后一次预约记录
+     * @param openid
+     * @return
+     */
+    @Override
+    public List<CustomerAppointment> getLastAppointHistory(String shopId,String openid) {
+        return customerAppointmentMapper.getLastAppointHistory(shopId ,openid);
+    }
 }

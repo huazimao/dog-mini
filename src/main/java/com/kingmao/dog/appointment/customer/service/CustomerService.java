@@ -24,4 +24,7 @@ public interface CustomerService {
     List<CustomerAppointment> showAppointmentByTimeAndShop(String shopId, Date workTime);
 
     boolean cancelOrDoneApponitment(CustomerAppointment customerAppointment);
+
+    //查询最后一次预约记录
+    List<CustomerAppointment> getLastAppointHistory(String shopId,String openid);
 }
