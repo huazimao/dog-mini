@@ -1,7 +1,6 @@
 package com.kingmao.dog.appointment.wechat;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.kingmao.dog.appointment.cacha.SysCacha;
@@ -10,7 +9,7 @@ import com.kingmao.dog.utils.HttpUtil;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -23,7 +22,7 @@ import java.util.Map;
  * Date:2019/3/4
  * Author: KingMao
  **/
-@Component
+@Controller
 public class CoreApi {
     private static Logger log = Logger.getLogger(CoreApi.class);
 
@@ -35,8 +34,8 @@ public class CoreApi {
     @ResponseBody
     @RequestMapping("/core/code2Session.do")
     public String code2Session(String code) {
+        log.info("进入到core方法，获取code：" + code);
         String result = null;
-        String errcode = null;
         String openid = null;
         String session_key = null;
         Gson gson = new Gson();
@@ -44,13 +43,14 @@ public class CoreApi {
 
         try {
             result = HttpUtil.doHttpsGetJson(CoreUrl.getCode2SessionURL(appid,secret,code));
+            log.info("请求API返回结果：" + result);
             JSONObject jsonStr = JSONObject.fromObject(result);
-            errcode = jsonStr.getString("errcode");
-            if (errcode.equals("1")) {
+            if (jsonStr.has("openid")) {
                 openid = jsonStr.getString("openid");
                 session_key = jsonStr.getString("session_key");
                 map.put("openid", openid);
                 map.put("session_key", session_key);
+                log.info("openid:：" + openid + "session_key: " + session_key);
             }
         } catch (Exception e) {
             log.error("请求小程序API发生错误", e);

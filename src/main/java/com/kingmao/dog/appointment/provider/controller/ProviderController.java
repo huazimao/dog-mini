@@ -6,7 +6,6 @@ import com.kingmao.dog.appointment.customer.model.CustomerAppointment;
 import com.kingmao.dog.appointment.customer.service.CustomerService;
 import com.kingmao.dog.appointment.wechat.CoreApi;
 import com.kingmao.dog.utils.DateUtil;
-import com.sun.xml.internal.ws.spi.db.DatabindingException;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
