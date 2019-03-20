@@ -22,7 +22,7 @@ public class ScheduleTask{
 
     @Scheduled(cron = "0 0 0 * * ?")
     public void firstScheduledTasks(){
-        System.out.println("定时任务执行，现在时间是 : "+ new Date());
+        System.out.println("开始执行店铺设置任务。");
         scheduleApi.getSchedul();
     }
 
