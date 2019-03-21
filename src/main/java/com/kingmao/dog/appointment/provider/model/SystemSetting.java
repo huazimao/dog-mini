@@ -1,5 +1,7 @@
 package com.kingmao.dog.appointment.provider.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class SystemSetting {
@@ -29,9 +31,30 @@ public class SystemSetting {
 
     private Integer isAppTow;
 
+    private String startStr;
+
+    private String endStr;
+
     private Integer switchStatue;
 
+
     private Integer enabled;
+
+    public String getStartStr() {
+        return startStr;
+    }
+
+    public void setStartStr(String startStr) {
+        this.startStr = startStr;
+    }
+
+    public String getEndStr() {
+        return endStr;
+    }
+
+    public void setEndStr(String endStr) {
+        this.endStr = endStr;
+    }
 
     public Integer getId() {
         return id;

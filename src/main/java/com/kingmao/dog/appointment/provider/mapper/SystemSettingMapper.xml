@@ -12,7 +12,7 @@
     <result column="trainee_factor" jdbcType="DOUBLE" property="traineeFactor" />
     <result column="skiller_num" jdbcType="INTEGER" property="skillerNum" />
     <result column="skiller_factor" jdbcType="DOUBLE" property="skillerFactor" />
-    <result column="work_time" jdbcType="TIMESTAMP" property="workTime" />
+    <result column="work_time" jdbcType="DATE" property="workTime" />
     <result column="submit_time" jdbcType="TIMESTAMP" property="submitTime" />
     <result column="is_app_tow" jdbcType="INTEGER" property="isAppTow" />
     <result column="switch_statue" jdbcType="INTEGER" property="switchStatue" />
@@ -105,7 +105,7 @@
                 #{skillerFactor,jdbcType=DOUBLE},
             </if>
             <if test="workTime != null">
-                #{workTime,jdbcType=TIMESTAMP},
+                #{workTime,jdbcType=DATE},
             </if>
             <if test="submitTime != null">
                 #{submitTime,jdbcType=TIMESTAMP},
@@ -153,7 +153,7 @@
         skiller_factor = #{skillerFactor,jdbcType=DOUBLE},
       </if>
       <if test="workTime != null">
-        work_time = #{workTime,jdbcType=TIMESTAMP},
+        work_time = #{workTime,jdbcType=DATE},
       </if>
       <if test="submitTime != null">
         submit_time = #{submitTime,jdbcType=TIMESTAMP},
@@ -173,7 +173,7 @@
 
   <select id="getSySettingByShopIdAndTime"  resultMap="BaseResultMap">
     select
-    shop_id, service_start_time, service_end_time, timeout, limite, trainee_num,
+    id,shop_id, service_start_time, service_end_time, timeout, limite, trainee_num,
     trainee_factor, skiller_num, skiller_factor, work_time, submit_time, is_app_tow,
     switch_statue, enabled
     from system_setting

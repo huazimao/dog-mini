@@ -57,10 +57,10 @@ public class SystemSettingServiceImpl implements SystemSettingService {
         else {
             flag = systemSettingMapper.insertSelective(systemSetting) > 0;
         }
-        //计算店铺能效
+        //计算/修改店铺能效
         if (flag) {
             // 开工之前设置
-            if (systemSetting.getSubmitTime().before(systemSetting.getServiceStartTime())) {
+            //if (systemSetting.getSubmitTime().before(systemSetting.getServiceStartTime())) {
                 //当日剩余时间
                 lefTime = DateUtil.getMin(systemSetting.getServiceStartTime(), systemSetting.getServiceEndTime());
                 //当日工作时常
@@ -72,7 +72,8 @@ public class SystemSettingServiceImpl implements SystemSettingService {
                 //能效时间
                 earnTime = trainEffective + skillerEffective;
                 log.info("当日能效时间为：" + earnTime);
-            } else {
+            //}
+            /*else {
             //  开工之后设置
                 SystemSetting lastSetting = systemSettingMapper.getSySettingByShopIdAndTime(systemSetting.getShopId(),systemSetting.getWorkTime());
                 int lasTime = DateUtil.getMin(lastSetting.getServiceStartTime(), lastSetting.getSubmitTime());
@@ -89,7 +90,7 @@ public class SystemSettingServiceImpl implements SystemSettingService {
                 earnTime = trainEffective + skillerEffective;
                 log.info("当日能效时间为：" + earnTime);
 
-            }
+            }*/
             ProviderCount providerCount = providerCountMapper.getPorivderCountInfoNoType(systemSetting.getShopId(),systemSetting.getWorkTime());
             if (null != providerCount) {
                 //更新商家预约总表

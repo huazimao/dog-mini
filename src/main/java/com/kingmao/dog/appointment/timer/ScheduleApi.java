@@ -33,6 +33,7 @@ public class ScheduleApi {
         if (null != ljsystemSettingByDefault && ljsystemSettingByDefault.getIsAppTow() == 1) {
             ljsystemSettingByDefault.setWorkTime(twoDaysLater);
             ljsystemSettingByDefault.setSwitchStatue(1);
+            ljsystemSettingByDefault.setSubmitTime(new Date());
             boolean flaglj = systemSettingService.insertSysSetting(ljsystemSettingByDefault);
             if (flaglj) {
                 log.info("龙江店默认设置自动生成------------成功！");
@@ -41,6 +42,7 @@ public class ScheduleApi {
         if (null != lssystemSettingByDefault && lssystemSettingByDefault.getIsAppTow() == 1) {
             lssystemSettingByDefault.setWorkTime(twoDaysLater);
             lssystemSettingByDefault.setSwitchStatue(1);
+            lssystemSettingByDefault.setSubmitTime(new Date());
             boolean flagls = systemSettingService.insertSysSetting(lssystemSettingByDefault);
             if (flagls) {
                 log.info("龙山店默认设置自动生成------------成功！");
@@ -49,6 +51,7 @@ public class ScheduleApi {
         if (null != rgsystemSettingByDefault && rgsystemSettingByDefault.getIsAppTow() == 1) {
             rgsystemSettingByDefault.setWorkTime(twoDaysLater);
             rgsystemSettingByDefault.setSwitchStatue(1);
+            rgsystemSettingByDefault.setSubmitTime(new Date());
             boolean flagrg = systemSettingService.insertSysSetting(rgsystemSettingByDefault);
             if (flagrg) {
                 log.info("容桂店默认设置自动生成------------成功！");

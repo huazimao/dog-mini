@@ -51,7 +51,7 @@ public class DateUtil {
      */
     public static Date getYMD2(Date date){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String str = sdf.format(new Date());
+        String str = sdf.format(date);
         Date date1 = null;
         try {
             date1 =  sdf.parse(str);
@@ -71,6 +71,39 @@ public class DateUtil {
         String str = sdf.format(date);
         return str;
     }
+
+    /**
+     * str -->date
+     * @param str
+     * @return
+     */
+    public static Date str2Date(String str){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date date = null;
+        try {
+            date = sdf.parse(str);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
+    }
+    /**
+     * str -->date
+     * @param str
+     * @return
+     */
+    public static Date str2TDate(String str){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = null;
+        try {
+            date = sdf.parse(str);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
+    }
+
+
 
     public static Date getDatePlus(Date date){
         //计算两天后的时间
