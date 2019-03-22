@@ -40,8 +40,8 @@
         </javaClientGenerator>
 
         <!-- 数据库表名及对应的Java模型类名 -->
-        <table tableName="system_setting2"
-               domainObjectName="systemSettings"
+        <table tableName="client"
+               domainObjectName="Client"
                enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"

@@ -38,6 +38,13 @@ public class ProviderController {
     @Autowired
     private CustomerService customerService;
 
+    @RequestMapping(value = "go2appointmentPage.do")
+    public String go2appointmentPage(HttpServletRequest request) {
+        request.setAttribute("shopId",request.getParameter("shopId"));
+        return "/provider/appointments";
+    }
+
+
     /**
      * 商家预约后台，展示预约详情以及完成状态
      * @param shopId

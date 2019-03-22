@@ -62,6 +62,7 @@ public class AdminController {
             response.addCookie(password_cookie);
 
             map.put("type", 1);
+            map.put("shopId", sysUser.getShopid());
             map.put("msg", "普通员工登陆成功");
         } else if (sysUser.getLevel() == 2) {
             request.getSession().setAttribute("sysUser", sysUser);
@@ -113,6 +114,7 @@ public class AdminController {
         if (sysUser.getLevel() == 1) {
             request.getSession().setAttribute("sysUser", sysUser);
             map.put("type", 1);
+            map.put("shopId", sysUser.getShopid());
         } else if (sysUser.getLevel() == 2) {
             request.getSession().setAttribute("sysUser", sysUser);
             map.put("type", 2);

@@ -4,15 +4,20 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.kingmao.dog.appointment.cacha.SysCacha;
+import com.kingmao.dog.appointment.customer.model.Client;
+import com.kingmao.dog.appointment.customer.service.CustomerService;
 import com.kingmao.dog.utils.CoreUrl;
 import com.kingmao.dog.utils.HttpUtil;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,6 +35,9 @@ public class CoreApi {
     private String appid;
     @Value("${mini.secret}")
     private String secret;
+
+    @Autowired
+    private CustomerService customerService;
 
     @ResponseBody
     @RequestMapping("/core/code2Session.do")
@@ -79,5 +87,28 @@ public class CoreApi {
             log.info("调取微信接口向用户发送模板消息出错：" + jsonStr);
         }
         return "fail";
+    }
+
+    /**
+     * 保存用户信息
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/core/saveClientInfo.do")
+    public String dealuserInfo(HttpServletRequest request) {
+        log.info("接收到参数：" + request.getParameter("nickName"));
+        String openid = request.getParameter("openid");
+        String nickName = request.getParameter("nickName");
+        String wxImg = request.getParameter("wxImg");
+        Client client = new Client();
+        client.setOpenid(openid);
+        client.setNickName(nickName);
+        client.setWxImg(wxImg);
+        if (customerService.insertClient(client)) {
+            return "0ok0";
+        } else {
+            return "falisesesssss";
+        }
     }
 }

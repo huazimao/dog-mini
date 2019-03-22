@@ -14,101 +14,75 @@
 
 <body>
     <div class="weui-tab">
-        <form id="a1">
-            <div class="weui-navbar">
-                <input type="hidden" id="time_hidden" name="workTime" value="今天">
-                <input type="hidden" id="id" name="id" value="">
-                <div class="weui-navbar__item weui-bar__item_on">
-                    <div class="item-t">今天</div>
-                    <div class="item-b">
-                        <span class="item-date" id="time1"></span>
-                        (<span class="item-day" id="week1"></span>)
+        <div class="weui-navbar">
+            <input type="hidden" id="time_hidden" name="workTime" value="今天">
+            <input type="hidden" id="id" name="id" value="">
+            <div class="weui-navbar__item weui-bar__item_on">
+                <div class="item-t">今天</div>
+                <div class="item-b">
+                    <span class="item-date" id="time1"></span>
+                    (<span class="item-day" id="week1"></span>)
+                </div>
+            </div>
+            <div class="weui-navbar__item">
+                <div class="item-t">明天</div>
+                <div class="item-b">
+                    <span class="item-date" id="time2"></span>
+                    (<span class="item-day" id="week2"></span>)
+                </div>
+            </div>
+            <div class="weui-navbar__item">
+                <div class="item-t">后天</div>
+                <div class="item-b">
+                    <span class="item-date" id="time3"></span>
+                    (<span class="item-day" id="week3"></span>)
+                </div>
+            </div>
+        </div>
+        <div class="weui-tab__panel">
+            <div class="weui-cells weui-cells_form">
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label" id="shopId">龙江店</label></div>
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label for="" class="weui-label">开始时间</label></div>
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" type="datetime-local" value="" placeholder="" id="serviceStartTime" name="serviceStartTime"/>
                     </div>
                 </div>
-                <div class="weui-navbar__item">
-                    <div class="item-t">明天</div>
-                    <div class="item-b">
-                        <span class="item-date" id="time2"></span>
-                        (<span class="item-day" id="week2"></span>)
-                    </div>
-                </div>
-                <div class="weui-navbar__item">
-                    <div class="item-t">后天</div>
-                    <div class="item-b">
-                        <span class="item-date" id="time3"></span>
-                        (<span class="item-day" id="week3"></span>)
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label for="" class="weui-label">结束时间</label></div>
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" type="datetime-local" value="" placeholder="" id="serviceEndTime" name="serviceEndTime"/>
                     </div>
                 </div>
             </div>
-            <div class="weui-tab__panel">
-                <div class="weui-cells weui-cells_form">
-                    <div class="weui-cell">
-                        <div class="weui-cell__hd"><label class="weui-label" id="shopId">龙江店</label></div>
+            <div class="weui-cells weui-cells_form">
+                <div class="weui-cell weui-cell_switch">
+                    <div class="weui-cell__bd">自动开启第三天预约</div>
+                    <div class="weui-cell__ft">
+                        <label for="isAppTow" class="weui-switch-cp">
+                            <input id="isAppTow" class="weui-switch-cp__input" type="checkbox" name="isAppTow"/>
+                            <div class="weui-switch-cp__box"></div>
+                        </label>
                     </div>
-                    <div class="weui-cell">
-                        <div class="weui-cell__hd"><label class="weui-label">学徒</label></div>
-                        <div class="weui-cell__bd">
-                            <input class="weui-input" type="number" pattern="[0-9]*" placeholder="" id="traineeNum" name="traineeNum"/>
-                        </div>
-                    </div>
-                    <div class="weui-cell">
-                        <div class="weui-cell__hd"><label class="weui-label">学徒因子</label></div>
-                        <div class="weui-cell__bd">
-                            <input class="weui-input" type="number" pattern="[0-9]*" placeholder="" id="traineeFactor" name="traineeFactor"/>
-                        </div>
-                    </div>
-                    <div class="weui-cell">
-                        <div class="weui-cell__hd"><label class="weui-label">熟手</label></div>
-                        <div class="weui-cell__bd">
-                            <input class="weui-input" type="number" pattern="[0-9]*" placeholder="" id="skillerNum" name="skillerNum"/>
-                        </div>
-                    </div>
-                    <div class="weui-cell">
-                        <div class="weui-cell__hd"><label class="weui-label">熟手因子</label></div>
-                        <div class="weui-cell__bd">
-                            <input class="weui-input" type="number" pattern="[0-9]*" placeholder="" id="skillerFactor" name="skillerFactor"/>
-                        </div>
-                    </div>
-                    <div class="weui-cell">
-                        <div class="weui-cell__hd"><label for="" class="weui-label">开始时间</label></div>
-                        <div class="weui-cell__bd">
-                            <input class="weui-input" type="datetime-local" value="" placeholder="" id="serviceStartTime" name="serviceStartTime"/>
-                        </div>
-                    </div>
-                    <div class="weui-cell">
-                        <div class="weui-cell__hd"><label for="" class="weui-label">结束时间</label></div>
-                        <div class="weui-cell__bd">
-                            <input class="weui-input" type="datetime-local" value="" placeholder="" id="serviceEndTime" name="serviceEndTime"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="weui-cells weui-cells_form">
-                    <div class="weui-cell weui-cell_switch">
-                        <div class="weui-cell__bd">自动开启第三天预约</div>
-                        <div class="weui-cell__ft">
-                            <label for="isAppTow" class="weui-switch-cp">
-                                <input id="isAppTow" class="weui-switch-cp__input" type="checkbox" name="isAppTow"/>
-                                <div class="weui-switch-cp__box"></div>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="weui-cells weui-cells_form">
-                    <div class="weui-cell weui-cell_switch">
-                        <div class="weui-cell__bd">预约总开关</div>
-                        <div class="weui-cell__ft">
-                            <label for="switchStatue" class="weui-switch-cp">
-                                <input id="switchStatue" class="weui-switch-cp__input" type="checkbox" name="switchStatue"/>
-                                <div class="weui-switch-cp__box"></div>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="weui-btn-area">
-                    <a class="weui-btn weui-btn_primary" href="javascript:" id="showTooltips" >确定</a>
                 </div>
             </div>
-        </form>
+            <div class="weui-cells weui-cells_form">
+                <div class="weui-cell weui-cell_switch">
+                    <div class="weui-cell__bd">预约总开关</div>
+                    <div class="weui-cell__ft">
+                        <label for="switchStatue" class="weui-switch-cp">
+                            <input id="switchStatue" class="weui-switch-cp__input" type="checkbox" name="switchStatue"/>
+                            <div class="weui-switch-cp__box"></div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="weui-btn-area">
+                <a class="weui-btn weui-btn_primary" href="javascript:" id="showTooltips" >确定</a>
+            </div>
+        </div>
     </div>
 <div id="toast" style="display: none;">
     <div class="weui-mask_transparent"></div>
@@ -123,23 +97,17 @@
 <script src="https://res.wx.qq.com/open/libs/weuijs/1.0.0/weui.min.js"></script>
 <script src="${context}/js/example.js"></script>
 <script src="${context}/js/sysetting.js"></script>
-<!--BEGIN toast-->
-<!--end toast-->
-<script type="text/javascript">
-    // toast
-    $(function(){
-        var $toast = $('#toast');
-        $('#showToast').on('click', function(){
-            if ($toast.css('display') != 'none') return;
-
-            $toast.fadeIn(100);
-            setTimeout(function () {
-                $toast.fadeOut(100);
-            }, 2000);
-        });
-    });
-</script>
 <script>
+
+    function showOK() {
+        var $toast = $('#toast');
+        if ($toast.css('display') != 'none') return;
+
+        $toast.fadeIn(100);
+        setTimeout(function () {
+            $toast.fadeOut(100);
+        }, 1000);
+    }
 
     // 点击时间按钮
     $('.weui-navbar__item').on('click', function () {
@@ -167,15 +135,25 @@
 
     //保存设置
     function save(date) {
+        var isAppTow = 0;
+        var switchStatue = 0;
+        var id = $("#id").val();
         var workTime = date;
-        var traineeNum = $("#traineeNum").val();
-        var traineeFactor = $("#traineeFactor").val();
-        var skillerNum = $("#skillerNum").val();
-        var skillerFactor = $("#skillerFactor").val();
         var serviceStartTime = renderTime($("#serviceStartTime").val());
         var serviceEndTime = renderTime($("#serviceEndTime").val());
-        var id = $("#id").val();
         var shopName = document.getElementById("shopId").innerText.trim();
+        //isAppTow = $("#isAppTow").val();
+
+        //switchStatue = $("#switchStatue").val();
+        //console.log("isAppTow=" + isAppTow + "switchStatue=" + switchStatue);
+
+        if($('#isAppTow').is(':checked')) {
+            isAppTow = 1;
+        }
+        if($('#switchStatue').is(':checked')) {
+            switchStatue = 1;
+        }
+
         var shopId = "";
         if (shopName == "龙江店"){
             shopId = 'lj';
@@ -190,17 +168,18 @@
             dataType:"json",
             data:{
                 "workTime":workTime,
-                "traineeNum":traineeNum,
-                "traineeFactor":traineeFactor,
-                "skillerNum":skillerNum,
-                "skillerFactor":skillerFactor,
                 "serviceStartTime":serviceStartTime,
                 "serviceEndTime":serviceEndTime,
                 "shopId":shopId,
-                "id":id
+                "id":id,
+                "isAppTow":isAppTow,
+                "switchStatue":switchStatue
             },
             success:function (data) {
                 console.info(data);
+                if (data == 1){
+                    showOK();
+                }
             }
 
         });
@@ -341,10 +320,6 @@
             success:function (data) {
                 console.log(data.systemSetting);
                 var systemSetting = data.systemSetting;
-                $("#traineeNum").val(systemSetting.traineeNum);
-                $("#traineeFactor").val(systemSetting.traineeFactor);
-                $("#skillerNum").val(systemSetting.skillerNum);
-                $("#skillerFactor").val(systemSetting.skillerFactor);
                 $("#id").val(systemSetting.id);
                 var start = dealDate(systemSetting.startStr);
                 var end = dealDate(systemSetting.endStr);
@@ -353,10 +328,14 @@
                 var switchStatue = systemSetting.switchStatue;
                 var isAppTow = systemSetting.isAppTow;
                 if (switchStatue == 1){
-                    $("#switchStatue").attr("checked", true);
+                    $("#switchStatue").prop("checked", true);
+                }else {
+                    $("#switchStatue").prop("checked", false);
                 }
                 if (isAppTow == 1){
-                    $("#isAppTow").attr("checked", true);
+                    $("#isAppTow").prop("checked", true);
+                }else {
+                    $("#isAppTow").prop("checked", false);
                 }
             }
 

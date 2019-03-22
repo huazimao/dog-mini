@@ -106,13 +106,13 @@ public class DateUtil {
 
 
     public static Date getDatePlus(Date date){
-        //计算两天后的时间
+        //计算三天后的时间
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Calendar c = Calendar.getInstance();
 
         c.setTime(date);
 
-        c.add(Calendar.DATE, 2);
+        c.add(Calendar.DATE, 3);
 
         return c.getTime();
     }

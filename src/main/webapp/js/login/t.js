@@ -1,18 +1,15 @@
-$("#o1").click(function() {
-
-});
 function o1() {
-    alert(getRootPath_dc() + '/provider/showAppointmentByTimeAndShop.do?shopId=lj');
-    window.location.href= getRootPath_dc() + '/provider/showAppointmentByTimeAndShop.do?shopId=lj';
+    alert(getRootPath_dc() + '/provider/2appointmentPage.do?shopId=lj');
+    window.location.href= getRootPath_dc() + '/provider/2appointmentPage.do?shopId=lj';
 
 }
 
 function o2() {
-    window.location.href= getRootPath_dc() + '/provider/showAppointmentByTimeAndShop.do?shopId=ls';
+    window.location.href= getRootPath_dc() + '/provider/2appointmentPage.do?shopId=ls';
 }
 
 function o3() {
-    window.location.href= getRootPath_dc() + '/provider/showAppointmentByTimeAndShop.do?shopId=rg';
+    window.location.href= getRootPath_dc() + '/provider/2appointmentPage.do?shopId=rg';
 }
 
 function getRootPath_dc() {

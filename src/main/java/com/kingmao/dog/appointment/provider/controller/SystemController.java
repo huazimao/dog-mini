@@ -21,6 +21,7 @@ import java.util.Map;
  * Date:2019/2/21
  * Author: KingMao
  **/
+@RequestMapping("/provider/")
 @Controller
 public class SystemController {
     @Autowired
@@ -33,29 +34,25 @@ public class SystemController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/provider/saveOrUptSetting.do")
+    @RequestMapping(value = "saveOrUptSetting.do")
     //public String calculateServiceTime(Date workTime, Integer traineeNum, Double traineeFactor,Integer skillerNum,Double skillerFactor, Date serviceStartTime,Date serviceEndTime) {
 //    public String calculateServiceTime(Date workTime, Integer traineeNum, Double traineeFactor,Integer skillerNum,Double skillerFactor,Date serviceStartTime) {
     public String calculateServiceTime(HttpServletRequest request) {
         String work_time = request.getParameter("workTime");
-        Integer traineeNum = Integer.parseInt(request.getParameter("traineeNum"));
-        Double traineeFactor = Double.parseDouble(request.getParameter("traineeFactor"));
-        Integer skillerNum = Integer.parseInt(request.getParameter("skillerNum"));
-        Double skillerFactor = Double.parseDouble(request.getParameter("skillerFactor"));
         String service_start_time = request.getParameter("serviceStartTime");
         String service_end_time = request.getParameter("serviceEndTime");
         Integer id = Integer.parseInt(request.getParameter("id"));
+        Integer isAppTow = Integer.parseInt(request.getParameter("isAppTow"));
+        Integer switchStatue = Integer.parseInt(request.getParameter("switchStatue"));
 
         SystemSetting systemSetting = new SystemSetting();
         systemSetting.setId(id);
         systemSetting.setWorkTime(DateUtil.str2Date(work_time));
-        systemSetting.setTraineeNum(traineeNum);
-        systemSetting.setTraineeFactor(traineeFactor);
-        systemSetting.setSkillerNum(skillerNum);
-        systemSetting.setSkillerFactor(skillerFactor);
         systemSetting.setServiceStartTime(DateUtil.str2Date(service_start_time));
         systemSetting.setServiceEndTime(DateUtil.str2Date(service_end_time));
         systemSetting.setSubmitTime(new Date());
+        systemSetting.setIsAppTow(isAppTow);
+        systemSetting.setSwitchStatue(switchStatue);
 
         return systemSettingService.saveOrUptSetting(systemSetting) ? "1" : "0";
 
@@ -66,7 +63,7 @@ public class SystemController {
      * @return
      */
     @ResponseBody
-    @RequestMapping("/provider/getSySettingByShopIdAndTime.do")
+    @RequestMapping("getSySettingByShopIdAndTime.do")
     public String getSySettingByShopIdAndTime(HttpServletRequest request){
         String work_time = request.getParameter("workTime");
         Date workTime = DateUtil.getYMD2(DateUtil.str2Date(work_time));
@@ -81,12 +78,9 @@ public class SystemController {
         map.put("systemSetting", systemSetting);
         return gson.toJson(map);
     }
-/*
-    @InitBinder
-    public void initBinder(WebDataBinder binder, WebRequest request) {
 
-        //转换日期
-        DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));// CustomDateEditor为自定义日期编辑器
-    }*/
+    @RequestMapping("go2defaultSettingPage.do")
+    public String getDog(){
+        return "provider/sysetting";
+    }
 }

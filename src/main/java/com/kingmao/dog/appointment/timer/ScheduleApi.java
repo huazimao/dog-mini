@@ -23,16 +23,15 @@ public class ScheduleApi {
     private static Logger log = Logger.getLogger(ScheduleApi.class);
 
     public void getSchedul(){
-        //根据今天的默认设置，生成第三天默认设置
+        //根据今天的默认设置，生成第四天默认设置
         SystemSetting ljsystemSettingByDefault = systemSettingService.getSySettingByShopIdAndTime("lj",DateUtil.getYMD2(new Date()));
         SystemSetting lssystemSettingByDefault = systemSettingService.getSySettingByShopIdAndTime("ls",DateUtil.getYMD2(new Date()));
         SystemSetting rgsystemSettingByDefault = systemSettingService.getSySettingByShopIdAndTime("rg",DateUtil.getYMD2(new Date()));
 
-        //获取两天后的时间
+        //获取三天后的时间
         Date twoDaysLater = DateUtil.getDatePlus(DateUtil.getYMD2(new Date()));
         if (null != ljsystemSettingByDefault && ljsystemSettingByDefault.getIsAppTow() == 1) {
             ljsystemSettingByDefault.setWorkTime(twoDaysLater);
-            ljsystemSettingByDefault.setSwitchStatue(1);
             ljsystemSettingByDefault.setSubmitTime(new Date());
             boolean flaglj = systemSettingService.insertSysSetting(ljsystemSettingByDefault);
             if (flaglj) {
@@ -41,7 +40,6 @@ public class ScheduleApi {
         }
         if (null != lssystemSettingByDefault && lssystemSettingByDefault.getIsAppTow() == 1) {
             lssystemSettingByDefault.setWorkTime(twoDaysLater);
-            lssystemSettingByDefault.setSwitchStatue(1);
             lssystemSettingByDefault.setSubmitTime(new Date());
             boolean flagls = systemSettingService.insertSysSetting(lssystemSettingByDefault);
             if (flagls) {
@@ -50,7 +48,6 @@ public class ScheduleApi {
         }
         if (null != rgsystemSettingByDefault && rgsystemSettingByDefault.getIsAppTow() == 1) {
             rgsystemSettingByDefault.setWorkTime(twoDaysLater);
-            rgsystemSettingByDefault.setSwitchStatue(1);
             rgsystemSettingByDefault.setSubmitTime(new Date());
             boolean flagrg = systemSettingService.insertSysSetting(rgsystemSettingByDefault);
             if (flagrg) {

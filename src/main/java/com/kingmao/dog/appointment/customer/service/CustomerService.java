@@ -1,5 +1,6 @@
 package com.kingmao.dog.appointment.customer.service;
 
+import com.kingmao.dog.appointment.customer.model.Client;
 import com.kingmao.dog.appointment.customer.model.CustomerAppointment;
 
 import java.util.Date;
@@ -27,4 +28,6 @@ public interface CustomerService {
 
     //查询最后一次预约记录
     List<CustomerAppointment> getLastAppointHistory(String shopId,String openid);
+
+    boolean insertClient(Client client);
 }

@@ -1,11 +1,8 @@
 package com.kingmao.dog.appointment.provider.service.impl;
 
-import com.kingmao.dog.appointment.provider.mapper.ProviderCountMapper;
 import com.kingmao.dog.appointment.provider.mapper.SystemSettingMapper;
-import com.kingmao.dog.appointment.provider.model.ProviderCount;
 import com.kingmao.dog.appointment.provider.model.SystemSetting;
 import com.kingmao.dog.appointment.provider.service.SystemSettingService;
-import com.kingmao.dog.utils.DateUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,8 +19,7 @@ import java.util.Date;
 public class SystemSettingServiceImpl implements SystemSettingService {
     @Autowired
     private SystemSettingMapper systemSettingMapper;
-    @Autowired
-    private ProviderCountMapper providerCountMapper;
+
     private static Logger log = Logger.getLogger(SystemSettingServiceImpl.class);
 
     /**

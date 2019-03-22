@@ -1,7 +1,9 @@
 package com.kingmao.dog.appointment.customer.service.impl;
 
+import com.kingmao.dog.appointment.customer.mapper.ClientMapper;
 import com.kingmao.dog.appointment.customer.mapper.CustomerAppointmentMapper;
 import com.kingmao.dog.appointment.customer.mapper.PetAppointmentMapper;
+import com.kingmao.dog.appointment.customer.model.Client;
 import com.kingmao.dog.appointment.customer.model.CustomerAppointment;
 import com.kingmao.dog.appointment.customer.model.PetAppointment;
 import com.kingmao.dog.appointment.customer.service.CustomerService;
@@ -31,6 +33,9 @@ public class CustomerServiceImpl implements CustomerService {
     private PetAppointmentMapper petAppointmentMapper;
     @Autowired
     private ProviderCountMapper providerCountMapper;
+    @Autowired
+    private ClientMapper clientMapper;
+
     private static Logger log = Logger.getLogger(CustomerServiceImpl.class);
 
     @Override
@@ -48,12 +53,8 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public boolean insertAppointment(CustomerAppointment customerAppointment) {
         List<PetAppointment> petAppointmentList = customerAppointment.getPetLists();
-        Integer consumeTime = getConsumeTime(petAppointmentList);
-        log.info(  "用户洗护预计耗时：" + consumeTime);
-        customerAppointment.setConsumeTime(consumeTime);
         Date appointmenTime = DateUtil.getYMD(new Date());
         customerAppointment.setOppointmentTime(appointmenTime);
-        customerAppointment.setCountFinishedTime(DateUtil.getPlus(appointmenTime,consumeTime));
         boolean flag;
         if (customerAppointment.getAppointmentId() == null) {
             //插入客户预约表
@@ -88,9 +89,6 @@ public class CustomerServiceImpl implements CustomerService {
                 providerCount2.setWorkTime(customerAppointment.getWorkTime());
                 providerCount2.setShopId(customerAppointment.getShopId());
                 //新建p表时，只会有一个consume，所以从这里拿就可以了
-                providerCount2.setConsumeTime(consumeTime);
-                providerCount2.setDtype(customerAppointment.getDtype());
-                providerCount2.setEarnTime(providerCount2.getEarnTime());
                 flag = providerCountMapper.insertSelective(providerCount2) > 0;
             }
         }
@@ -108,42 +106,6 @@ public class CustomerServiceImpl implements CustomerService {
         return customerAppointmentMapper.getAppInfo(customerAppointment);
     }
 
-    /**
-     * 计算该客户预约的宠物洗护需要的耗时
-     * @param petAppointmentList
-     * @return
-     */
-    public Integer getConsumeTime(List<PetAppointment> petAppointmentList) {
-        Integer consumeTime = 0;
-        for (int x = 0; x < petAppointmentList.size(); x++) {
-            PetAppointment pet = petAppointmentList.get(x);
-            if (pet.getKindPet().equals("cat")) {
-                consumeTime += 100;
-            } else if (pet.getKindPet().equals("dog")) {
-                if (pet.getKindService().equals("wash")) {
-                    if (pet.getSize().equals("mini")) {
-                        consumeTime += 60;
-                    } else if (pet.getSize().equals("normal")) {
-                        consumeTime += 90;
-                    } else if (pet.getSize().equals("large")) {
-                        consumeTime += 120;
-                    }
-                }else if (pet.getKindService().equals("spa")) {
-                    if (pet.getSize().equals("mini")) {
-                        consumeTime += 90;
-                    } else if (pet.getSize().equals("normal")) {
-                        consumeTime += 120;
-                    } else if (pet.getSize().equals("large")) {
-                        consumeTime += 150;
-                    }
-                } else if (pet.getKindService().equals("modeling")) {
-                    consumeTime += 120;
-                }
-            }
-        }
-
-        return consumeTime;
-    }
 
     @Override
     public List<CustomerAppointment> showAppointmentByTimeAndShop(String shopId, Date workTime) {
@@ -168,5 +130,21 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<CustomerAppointment> getLastAppointHistory(String shopId,String openid) {
         return customerAppointmentMapper.getLastAppointHistory(shopId ,openid);
+    }
+
+    /**
+     * 插入客户信息
+     * @param client
+     * @return
+     */
+    @Override
+    public boolean insertClient(Client client) {
+        boolean flag = false;
+        if (clientMapper.getClientByOpenid(client.getOpenid()) == null) {
+            flag = clientMapper.insertSelective(client) >0;
+        }else {
+            flag = clientMapper.updateByPrimaryKeySelective(client)>0;
+        }
+        return flag;
     }
 }

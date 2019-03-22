@@ -24,7 +24,7 @@ $(function () {
                 if (data.type == 0) {
                     alert(data.msg);
                 }else if (data.type == 1){
-                    window.location.href = getRootPath_dc() + "/provider/showAppointmentByTimeAndShop.do";
+                    window.location.href = getRootPath_dc() + "/provider/go2appointmentPage.do?shopId=" + data.shopId;
                 }else if (data.type == 2) {
                     window.location.href = getRootPath_dc() + "/admin/power.do";
                 }
@@ -48,7 +48,7 @@ jQuery(document).ready(function(){
         success:function (data) {
             console.log(data);
             if (data.type == 1){
-                window.location.href = getRootPath_dc() + "/provider/showAppointmentByTimeAndShop.do";
+                window.location.href = getRootPath_dc() + "/provider/go2appointmentPage.do?shopId=" + data.shopId;
             }else if (data.type == 2) {
                 window.location.href = getRootPath_dc() + "/admin/power.do";
             }
