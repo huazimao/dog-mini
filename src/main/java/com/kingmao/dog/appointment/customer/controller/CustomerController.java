@@ -82,6 +82,7 @@ public class CustomerController {
     public String getAppointment(@RequestBody CustomerAppointment customerAppointment){
         log.info("客户预约接收到的参数为：" + customerAppointment.toString());
         customerAppointment.setOpenid("aaaaaaa");
+        customerAppointment.setOppointmentTime(new Date());
         Gson gson = new Gson();
         Map<String, Object> map = new HashMap<String, Object>();
         if (customerService.insertAppointment(customerAppointment)){
