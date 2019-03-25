@@ -1,44 +1,112 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Login</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<link href="css/login/style.css" rel='stylesheet' type='text/css' />
-<!--webfonts-->
-<link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic,700italic|Oswald:400,300,700' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Exo+2' rel='stylesheet' type='text/css'>
-<!--//webfonts-->
-<!--<script src="http://ajax.useso.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>-->
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
 	<script src="js/jquery-2.1.1.min.js" charset="utf-8"></script>
+	<title>登陆</title>
+	<style>
+		*{
+			margin:0;
+			padding:0;
+			font-size:26.6667vw;
+			box-sizing: border-box;
+		}
+		input {
+			border:none;
+			outline: none;
+			background-color: transparent;
+		}
+		::-webkit-input-placeholder { /* WebKit browsers */
+			font-size:0.16rem;
+			color: #999; }
+		:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+			font-size:0.16rem;
+			color: #999; }
+		::-moz-placeholder { /* Mozilla Firefox 19+ */
+			font-size:0.16rem;
+			color: #999; }
+		:-ms-input-placeholder { /* Internet Explorer 10+ */
+			font-size:0.16rem;
+			color: #999; }
+
+		body,html {
+			width: 100%;
+			height:100%;
+
+		}
+		.box {
+			width: 100%;
+			height:100%;
+			background: url("image/login/bg-4.jpg")no-repeat left top;
+			background-size:100% 100%;
+			background-attachment: fixed;
+		}
+		.box .logo {
+			width: 1.5rem;
+			/*height: 2rem;*/
+			overflow: hidden;
+			margin:0 auto;
+		}
+		.box .logo img {
+			width: 100%;
+		}
+		.box .form {
+			width: 3rem;
+			overflow: hidden;
+			margin:.2rem auto 0;
+		}
+		.box .input-div {
+			width: 100%;
+			overflow: hidden;
+			border-bottom: 1px solid #eee;
+			display: flex;
+			margin-bottom: 0.2rem;
+			padding:0.1rem 0;
+			align-items: center;
+		}
+		.box .input-div img {
+			width:0.2rem;
+			height: 0.2rem;
+		}
+		.box .input-div input {
+			flex:1;
+			height:30px;
+			line-height: 30px;
+			padding-left:0.2rem;
+			font-size:0.18rem;
+		}
+		.box .signIn {
+			width:2.5rem;
+			height: 0.5rem;
+			overflow: hidden;
+			border-radius:0.1rem;
+			background-color: #007AFF;
+			text-align: center;
+			line-height: 0.5rem;
+			color: #fff;
+			margin: 0.5rem auto 0;
+			font-size: 0.18rem;
+		}
+	</style>
 </head>
 <body>
- <!--SIGN UP-->
- <!--<h1>klasikal Login Form</h1>-->
-<div class="login-form">
-		<div class="head-info">
-			<label class="lbl-1"> </label>
-			<label class="lbl-2"> </label>
-			<label class="lbl-3"> </label>
+<div class="box">
+	<div class="logo">
+		<img src="image/login/logo1.png"/>
+	</div>
+	<div class="form">
+		<div class="input-div name">
+			<img src="image/login/account-img.png"/>
+			<input class="input input-name" type="text" id="username" placeholder="用户名"/>
 		</div>
-			<div class="clear"> </div>
-	<div class="avtar">
-		<img src="image/login/avtar.png" />
+		<div class="input-div password">
+			<img src="image/login/password-img.png"/>
+			<input class="input input-password" type="password" id="password" placeholder="密码"/>
+		</div>
 	</div>
-	<!--<div>
-		<input value="" id="msg"/>
-	</div>-->
-			<form>
-					<input type="text" class="text" id="username"value="Username" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Username';}" >
-						<div class="key">
-					<input type="password" id="password"value="Password" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Password';}">
-						</div>
-			</form>
-	<div class="signin">
-		<input type="submit" value="Login" id="loginBtn">
-	</div>
+	<div class="signIn" id="loginBtn">登陆</div>
 </div>
-
 </body>
 <script src="js/login/login.js"></script>
 </html>
