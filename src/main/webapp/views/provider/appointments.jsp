@@ -16,6 +16,7 @@
     <div class="weui-navbar">
         <input type="hidden" id="time_hidden" name="workTime" value="今天">
         <input type="hidden" id="id" name="id" value="">
+        <input type="hidden" id="shopId" name="shopId" value="${shopId}">
         <div class="weui-navbar__item weui-bar__item_on">
             <div class="item-t">今天</div>
             <div class="item-b">
@@ -109,90 +110,7 @@
                 </div>
             </div>
         </div>
-        <div id="tab2" class="weui-tab__bd-item">
-            <div class="lists">
-                <div class="weui-cells">
-                    <div class="weui-cell">
-                        <div class="weui-cell__hd">
-                            <img src="../dist/demos/images/avatar.jpg">
-                            <span class="weui-badge">3</span>
-                        </div>
-                        <div class="weui-cell__bd">
-                            <p class="customer-name">你快看看</p>
-                            <p class="customer-start-time">预约时间：10：40</p>
-                            <p class="customer-end-time">完成时间：11：00</p>
-                        </div>
-                        <div class="weui-cell__ft">
-                            <p class="customer-pet">小型犬洗澡</p>
-                            <p class="customer-pet">大型犬洗澡</p>
-                        </div>
-                        <div class="weui-cell__ft">
-                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default">已通知</a>
-                        </div>
-                    </div>
-                    <div class="weui-cell">
-                        <div class="weui-cell__hd">
-                            <img src="../dist/demos/images/avatar.jpg">
-                            <span class="weui-badge">3</span>
-                        </div>
-                        <div class="weui-cell__bd">
-                            <p class="customer-name">二狗子</p>
-                            <p class="customer-start-time">预约时间：10：40</p>
-                            <p class="customer-end-time">完成时间：11：00</p>
-                        </div>
-                        <div class="weui-cell__ft">
-                            <p class="customer-pet">小型犬洗澡</p>
-                        </div>
-                        <div class="weui-cell__ft">
-                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_primary">去通知</a>
-                        </div>
-                    </div>
-                    <div class="weui-cell">
-                        <div class="weui-cell__hd">
-                            <img src="../dist/demos/images/avatar.jpg">
-                            <span class="weui-badge">3</span>
-                        </div>
-                        <div class="weui-cell__bd">
-                            <p class="customer-name">二狗子</p>
-                            <p class="customer-start-time">预约时间：10：40</p>
-                            <p class="customer-end-time">完成时间：11：00</p>
-                        </div>
-                        <div class="weui-cell__ft">
-                            <p class="customer-pet">小型犬洗澡</p>
-                        </div>
-                        <div class="weui-cell__ft">
-                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_primary">待完成</a>
-                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_warn">撤单</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="tab3" class="weui-tab__bd-item">
-            <div class="lists">
-                <div class="weui-cells">
-                    <div class="weui-cell">
-                        <div class="weui-cell__hd">
-                            <img src="../dist/demos/images/avatar.jpg">
-                            <span class="weui-badge">3</span>
-                        </div>
-                        <div class="weui-cell__bd">
-                            <p class="customer-name">事实上</p>
-                            <p class="customer-start-time">预约时间：10：40</p>
-                            <p class="customer-end-time">完成时间：11：00</p>
-                        </div>
-                        <div class="weui-cell__ft">
-                            <p class="customer-pet">小型犬洗澡</p>
-                            <p class="customer-pet">大型犬洗澡</p>
-                        </div>
-                        <div class="weui-cell__ft">
-                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default">已通知</a>
-                        </div>
-                    </div>
 
-                </div>
-            </div>
-        </div>
     </div>
 
 </div>
@@ -211,6 +129,10 @@
         getInfoByTime();
     });
 
+    jQuery(document).ready(function(){
+        getInfoByTime();
+    });
+
     // 获取默认设置
     function getInfoByTime() {
         var workTime = $("#time_hidden").val();
@@ -222,15 +144,16 @@
         }else {
             date = GetDateStr(2);
         }
-        var shopName = document.getElementById("shopId").innerText.trim();
-        var shopId = "";
+        var shopId = $("#shopId").val();
+        /*var shopName = $("#shopId").html();
         if (shopName == "龙江店"){
             shopId = 'lj';
         }else if (shopName == "龙山店"){
             shopId = "ls";
         }else if(shopName == "容桂店"){
             shopId = 'rg';
-        }
+        }*/
+        alert(shopId);
         $.ajax({
             type:"post",
             url:getRootPath_dc() + "/provider/showAppointmentByTimeAndShop.do",

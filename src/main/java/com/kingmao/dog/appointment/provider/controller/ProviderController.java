@@ -47,14 +47,14 @@ public class ProviderController {
 
     /**
      * 商家预约后台，展示预约详情以及完成状态
-     * @param shopId
-     * @param workTime
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "showAppointmentByTimeAndShop.do", method = {RequestMethod.GET,RequestMethod.POST})
-    public String showAppointmentByTimeAndShop(HttpServletRequest request,String shopId, Date workTime){
+    public String showAppointmentByTimeAndShop(HttpServletRequest request){
         log.info("进入到商家后台");
+        String shopId = request.getParameter("shopId");
+        Date workTime = DateUtil.str2Date(request.getParameter("workTime"));
         Gson gson = new Gson();
         Map map = new HashMap();
         if (null == workTime) {
