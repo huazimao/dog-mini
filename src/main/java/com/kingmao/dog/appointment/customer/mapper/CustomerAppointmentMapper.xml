@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.kingmao.dog.appointment.customer.model.CustomerAppointment">
     <id column="appointment_id" jdbcType="INTEGER" property="appointmentId" />
     <result column="shop_id" jdbcType="VARCHAR" property="shopId" />
-    <result column="work_time" jdbcType="TIMESTAMP" property="workTime" />
+    <result column="work_time" jdbcType="DATE" property="workTime" />
     <result column="service_end_time" jdbcType="TIMESTAMP" property="serviceEndTime" />
     <result column="service_start_time" jdbcType="TIMESTAMP" property="serviceStartTime" />
     <result column="openid" jdbcType="VARCHAR" property="openid" />
@@ -54,7 +54,7 @@
     oppointment_time, count_finished_time,
     appointment_state, consume_time, dtype,
     acc_finished_time, enabled)
-    values (#{appointmentId,jdbcType=INTEGER}, #{shopId,jdbcType=VARCHAR}, #{workTime,jdbcType=TIMESTAMP},
+    values (#{appointmentId,jdbcType=INTEGER}, #{shopId,jdbcType=VARCHAR}, #{workTime,jdbcType=DATE},
     #{serviceEndTime,jdbcType=TIMESTAMP}, #{serviceStartTime,jdbcType=TIMESTAMP}, #{openid,jdbcType=VARCHAR},
     #{phone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{ispickup,jdbcType=INTEGER},
     #{oppointmentTime,jdbcType=TIMESTAMP}, #{countFinishedTime,jdbcType=TIMESTAMP},
@@ -121,7 +121,7 @@
         #{shopId,jdbcType=VARCHAR},
       </if>
       <if test="workTime != null">
-        #{workTime,jdbcType=TIMESTAMP},
+        #{workTime,jdbcType=DATE},
       </if>
       <if test="serviceEndTime != null">
         #{serviceEndTime,jdbcType=TIMESTAMP},
@@ -171,7 +171,7 @@
         shop_id = #{shopId,jdbcType=VARCHAR},
       </if>
       <if test="workTime != null">
-        work_time = #{workTime,jdbcType=TIMESTAMP},
+        work_time = #{workTime,jdbcType=DATE},
       </if>
       <if test="serviceEndTime != null">
         service_end_time = #{serviceEndTime,jdbcType=TIMESTAMP},
@@ -218,7 +218,7 @@
   <update id="updateByPrimaryKey" parameterType="com.kingmao.dog.appointment.customer.model.CustomerAppointment">
     update customer_appointment
     set shop_id = #{shopId,jdbcType=VARCHAR},
-      work_time = #{workTime,jdbcType=TIMESTAMP},
+      work_time = #{workTime,jdbcType=DATE},
       service_end_time = #{serviceEndTime,jdbcType=TIMESTAMP},
       service_start_time = #{serviceStartTime,jdbcType=TIMESTAMP},
       openid = #{openid,jdbcType=VARCHAR},
@@ -244,13 +244,13 @@
     SELECT
     <include refid="Base_Column_List" />
     FROM customer_appointment
-    where openid = #{openid,jdbcType=VARCHAR} and shop_id = #{shopId,jdbcType=VARCHAR} and work_time = #{workTime,jdbcType=TIMESTAMP}
+    where openid = #{openid,jdbcType=VARCHAR} and shop_id = #{shopId,jdbcType=VARCHAR} and work_time = #{workTime,jdbcType=DATE}
   </select>
 
   <select id="showAppointmentByTimeAndShop" resultMap="BaseResultMap">
      SELECT c.*,p.*
       FROM customer_appointment c LEFT JOIN pet_appointment p ON c.appointment_id = p.appointment_id
-      WHERE c.shop_id = #{shopId} and c.work_time = #{workTime}
+      WHERE c.shop_id = #{shopId,jdbcType=VARCHAR} and c.work_time = #{workTime,jdbcType=DATE}
       order by oppointment_time
   </select>
 
