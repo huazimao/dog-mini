@@ -44,6 +44,7 @@ public class SystemController {
         Integer id = Integer.parseInt(request.getParameter("id"));
         Integer isAppTow = Integer.parseInt(request.getParameter("isAppTow"));
         Integer switchStatue = Integer.parseInt(request.getParameter("switchStatue"));
+        String board = request.getParameter("board");
 
         SystemSetting systemSetting = new SystemSetting();
         systemSetting.setId(id);
@@ -51,6 +52,7 @@ public class SystemController {
         systemSetting.setServiceStartTime(DateUtil.str2Date(service_start_time));
         systemSetting.setServiceEndTime(DateUtil.str2Date(service_end_time));
         systemSetting.setSubmitTime(new Date());
+        systemSetting.setBoard(board);
         systemSetting.setIsAppTow(isAppTow);
         systemSetting.setSwitchStatue(switchStatue);
 
@@ -71,10 +73,10 @@ public class SystemController {
         Gson gson = new Gson();
         Map map = new HashMap();
         SystemSetting systemSetting = systemSettingService.getSySettingByShopIdAndTime(shopId,workTime);
-        systemSetting.setEndStr(new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm").create().toJson(systemSetting.getServiceEndTime()));
-        systemSetting.setStartStr(new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm").create().toJson(systemSetting.getServiceStartTime()));
-        log.info(systemSetting.getEndStr());
-        log.info(systemSetting.getServiceEndTime());
+        if (systemSetting != null) {
+            systemSetting.setEndStr(new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm").create().toJson(systemSetting.getServiceEndTime()));
+            systemSetting.setStartStr(new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm").create().toJson(systemSetting.getServiceStartTime()));
+        }
         map.put("systemSetting", systemSetting);
         return gson.toJson(map);
     }

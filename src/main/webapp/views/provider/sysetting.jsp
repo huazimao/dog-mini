@@ -9,14 +9,16 @@
     <title>商家系统设置</title>
     <link rel="stylesheet" href="${context}/css/weui.css">
     <link rel="stylesheet" href="${context}/css/example.css">
+
+
     <script type="text/javascript" src="${context}/js/jquery-2.1.1.min.js"></script>
 </head>
-
 <body>
     <div class="weui-tab">
         <div class="weui-navbar">
             <input type="hidden" id="time_hidden" name="workTime" value="今天">
             <input type="hidden" id="id" name="id" value="">
+
             <div class="weui-navbar__item weui-bar__item_on">
                 <div class="item-t">今天</div>
                 <div class="item-b">
@@ -56,6 +58,12 @@
                         <input class="weui-input" type="datetime-local" value="" placeholder="" id="serviceEndTime" name="serviceEndTime"/>
                     </div>
                 </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <textarea class="weui-textarea" placeholder="请输入店铺公告" rows="3" id="board"></textarea>
+                        <div class="weui-textarea-counter"></div>
+                    </div>
+                </div>
             </div>
             <div class="weui-cells weui-cells_form">
                 <div class="weui-cell weui-cell_switch">
@@ -84,13 +92,13 @@
             </div>
         </div>
     </div>
-<div id="toast" style="display: none;">
-    <div class="weui-mask_transparent"></div>
-    <div class="weui-toast">
-        <i class="weui-icon-success-no-circle weui-icon_toast"></i>
-        <p class="weui-toast__content">设置成功</p>
+    <div id="toast" style="display: none;">
+        <div class="weui-mask_transparent"></div>
+        <div class="weui-toast">
+            <i class="weui-icon-success-no-circle weui-icon_toast"></i>
+            <p class="weui-toast__content">设置成功</p>
+        </div>
     </div>
-</div>
 
 <script src="${context}/js/zepto.min.js"></script>
 <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
@@ -142,6 +150,7 @@
         var serviceStartTime = renderTime($("#serviceStartTime").val());
         var serviceEndTime = renderTime($("#serviceEndTime").val());
         var shopName = document.getElementById("shopId").innerText.trim();
+        var board = $("#board").text();
         //isAppTow = $("#isAppTow").val();
 
         //switchStatue = $("#switchStatue").val();
@@ -170,6 +179,7 @@
                 "workTime":workTime,
                 "serviceStartTime":serviceStartTime,
                 "serviceEndTime":serviceEndTime,
+                "board":board,
                 "shopId":shopId,
                 "id":id,
                 "isAppTow":isAppTow,
@@ -323,6 +333,7 @@
                 $("#id").val(systemSetting.id);
                 var start = dealDate(systemSetting.startStr);
                 var end = dealDate(systemSetting.endStr);
+                $("#board").text(systemSetting.board);
                 $("#serviceStartTime").val(start);
                 $("#serviceEndTime").val(end);
                 var switchStatue = systemSetting.switchStatue;

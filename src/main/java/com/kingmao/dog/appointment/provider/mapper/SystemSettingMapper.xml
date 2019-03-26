@@ -14,13 +14,14 @@
     <result column="skiller_factor" jdbcType="DOUBLE" property="skillerFactor" />
     <result column="work_time" jdbcType="DATE" property="workTime" />
     <result column="submit_time" jdbcType="TIMESTAMP" property="submitTime" />
+    <result column="board" jdbcType="VARCHAR" property="board" />
     <result column="is_app_tow" jdbcType="INTEGER" property="isAppTow" />
     <result column="switch_statue" jdbcType="INTEGER" property="switchStatue" />
     <result column="enabled" jdbcType="INTEGER" property="enabled" />
   </resultMap>
   <sql id="Base_Column_List">
     id, shop_id, service_start_time, service_end_time, timeout, limite, trainee_num,
-    trainee_factor, skiller_num, skiller_factor, work_time, submit_time, is_app_tow,
+    trainee_factor, skiller_num, skiller_factor, work_time, submit_time, board,is_app_tow,
     switch_statue, enabled
   </sql>
 
@@ -62,6 +63,9 @@
             </if>
             <if test="submitTime != null">
                 submit_time,
+            </if>
+            <if test="board != null">
+                board,
             </if>
             <if test="isAppTow != null">
                 is_app_tow,
@@ -109,6 +113,9 @@
             </if>
             <if test="submitTime != null">
                 #{submitTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="board != null">
+                #{board,jdbcType=VARCHAR},
             </if>
             <if test="isAppTow != null">
                 #{isAppTow,jdbcType=INTEGER},
@@ -158,6 +165,9 @@
       <if test="submitTime != null">
         submit_time = #{submitTime,jdbcType=TIMESTAMP},
       </if>
+        <if test="board != null">
+            board = #{board,jdbcType=VARCHAR},
+        </if>
       <if test="isAppTow != null">
         is_app_tow = #{isAppTow,jdbcType=INTEGER},
       </if>
@@ -174,7 +184,7 @@
   <select id="getSySettingByShopIdAndTime"  resultMap="BaseResultMap">
     select
     id,shop_id, service_start_time, service_end_time, timeout, limite, trainee_num,
-    trainee_factor, skiller_num, skiller_factor, work_time, submit_time, is_app_tow,
+    trainee_factor, skiller_num, skiller_factor, work_time, submit_time, board, is_app_tow,
     switch_statue, enabled
     from system_setting
     where shop_id = #{shopId,jdbcType=INTEGER} and work_time = #{workTime,jdbcType=TIMESTAMP}

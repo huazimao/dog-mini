@@ -1,0 +1,51 @@
+.weui-navbar {
+	position: static;
+}
+.address-name {
+	text-align: right;
+	height:50px;
+	width: 100%;
+	line-height: 50px;
+	padding-right:30px;
+	border-bottom: 1px solid #ddd;
+}
+.lists .weui-cell {
+	padding:10px;
+}
+.lists .weui-cell .weui-cell__hd {
+	width: 80px;
+	height: 80px;
+	overflow: hidden;
+	margin-right: 10px;
+}
+.lists .weui-cell .weui-cell__hd img {
+	width: 100%;
+	height: 100%;
+}
+.lists .weui-cell .weui-cell__bd .customer-name {
+	font-size:18px;
+}
+.lists .weui-cell .weui-cell__bd .customer-start-time {
+	font-size:14px;
+}
+.lists .weui-cell .weui-cell__bd .customer-end-time {
+	font-size:14px;
+}
+.lists .weui-cell .customer-pet {
+	font-size:12px;
+	margin-right: 10px;
+}
+.lists .weui-cell .weui-cell__ft a {
+	display: block;
+}
+.weui-btn_mini {
+	padding:0 5px;
+}
+.lists .weui-cell .weui-cell__hd {
+	position: relative;
+}
+.lists .weui-cell .weui-cell__hd .weui-badge {
+	position: absolute;
+	right:0.5px;
+	top:0.5px;
+}
