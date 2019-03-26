@@ -72,11 +72,13 @@ public class ProviderController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "cancelOrDoneApponitment.do",produces = {"application/json;charset=UTF-8"})
-    public String cancelOrDoneApponitment(@RequestBody CustomerAppointment customerAppointment){
+    @RequestMapping(value = "doneApponitment.do",produces = {"application/json;charset=UTF-8"})
+    public String doneApponitment(@RequestBody CustomerAppointment customerAppointment){
         Gson gson = new Gson();
         String ret = "fail";
         Map<String, Object> map = new HashMap<String, Object>();
+        customerAppointment.setAppointmentState(2);
+        customerAppointment.setAccFinishedTime(DateUtil.getYMD(new Date()));
         boolean flag = customerService.cancelOrDoneApponitment(customerAppointment);
 
         //完成洗护，发送模板消息
@@ -96,6 +98,31 @@ public class ProviderController {
         return gson.toJson(map);
     }
 
+    /**
+     * 商家撤单
+     * @param customerAppointment
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "cancelApponitment.do",produces = {"application/json;charset=UTF-8"})
+    public String cancelApponitment(@RequestBody CustomerAppointment customerAppointment){
+        Gson gson = new Gson();
+        Map<String, Object> map = new HashMap<String, Object>();
+        customerAppointment.setAppointmentState(3);
+        customerAppointment.setAccFinishedTime(DateUtil.getYMD(new Date()));
+        boolean flag = customerService.cancelOrDoneApponitment(customerAppointment);
+        if (flag) {
+            map.put("type", 1);
+        }else {
+            map.put("type", 0);
+            map.put("msg","撤单失败，请人工标注！");
+        }
+
+        return gson.toJson(map);
+    }
+
+
+
     public String dealMsg(CustomerAppointment customerAppointment){
         String shopId = customerAppointment.getShopId();
         String accTime = DateUtil.date2Str(DateUtil.getYMD(new Date()));
@@ -107,6 +134,9 @@ public class ProviderController {
             case "lj":
                 shopName = "龙江店";
                 break;
+            case "rg":
+                shopName = "容桂店";
+                break;
         }
 
         String msg = "{\n" +
@@ -115,7 +145,7 @@ public class ProviderController {
                 "\t\"form_id\": "+customerAppointment.getFormId()+",\n" +
                 "\t\"data\": {\n" +
                 "\t\t\"keyword1\": {\n" +
-                "\t\t\t\"value\": \"洗护服务\",\n" +
+                "\t\t\t\"value\": \"洗护服务已完成！\",\n" +
                 "\t\t\t\"color\": \"#4a4a4a\"\n" +
                 "\t\t},\n" +
                 "\t\t\"keyword2\": {\n" +
