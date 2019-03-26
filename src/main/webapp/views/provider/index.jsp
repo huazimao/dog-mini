@@ -6,9 +6,12 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" href="../../css/weui.css">
-    <link rel="stylesheet" href="../../css/example.css">
+    <link rel="stylesheet" href="${context}/css/weui.css">
+    <link rel="stylesheet" href="${context}/css/example.css">
     <script src="${context}/js/jquery-2.1.1.min.js"></script>
+    <script>
+        var path = '${context}';
+    </script>
 </head>
 
 <body>
@@ -40,5 +43,18 @@
 <script src="https://res.wx.qq.com/open/libs/weuijs/1.0.0/weui.min.js"></script>
 <script src="${context}/js/example.js"></script>
 </body>
-<script src="${context}/js/login/t.js"></script>
+<script>
+    function o1() {
+        window.location.href= path + '/provider/go2appointmentPage.do?shopId=lj';
+
+    }
+
+    function o2() {
+        window.location.href= path + '/provider/go2appointmentPage.do?shopId=ls';
+    }
+
+    function o3() {
+        window.location.href= path + '/provider/go2appointmentPage.do?shopId=rg';
+    }
+</script>
 </html>

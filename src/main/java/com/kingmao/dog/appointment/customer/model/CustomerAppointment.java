@@ -14,6 +14,10 @@ public class CustomerAppointment {
 
     private Date serviceStartTime;
 
+    private String nickName;
+
+    private String wxImg;
+
     private String openid;
 
     private String phone;
@@ -39,6 +43,22 @@ public class CustomerAppointment {
     private String formId;
 
     private List<PetAppointment> petLists;
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public String getWxImg() {
+        return wxImg;
+    }
+
+    public void setWxImg(String wxImg) {
+        this.wxImg = wxImg;
+    }
 
     public String getFormId() {
         return formId;

@@ -61,7 +61,12 @@ public class ProviderController {
             workTime = new Date();
         }
         List<CustomerAppointment> customerAppointmentList = customerService.showAppointmentByTimeAndShop(shopId, workTime);
-        map.put("list", customerAppointmentList);
+        if (customerAppointmentList.size() > 0) {
+            map.put("type", 1);
+            map.put("list", customerAppointmentList);
+        }else {
+            map.put("type", 0);
+        }
         return gson.toJson(map);
     }
 

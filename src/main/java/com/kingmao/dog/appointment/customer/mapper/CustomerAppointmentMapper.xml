@@ -9,6 +9,8 @@
     <result column="service_start_time" jdbcType="TIMESTAMP" property="serviceStartTime" />
     <result column="openid" jdbcType="VARCHAR" property="openid" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+    <result column="wx_img" jdbcType="VARCHAR" property="wxImg" />
     <result column="address" jdbcType="VARCHAR" property="address" />
     <result column="ispickup" jdbcType="INTEGER" property="ispickup" />
     <result column="oppointment_time" jdbcType="TIMESTAMP" property="oppointmentTime" />
@@ -248,7 +250,8 @@
 
   <select id="showAppointmentByTimeAndShop" resultMap="BaseResultMap">
      SELECT c.*,p.*
-      FROM customer_appointment c LEFT JOIN pet_appointment p ON c.appointment_id = p.appointment_id
+      FROM (SELECT c1.*,c2.wx_img,c2.nick_name FROM customer_appointment c1 LEFT JOIN client c2 ON c1.openid = c2.openid ) c
+      LEFT JOIN pet_appointment p ON c.appointment_id = p.appointment_id
       WHERE c.shop_id = #{shopId,jdbcType=VARCHAR} and c.work_time = #{workTime,jdbcType=DATE}
       order by oppointment_time
   </select>

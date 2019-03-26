@@ -9,9 +9,11 @@
     <title>商家系统设置</title>
     <link rel="stylesheet" href="${context}/css/weui.css">
     <link rel="stylesheet" href="${context}/css/example.css">
-
-
     <script type="text/javascript" src="${context}/js/jquery-2.1.1.min.js"></script>
+    <script>
+        var path = '${context}';
+    </script>
+
 </head>
 <body>
     <div class="weui-tab">
@@ -173,7 +175,7 @@
         }
         $.ajax({
             type:"post",
-            url:getRootPath_dc() + "/provider/saveOrUptSetting.do",
+            url:path + "/provider/saveOrUptSetting.do",
             dataType:"json",
             data:{
                 "workTime":workTime,
@@ -321,7 +323,7 @@
         }
         $.ajax({
             type:"post",
-            url:getRootPath_dc() + "/provider/getSySettingByShopIdAndTime.do",
+            url:path + "/provider/getSySettingByShopIdAndTime.do",
             dataType:"json",
             data:{
                 "shopId":shopId,
