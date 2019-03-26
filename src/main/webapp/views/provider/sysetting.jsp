@@ -67,7 +67,7 @@
             </div>
             <div class="weui-cells weui-cells_form">
                 <div class="weui-cell weui-cell_switch">
-                    <div class="weui-cell__bd">自动开启第三天预约</div>
+                    <div class="weui-cell__bd">自动开启预约功能</div>
                     <div class="weui-cell__ft">
                         <label for="isAppTow" class="weui-switch-cp">
                             <input id="isAppTow" class="weui-switch-cp__input" type="checkbox" name="isAppTow"/>

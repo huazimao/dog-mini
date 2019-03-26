@@ -28,10 +28,12 @@ public class ScheduleApi {
         SystemSetting lssystemSettingByDefault = systemSettingService.getSySettingByShopIdAndTime("ls",DateUtil.getYMD2(new Date()));
         SystemSetting rgsystemSettingByDefault = systemSettingService.getSySettingByShopIdAndTime("rg",DateUtil.getYMD2(new Date()));
 
-        //获取三天后的时间
-        Date twoDaysLater = DateUtil.getDatePlus(DateUtil.getYMD2(new Date()));
+        //获取第四天的时间
+        Date threeDaysLater = DateUtil.getDatePlus(DateUtil.getYMD2(new Date()));
         if (null != ljsystemSettingByDefault && ljsystemSettingByDefault.getIsAppTow() == 1) {
-            ljsystemSettingByDefault.setWorkTime(twoDaysLater);
+            ljsystemSettingByDefault.setServiceStartTime(DateUtil.getPlusByTime(ljsystemSettingByDefault.getServiceStartTime(),3));
+            ljsystemSettingByDefault.setServiceEndTime(DateUtil.getPlusByTime(ljsystemSettingByDefault.getServiceEndTime(),3));
+            ljsystemSettingByDefault.setWorkTime(threeDaysLater);
             ljsystemSettingByDefault.setSubmitTime(new Date());
             boolean flaglj = systemSettingService.insertSysSetting(ljsystemSettingByDefault);
             if (flaglj) {
@@ -39,7 +41,9 @@ public class ScheduleApi {
             }
         }
         if (null != lssystemSettingByDefault && lssystemSettingByDefault.getIsAppTow() == 1) {
-            lssystemSettingByDefault.setWorkTime(twoDaysLater);
+            lssystemSettingByDefault.setServiceStartTime(DateUtil.getPlusByTime(lssystemSettingByDefault.getServiceStartTime(),3));
+            lssystemSettingByDefault.setServiceEndTime(DateUtil.getPlusByTime(lssystemSettingByDefault.getServiceEndTime(),3));
+            lssystemSettingByDefault.setWorkTime(threeDaysLater);
             lssystemSettingByDefault.setSubmitTime(new Date());
             boolean flagls = systemSettingService.insertSysSetting(lssystemSettingByDefault);
             if (flagls) {
@@ -47,7 +51,9 @@ public class ScheduleApi {
             }
         }
         if (null != rgsystemSettingByDefault && rgsystemSettingByDefault.getIsAppTow() == 1) {
-            rgsystemSettingByDefault.setWorkTime(twoDaysLater);
+            rgsystemSettingByDefault.setServiceStartTime(DateUtil.getPlusByTime(rgsystemSettingByDefault.getServiceStartTime(),3));
+            rgsystemSettingByDefault.setServiceEndTime(DateUtil.getPlusByTime(rgsystemSettingByDefault.getServiceEndTime(),3));
+            rgsystemSettingByDefault.setWorkTime(threeDaysLater);
             rgsystemSettingByDefault.setSubmitTime(new Date());
             boolean flagrg = systemSettingService.insertSysSetting(rgsystemSettingByDefault);
             if (flagrg) {

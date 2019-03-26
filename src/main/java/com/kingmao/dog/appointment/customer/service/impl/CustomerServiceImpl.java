@@ -147,4 +147,14 @@ public class CustomerServiceImpl implements CustomerService {
         }
         return flag;
     }
+
+    /**
+     * 客户修改预约信息
+     * @param customerAppointment
+     * @return
+     */
+    @Override
+    public boolean updateAppointment(CustomerAppointment customerAppointment) {
+        return customerAppointmentMapper.updateByPrimaryKeySelective(customerAppointment)>0;
+    }
 }

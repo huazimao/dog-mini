@@ -20,7 +20,7 @@ public class ScheduleTask{
     private AccessTokenApi accessTokenApi;
 
 
-    @Scheduled(cron = "0 0 23 * * ?")
+    @Scheduled(cron = "0 0 15 * * ?")
     public void firstScheduledTasks(){
         System.out.println("开始执行店铺设置任务。");
         scheduleApi.getSchedul();

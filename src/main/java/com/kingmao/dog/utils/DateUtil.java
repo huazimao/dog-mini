@@ -218,6 +218,20 @@ public class DateUtil {
         return date1;
     }
 
+    public static Date getPlusByTime(Date date,Integer days){
+        Calendar calendar=Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(calendar.DATE,days);
+        return calendar.getTime();
+    }
+
+    public static void main(String[] args) {
+        String str = "2019-03-22 11:36:00";
+        Date date = str2Date(str);
+        System.out.println(getPlusByTime(date,10));
+    }
+
+
     /**
      *
      * @param serviceStarTime
@@ -237,10 +251,6 @@ public class DateUtil {
         }
     }
 
-    public static void main(String[] args) {
-        String accTime = DateUtil.date2Str(DateUtil.getYMD(new Date()));
-        System.out.println(accTime);
-    }
 
     /**
      * 输入分子分母，得出比例

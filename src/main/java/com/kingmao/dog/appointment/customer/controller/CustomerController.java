@@ -47,12 +47,11 @@ public class CustomerController {
     @ResponseBody
     @RequestMapping("appointmentPage.do")
     public String appointmentPage(CustomerAppointment customerAppointment) {
-        log.info("进入到客户预约界面，收到参数为：" + "shopId=" + customerAppointment.getShopId() + "workTime=" + customerAppointment.getWorkTime());
+        log.info("进入到客户预约界面，收到参数为：" + "shopId=" + customerAppointment.getShopId() + "workTime=" + customerAppointment.getWorkTime() + "openid=" + customerAppointment.getOpenid());
         String shopId = customerAppointment.getShopId();
         Date workTime = customerAppointment.getWorkTime();
         Gson gson = new Gson();
         Map<String, Object> map = new HashMap<String, Object>();
-        customerAppointment.setOpenid("opend");
 
         //查询当日该店总开关
         SystemSetting systemSetting = systemSettingService.getSySettingByShopIdAndTime(shopId, workTime);
@@ -73,27 +72,32 @@ public class CustomerController {
     }
 
     /**
-     * 客户预约洗护服务
+     * 客户预约/修改洗护服务
      * @param customerAppointment
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "appointment.do" ,produces = {"application/json;charset=UTF-8"})
-    public String getAppointment(@RequestBody CustomerAppointment customerAppointment){
+    public String getAppointment(CustomerAppointment customerAppointment){
         log.info("客户预约接收到的参数为：" + customerAppointment.toString());
         customerAppointment.setOpenid("aaaaaaa");
         customerAppointment.setOppointmentTime(new Date());
         Gson gson = new Gson();
         Map<String, Object> map = new HashMap<String, Object>();
-        if (customerService.insertAppointment(customerAppointment)){
-            map.put("type", 1);
+        if (customerAppointment.getAppointmentId() != null) {
+            if (customerService.insertAppointment(customerAppointment)){
+                map.put("type", 1);
+            }
+        }else {
+            if (customerService.updateAppointment(customerAppointment)) {
+                map.put("type", 1);
+            }
         }
 
         return gson.toJson(map);
     }
 
     /**
-     * 点击 预约时发出请求
      * 查询客户最近一次预约记录，并填充到预约信息中
      * @param shopId
      * @param openid
@@ -121,7 +125,8 @@ public class CustomerController {
      */
     @ResponseBody
     @RequestMapping(value = "cancelApponitment.do")
-    public String cancelOrDoneApponitment(@RequestBody CustomerAppointment customerAppointment){
+    public String cancelOrDoneApponitment(CustomerAppointment customerAppointment){
+        customerAppointment.setAppointmentState(4);
         Gson gson = new Gson();
         Map<String, Object> map = new HashMap<String, Object>();
         boolean flag = customerService.cancelOrDoneApponitment(customerAppointment);

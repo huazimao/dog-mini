@@ -183,11 +183,9 @@
 
   <select id="getSySettingByShopIdAndTime"  resultMap="BaseResultMap">
     select
-    id,shop_id, service_start_time, service_end_time, timeout, limite, trainee_num,
-    trainee_factor, skiller_num, skiller_factor, work_time, submit_time, board, is_app_tow,
-    switch_statue, enabled
+    <include refid="Base_Column_List"/>
     from system_setting
-    where shop_id = #{shopId,jdbcType=INTEGER} and work_time = #{workTime,jdbcType=TIMESTAMP}
+    where shop_id = #{shopId,jdbcType=VARCHAR} and work_time = #{workTime,jdbcType=DATE}
   </select>
 
 </mapper>

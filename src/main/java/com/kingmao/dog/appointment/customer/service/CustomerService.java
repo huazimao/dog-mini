@@ -30,4 +30,6 @@ public interface CustomerService {
     List<CustomerAppointment> getLastAppointHistory(String shopId,String openid);
 
     boolean insertClient(Client client);
+
+    boolean updateAppointment(CustomerAppointment customerAppointment);
 }
