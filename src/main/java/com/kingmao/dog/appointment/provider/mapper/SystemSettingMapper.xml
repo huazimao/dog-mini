@@ -28,9 +28,6 @@
     <insert id="insertSelective" parameterType="com.kingmao.dog.appointment.provider.model.SystemSetting">
         insert into system_setting
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                id,
-            </if>
             <if test="shopId != null">
                 shop_id,
             </if>
@@ -78,9 +75,6 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                #{id,jdbcType=INTEGER},
-            </if>
             <if test="shopId != null">
                 #{shopId,jdbcType=VARCHAR},
             </if>

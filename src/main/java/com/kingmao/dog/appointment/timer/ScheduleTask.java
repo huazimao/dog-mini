@@ -21,6 +21,7 @@ public class ScheduleTask{
 
 
     @Scheduled(cron = "0 0 15 * * ?")
+//    @Scheduled(fixedRate = 60 * 1000 * 60)
     public void firstScheduledTasks(){
         System.out.println("开始执行店铺设置任务。");
         scheduleApi.getSchedul();
