@@ -42,6 +42,26 @@ public class CustomerAppointment {
 
     private String formId;
 
+    private String appStr;
+
+    private String accStr;
+
+    public String getAppStr() {
+        return appStr;
+    }
+
+    public void setAppStr(String appStr) {
+        this.appStr = appStr;
+    }
+
+    public String getAccStr() {
+        return accStr;
+    }
+
+    public void setAccStr(String accStr) {
+        this.accStr = accStr;
+    }
+
     private List<PetAppointment> petLists;
 
     public String getNickName() {

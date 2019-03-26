@@ -45,6 +45,16 @@ public class DateUtil {
     }
 
     /**
+     * 返回时分
+     * @param date
+     * @return
+     */
+    public static String getStrMS(Date date){
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        return sdf.format(date);
+    }
+
+    /**
      * 返回时间，2019-02-26 10:36
      * @param date
      * @return

@@ -62,6 +62,11 @@ public class ProviderController {
         }
         List<CustomerAppointment> customerAppointmentList = customerService.showAppointmentByTimeAndShop(shopId, workTime);
         if (customerAppointmentList.size() > 0) {
+            for (CustomerAppointment c : customerAppointmentList) {
+                c.setAppStr(DateUtil.getStrMS(c.getOppointmentTime()));
+                c.setAccStr(DateUtil.getStrMS(c.getAccFinishedTime()));
+                c.setFormId("df2dfg4dfg42");
+            }
             map.put("type", 1);
             map.put("list", customerAppointmentList);
         }else {

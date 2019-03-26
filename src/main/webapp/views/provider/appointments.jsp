@@ -9,6 +9,8 @@
     <title>商家系统设置</title>
     <link rel="stylesheet" href="${context}/css/weui.css">
     <link rel="stylesheet" href="${context}/css/example.css">
+    <link rel="stylesheet" href="${context}/css/common.css">
+    <link rel="stylesheet" href="${context}/css/lists.css">
     <script type="text/javascript" src="${context}/js/jquery-2.1.1.min.js"></script>
     <script>
         var path = '${context}';
@@ -43,128 +45,39 @@
             </div>
         </div>
     </div>
-    <div class="weui-tab__panel">
-        <div class="weui-cells weui-cells_form">
-            <div class="weui-cell">
-                <div class="weui-cell__hd"><label class="weui-label" id="shopId">龙江店</label></div>
-            </div>
+    <div class="address-name">
+        龙江店
+    </div>
+    <div class="weui-tab__bd">
+        <div id="tab1" class="weui-tab__bd-item">
             <div class="lists">
+                <div class="weui-cells">
 
 
 
+                </div>
             </div>
-
-
-
-
         </div>
-    </div>
-</div>
-<div id="toast" style="display: none;">
-    <div class="weui-mask_transparent"></div>
-    <div class="weui-toast">
-        <i class="weui-icon-success-no-circle weui-icon_toast"></i>
-        <p class="weui-toast__content">设置成功</p>
-    </div>
-</div>
 
+    </div>
+
+</div>
 <script src="${context}/js/zepto.min.js"></script>
 <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script src="https://res.wx.qq.com/open/libs/weuijs/1.0.0/weui.min.js"></script>
 <script src="${context}/js/example.js"></script>
 <script src="${context}/js/sysetting.js"></script>
-<script>
-
-    function showOK() {
-        var $toast = $('#toast');
-        if ($toast.css('display') != 'none') return;
-
-        $toast.fadeIn(100);
-        setTimeout(function () {
-            $toast.fadeOut(100);
-        }, 1000);
-    }
+<script type="text/javascript">
 
     // 点击时间按钮
     $('.weui-navbar__item').on('click', function () {
         $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
         var _date = $(".weui-tab .weui-navbar .weui-bar__item_on .item-t").text();
+        alert(_date);
         $("#time_hidden").val(_date);
         getDefaultSetting();
 
     });
-
-    //点击确定按钮
-    $('#showTooltips').on('click', function(){
-        var workTime = $("#time_hidden").val();
-        var date = '';
-        if (workTime == "今天"){
-            date = GetDateStr(0);
-        }else if (workTime == "明天"){
-            date = GetDateStr(1);
-        }else {
-            date = GetDateStr(2);
-        }
-
-        save(date);
-    });
-
-    //保存设置
-    function save(date) {
-        var isAppTow = 0;
-        var switchStatue = 0;
-        var id = $("#id").val();
-        var workTime = date;
-        var serviceStartTime = renderTime($("#serviceStartTime").val());
-        var serviceEndTime = renderTime($("#serviceEndTime").val());
-        var shopName = document.getElementById("shopId").innerText.trim();
-        var board = $("#board").text();
-        //isAppTow = $("#isAppTow").val();
-
-        //switchStatue = $("#switchStatue").val();
-        //console.log("isAppTow=" + isAppTow + "switchStatue=" + switchStatue);
-
-        if($('#isAppTow').is(':checked')) {
-            isAppTow = 1;
-        }
-        if($('#switchStatue').is(':checked')) {
-            switchStatue = 1;
-        }
-
-        var shopId = "";
-        if (shopName == "龙江店"){
-            shopId = 'lj';
-        }else if (shopName == "龙山店"){
-            shopId = "ls";
-        }else if(shopName == "容桂店"){
-            shopId = 'rg';
-        }
-        $.ajax({
-            type:"post",
-            url:path + "/provider/saveOrUptSetting.do",
-            dataType:"json",
-            data:{
-                "workTime":workTime,
-                "serviceStartTime":serviceStartTime,
-                "serviceEndTime":serviceEndTime,
-                "board":board,
-                "shopId":shopId,
-                "id":id,
-                "isAppTow":isAppTow,
-                "switchStatue":switchStatue
-            },
-            success:function (data) {
-                console.info(data);
-                if (data == 1){
-                    showOK();
-                }
-            }
-
-        });
-
-
-    }
-
 
     // 带T时间的转换
     function renderTime(date) {
@@ -243,6 +156,16 @@
         getDefaultSetting();
     });
 
+    //完成服务
+    function doneApp(openid,formId,appointmentId) {
+        alert("完成服务：" + openid + formId + appointmentId);
+    }
+
+    //撤单
+    function cancelApp(appointmentId) {
+        alert("撤单：" + appointmentId);
+    }
+
     // 获取默认设置
     function getDefaultSetting() {
         var workTime = $("#time_hidden").val();
@@ -254,15 +177,14 @@
         }else {
             date = GetDateStr(2);
         }
-        var shopName = document.getElementById("shopId").innerText.trim();
-        var shopId = "";
-        if (shopName == "龙江店"){
+        var shopId = "lj";
+        /*if (shopName == "龙江店"){
             shopId = 'lj';
         }else if (shopName == "龙山店"){
             shopId = "ls";
         }else if(shopName == "容桂店"){
             shopId = 'rg';
-        }
+        }*/
         $.ajax({
             type:"post",
             url:path + "/provider/showAppointmentByTimeAndShop.do",
@@ -273,46 +195,77 @@
             },
             success:function (data) {
                 console.log(data.list);
-                if (data.list.type == 1){
+                if (data.type == 1){
+                    console.log("leng:" + data.list.length);
                     for (var i = 0;i<data.list.length;i++){
                         var app = data.list[i];
-                        var _html = '<div class="weui-cells"';
+                        var _html = '<div class="weui-cell">';
                             _html += '<div class="weui-cell__hd">';
                             _html += '<img src="app.wxImg">';
                             _html += '<span class="weui-badge">3</span>';
-                            _html += ' </div>';
-                            _html += ' <div class="weui-cell__bd">';
-                            _html += ' <p class="customer-name">'+ app.nickName +'</p>';
-                            _html += '<p class="customer-start-time">'+ app.oppointmentTime + '</p>';
-                            _html += '<p class="customer-end-time">'+app.countFinishedTime +'</p>';
+                            _html += '</div>';
+                            _html += '<div class="weui-cell__bd">';
+                            _html += '<p class="customer-name">'+app.nickName+'</p>';
+                            _html += '<p class="customer-start-time">预约时间：'+app.appStr+'</p>';
+                            _html += '<p class="customer-end-time">完成时间：'+app.accStr+'</p>';
+                            _html += '</div>';
+                            _html += '<div class="weui-cell__ft">';
+                            for (var x = 0;x<app.petLists.length;x++){
+                                var pets = app.petLists[x];
+                                var _pets = '';
+                                switch (pets.size){
+                                    case 'mini':
+                                        _pets +="小型"
+                                        break;
+                                    case 'normal':
+                                        _pets +="中型"
+                                        break;
+                                    case 'large':
+                                        _pets +="大型"
+                                }
+                                switch (pets.kindPet){
+                                    case 'cat':
+                                        _pets +="猫"
+                                        break;
+                                    case 'dog':
+                                        _pets +="犬"
+                                        break;
+                                }
+                                switch (pets.kindService){
+                                    case 'wash':
+                                        _pets +="洗澡"
+                                        break;
+                                    case 'modeling':
+                                        _pets +="造型"
+                                        break;
+                                    case 'spa':
+                                        _pets +="SPA"
+                                        break;
+                                }
+                                _html += '<p class="customer-pet">'+_pets+'</p>';
+
+                            }
+                            _html += '</div>';
+                            _html += '<div class="weui-cell__ft">';
+                            switch (app.appointmentState){
+                                case 1:
+                                    _html += '<a href="javascript:doneApp('+app.openid+','+app.formId+','+app.appointmentId+')" class="weui-btn weui-btn_mini weui-btn_primary">去完成</a>';
+                                    _html += '<a href="javascript:cancelApp('+app.appointmentId +')" class="weui-btn weui-btn_mini weui-btn_warn">撤单</a>';
+                                    break;
+                                case 2:
+                                    _html += '<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default">已完成</a>';
+                                    break;
+                            }
+                            _html += '</div>';
                             _html += '</div>';
                         $(".lists").append(_html);
                     }
-
                 }
-            /*
-
-
-
-
-
-
-
-                <div class="weui-cell__ft">
-                    <p class="customer-pet">小型犬洗澡</p>
-                    <p class="customer-pet">大型犬洗澡</p>
-                    </div>
-                    <div class="weui-cell__ft">
-                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default">已通知</a>
-                 </div>
-            </div>
-            */
-
-
             }
-
         });
     }
+
+
 
     // 转换成带T的时间
     function dealDate(date) {
