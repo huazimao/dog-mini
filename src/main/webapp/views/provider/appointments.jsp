@@ -20,7 +20,7 @@
 <body>
 <div class="weui-tab">
     <div class="weui-navbar">
-        <input type="hidden" id="time_hidden" name="workTime" value="">
+        <input type="hidden" id="time_hidden" name="workTime" value="今天">
         <input type="hidden" id="shopId" name="shopId" value="${shopId}">
 
         <div class="weui-navbar__item weui-bar__item_on">
@@ -85,14 +85,6 @@
         getDefaultSetting();
 
     });
-
-    // 带T时间的转换
-    function renderTime(date) {
-        var dateee = new Date(date).toJSON();
-        return new Date(+new Date(dateee) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
-    }
-
-
 
     //获取今天 明天 后天
     function GetDateStr(AddDayCount) {
