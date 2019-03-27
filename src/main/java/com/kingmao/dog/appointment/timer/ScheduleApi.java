@@ -30,35 +30,29 @@ public class ScheduleApi {
 
         //获取第四天的时间
         Date threeDaysLater = DateUtil.getDatePlus(DateUtil.getYMD2(new Date()));
-        if (null != ljsystemSettingByDefault && ljsystemSettingByDefault.getIsAppTow() == 1) {
-            ljsystemSettingByDefault.setServiceStartTime(DateUtil.getPlusByTime(ljsystemSettingByDefault.getServiceStartTime(),3));
-            ljsystemSettingByDefault.setServiceEndTime(DateUtil.getPlusByTime(ljsystemSettingByDefault.getServiceEndTime(),3));
-            ljsystemSettingByDefault.setWorkTime(threeDaysLater);
-            ljsystemSettingByDefault.setSubmitTime(new Date());
-            boolean flaglj = systemSettingService.insertSysSetting(ljsystemSettingByDefault);
-            if (flaglj) {
-                log.info("龙江店默认设置自动生成------------成功！");
-            }
+        ljsystemSettingByDefault.setServiceStartTime(DateUtil.getPlusByTime(ljsystemSettingByDefault.getServiceStartTime(),3));
+        ljsystemSettingByDefault.setServiceEndTime(DateUtil.getPlusByTime(ljsystemSettingByDefault.getServiceEndTime(),3));
+        ljsystemSettingByDefault.setWorkTime(threeDaysLater);
+        ljsystemSettingByDefault.setSubmitTime(new Date());
+        boolean flaglj = systemSettingService.insertSysSetting(ljsystemSettingByDefault);
+        if (flaglj) {
+            log.info("龙江店默认设置自动生成------------成功！");
         }
-        if (null != lssystemSettingByDefault && lssystemSettingByDefault.getIsAppTow() == 1) {
-            lssystemSettingByDefault.setServiceStartTime(DateUtil.getPlusByTime(lssystemSettingByDefault.getServiceStartTime(),3));
-            lssystemSettingByDefault.setServiceEndTime(DateUtil.getPlusByTime(lssystemSettingByDefault.getServiceEndTime(),3));
-            lssystemSettingByDefault.setWorkTime(threeDaysLater);
-            lssystemSettingByDefault.setSubmitTime(new Date());
-            boolean flagls = systemSettingService.insertSysSetting(lssystemSettingByDefault);
-            if (flagls) {
-                log.info("龙山店默认设置自动生成------------成功！");
-            }
+        lssystemSettingByDefault.setServiceStartTime(DateUtil.getPlusByTime(lssystemSettingByDefault.getServiceStartTime(),3));
+        lssystemSettingByDefault.setServiceEndTime(DateUtil.getPlusByTime(lssystemSettingByDefault.getServiceEndTime(),3));
+        lssystemSettingByDefault.setWorkTime(threeDaysLater);
+        lssystemSettingByDefault.setSubmitTime(new Date());
+        boolean flagls = systemSettingService.insertSysSetting(lssystemSettingByDefault);
+        if (flagls) {
+            log.info("龙山店默认设置自动生成------------成功！");
         }
-        if (null != rgsystemSettingByDefault && rgsystemSettingByDefault.getIsAppTow() == 1) {
-            rgsystemSettingByDefault.setServiceStartTime(DateUtil.getPlusByTime(rgsystemSettingByDefault.getServiceStartTime(),3));
-            rgsystemSettingByDefault.setServiceEndTime(DateUtil.getPlusByTime(rgsystemSettingByDefault.getServiceEndTime(),3));
-            rgsystemSettingByDefault.setWorkTime(threeDaysLater);
-            rgsystemSettingByDefault.setSubmitTime(new Date());
-            boolean flagrg = systemSettingService.insertSysSetting(rgsystemSettingByDefault);
-            if (flagrg) {
-                log.info("容桂店默认设置自动生成------------成功！");
-            }
+        rgsystemSettingByDefault.setServiceStartTime(DateUtil.getPlusByTime(rgsystemSettingByDefault.getServiceStartTime(),3));
+        rgsystemSettingByDefault.setServiceEndTime(DateUtil.getPlusByTime(rgsystemSettingByDefault.getServiceEndTime(),3));
+        rgsystemSettingByDefault.setWorkTime(threeDaysLater);
+        rgsystemSettingByDefault.setSubmitTime(new Date());
+        boolean flagrg = systemSettingService.insertSysSetting(rgsystemSettingByDefault);
+        if (flagrg) {
+            log.info("容桂店默认设置自动生成------------成功！");
         }
     }
 }
