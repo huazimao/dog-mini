@@ -6,6 +6,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>请选择店铺</title>
     <link rel="stylesheet" href="${context}/css/weui.css">
     <link rel="stylesheet" href="${context}/css/example.css">
     <script src="${context}/js/jquery-2.1.1.min.js"></script>
@@ -25,7 +26,7 @@
     </a>
     <a class="weui-cell weui-cell_access" href="javascript:;"onclick="o2()">
         <div class="weui-cell__bd">
-            <p>龙江店</p>
+            <p>龙山店</p>
         </div>
         <div class="weui-cell__ft">
         </div>

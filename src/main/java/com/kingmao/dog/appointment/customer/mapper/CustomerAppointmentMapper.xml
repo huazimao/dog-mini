@@ -253,7 +253,7 @@
       FROM (SELECT c1.*,c2.wx_img,c2.nick_name FROM customer_appointment c1 LEFT JOIN client c2 ON c1.openid = c2.openid ) c
       LEFT JOIN pet_appointment p ON c.appointment_id = p.appointment_id
       WHERE c.shop_id = #{shopId,jdbcType=VARCHAR} and c.work_time = #{workTime,jdbcType=DATE}
-      order by oppointment_time
+      order by appointment_state desc, oppointment_time
   </select>
 
   <select id="getLastAppointHistory" parameterType="java.lang.String" resultMap="BaseResultMap">

@@ -19,7 +19,7 @@
     <div class="weui-tab">
         <div class="weui-navbar">
             <input type="hidden" id="time_hidden" name="workTime" value="今天">
-            <input type="hidden" id="id" name="id" value="">
+            <input type="hidden" id="systemSettingId" name="systemSettingId" value="">
 
             <div class="weui-navbar__item weui-bar__item_on">
                 <div class="item-t">今天</div>
@@ -46,7 +46,17 @@
         <div class="weui-tab__panel">
             <div class="weui-cells weui-cells_form">
                 <div class="weui-cell">
-                    <div class="weui-cell__hd"><label class="weui-label" id="shopId">龙江店</label></div>
+                    <div class="weui-cell__hd"><label class="weui-label" id="shopId">
+                        <c:if test="${shopId == 'lj'}">
+                            龙江店
+                        </c:if>
+                        <c:if test="${shopId == 'ls'}">
+                            龙山店
+                        </c:if>
+                        <c:if test="${shopId == 'rg'}">
+                            容桂店
+                        </c:if>
+                    </label></div>
                 </div>
                 <div class="weui-cell">
                     <div class="weui-cell__hd"><label for="" class="weui-label">开始时间</label></div>
@@ -64,17 +74,6 @@
                     <div class="weui-cell__bd">
                         <textarea class="weui-textarea" placeholder="请输入店铺公告" rows="3" id="board"></textarea>
                         <div class="weui-textarea-counter"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="weui-cells weui-cells_form">
-                <div class="weui-cell weui-cell_switch">
-                    <div class="weui-cell__bd">自动开启预约功能</div>
-                    <div class="weui-cell__ft">
-                        <label for="isAppTow" class="weui-switch-cp">
-                            <input id="isAppTow" class="weui-switch-cp__input" type="checkbox" name="isAppTow"/>
-                            <div class="weui-switch-cp__box"></div>
-                        </label>
                     </div>
                 </div>
             </div>
@@ -147,20 +146,16 @@
     function save(date) {
         var isAppTow = 0;
         var switchStatue = 0;
-        var id = $("#id").val();
+        var id = $("#systemSettingId").val();
         var workTime = date;
         var serviceStartTime = renderTime($("#serviceStartTime").val());
         var serviceEndTime = renderTime($("#serviceEndTime").val());
         var shopName = document.getElementById("shopId").innerText.trim();
-        var board = $("#board").text();
+        var board = $("#board").val();
         //isAppTow = $("#isAppTow").val();
 
         //switchStatue = $("#switchStatue").val();
         //console.log("isAppTow=" + isAppTow + "switchStatue=" + switchStatue);
-
-        if($('#isAppTow').is(':checked')) {
-            isAppTow = 1;
-        }
         if($('#switchStatue').is(':checked')) {
             switchStatue = 1;
         }
@@ -184,13 +179,13 @@
                 "board":board,
                 "shopId":shopId,
                 "id":id,
-                "isAppTow":isAppTow,
                 "switchStatue":switchStatue
             },
             success:function (data) {
                 console.info(data);
                 if (data == 1){
                     showOK();
+                    location.reload();
                 }
             }
 
@@ -303,6 +298,7 @@
 
     // 获取默认设置
     function getDefaultSetting() {
+        $("#board").text("");
         var workTime = $("#time_hidden").val();
         var date = null;
         if (workTime == "今天"){
@@ -332,7 +328,7 @@
             success:function (data) {
                 console.log(data.systemSetting);
                 var systemSetting = data.systemSetting;
-                $("#id").val(systemSetting.id);
+                $("#systemSettingId").val(systemSetting.id);
                 var start = dealDate(systemSetting.startStr);
                 var end = dealDate(systemSetting.endStr);
                 $("#board").text(systemSetting.board);
@@ -344,11 +340,6 @@
                     $("#switchStatue").prop("checked", true);
                 }else {
                     $("#switchStatue").prop("checked", false);
-                }
-                if (isAppTow == 1){
-                    $("#isAppTow").prop("checked", true);
-                }else {
-                    $("#isAppTow").prop("checked", false);
                 }
             }
 

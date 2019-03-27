@@ -42,7 +42,6 @@ public class SystemController {
         String service_start_time = request.getParameter("serviceStartTime");
         String service_end_time = request.getParameter("serviceEndTime");
         Integer id = Integer.parseInt(request.getParameter("id"));
-        Integer isAppTow = Integer.parseInt(request.getParameter("isAppTow"));
         Integer switchStatue = Integer.parseInt(request.getParameter("switchStatue"));
         String board = request.getParameter("board");
 
@@ -53,7 +52,6 @@ public class SystemController {
         systemSetting.setServiceEndTime(DateUtil.str2Date(service_end_time));
         systemSetting.setSubmitTime(new Date());
         systemSetting.setBoard(board);
-        systemSetting.setIsAppTow(isAppTow);
         systemSetting.setSwitchStatue(switchStatue);
 
         return systemSettingService.saveOrUptSetting(systemSetting) ? "1" : "0";
@@ -81,8 +79,13 @@ public class SystemController {
         return gson.toJson(map);
     }
 
+    /**
+     * 跳转店铺设置中间页
+     * @return
+     */
     @RequestMapping("go2defaultSettingPage.do")
-    public String getDog(){
+    public String getDog(HttpServletRequest request){
+        request.setAttribute("shopId",request.getParameter("shopId"));
         return "provider/sysetting";
     }
 }

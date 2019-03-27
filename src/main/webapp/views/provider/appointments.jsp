@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
-    <title>商家系统设置</title>
+    <title>预约列表</title>
     <link rel="stylesheet" href="${context}/css/weui.css">
     <link rel="stylesheet" href="${context}/css/example.css">
     <link rel="stylesheet" href="${context}/css/common.css">
@@ -20,8 +20,8 @@
 <body>
 <div class="weui-tab">
     <div class="weui-navbar">
-        <input type="hidden" id="time_hidden" name="workTime" value="今天">
-        <input type="hidden" id="id" name="id" value="">
+        <input type="hidden" id="time_hidden" name="workTime" value="">
+        <input type="hidden" id="shopId" name="shopId" value="${shopId}">
 
         <div class="weui-navbar__item weui-bar__item_on">
             <div class="item-t">今天</div>
@@ -46,7 +46,15 @@
         </div>
     </div>
     <div class="address-name">
-        龙江店
+        <c:if test="${shopId == 'lj'}">
+            龙江店
+        </c:if>
+        <c:if test="${shopId == 'ls'}">
+            龙山店
+        </c:if>
+        <c:if test="${shopId == 'rg'}">
+            容桂店
+        </c:if>
     </div>
     <div class="weui-tab__bd">
         <div id="tab1" class="weui-tab__bd-item">
@@ -73,7 +81,6 @@
     $('.weui-navbar__item').on('click', function () {
         $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
         var _date = $(".weui-tab .weui-navbar .weui-bar__item_on .item-t").text();
-        alert(_date);
         $("#time_hidden").val(_date);
         getDefaultSetting();
 
@@ -169,6 +176,7 @@
     // 获取默认设置
     function getDefaultSetting() {
         var workTime = $("#time_hidden").val();
+        var shopId = $("#shopId").val();
         var date = null;
         if (workTime == "今天"){
             date = GetDateStr(0);
@@ -177,14 +185,6 @@
         }else {
             date = GetDateStr(2);
         }
-        var shopId = "lj";
-        /*if (shopName == "龙江店"){
-            shopId = 'lj';
-        }else if (shopName == "龙山店"){
-            shopId = "ls";
-        }else if(shopName == "容桂店"){
-            shopId = 'rg';
-        }*/
         $.ajax({
             type:"post",
             url:path + "/provider/showAppointmentByTimeAndShop.do",
@@ -195,14 +195,14 @@
             },
             success:function (data) {
                 console.log(data.list);
+                $(".lists").text("");
                 if (data.type == 1){
-                    console.log("leng:" + data.list.length);
                     for (var i = 0;i<data.list.length;i++){
                         var app = data.list[i];
                         var _html = '<div class="weui-cell">';
                             _html += '<div class="weui-cell__hd">';
-                            _html += '<img src="app.wxImg">';
-                            _html += '<span class="weui-badge">3</span>';
+                            _html += '<img src='+app.wxImg+'>';
+                            // _html += '<span class="weui-badge">3</span>';
                             _html += '</div>';
                             _html += '<div class="weui-cell__bd">';
                             _html += '<p class="customer-name">'+app.nickName+'</p>';
@@ -249,7 +249,7 @@
                             _html += '<div class="weui-cell__ft">';
                             switch (app.appointmentState){
                                 case 1:
-                                    _html += '<a href="javascript:doneApp('+app.openid+','+app.formId+','+app.appointmentId+')" class="weui-btn weui-btn_mini weui-btn_primary">去完成</a>';
+                                    _html += '<a href="javascript:doneApp(\''+app.openid+'\',\''+app.formId+'\',\''+app.appointmentId+'\')" class="weui-btn weui-btn_mini weui-btn_primary">去完成</a>';
                                     _html += '<a href="javascript:cancelApp('+app.appointmentId +')" class="weui-btn weui-btn_mini weui-btn_warn">撤单</a>';
                                     break;
                                 case 2:
