@@ -185,7 +185,6 @@
                 console.info(data);
                 if (data == 1){
                     showOK();
-                    location.reload();
                 }
             }
 
@@ -298,7 +297,7 @@
 
     // 获取默认设置
     function getDefaultSetting() {
-        $("#board").text("");
+        $("#board").val("");
         var workTime = $("#time_hidden").val();
         var date = null;
         if (workTime == "今天"){
@@ -331,7 +330,7 @@
                 $("#systemSettingId").val(systemSetting.id);
                 var start = dealDate(systemSetting.startStr);
                 var end = dealDate(systemSetting.endStr);
-                $("#board").text(systemSetting.board);
+                $("#board").val(systemSetting.board);
                 $("#serviceStartTime").val(start);
                 $("#serviceEndTime").val(end);
                 var switchStatue = systemSetting.switchStatue;
