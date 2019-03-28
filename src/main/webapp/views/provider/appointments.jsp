@@ -66,10 +66,20 @@
                 </div>
             </div>
         </div>
-
     </div>
-
 </div>
+
+<!--BEGIN dialog2-->
+<div class="js_dialog" id="iosDialog2" style="display: none;">
+    <div class="weui-mask"></div>
+    <div class="weui-dialog">
+        <div class="weui-dialog__bd">弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内</div>
+        <div class="weui-dialog__ft">
+            <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" onclick="closeMsg()">知道了</a>
+        </div>
+    </div>
+</div>
+<!--END dialog2-->
 <script src="${context}/js/zepto.min.js"></script>
 <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script src="https://res.wx.qq.com/open/libs/weuijs/1.0.0/weui.min.js"></script>
@@ -77,93 +87,55 @@
 <script src="${context}/js/sysetting.js"></script>
 <script type="text/javascript">
 
-    // 点击时间按钮
-    $('.weui-navbar__item').on('click', function () {
-        $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
-        var _date = $(".weui-tab .weui-navbar .weui-bar__item_on .item-t").text();
-        $("#time_hidden").val(_date);
-        getDefaultSetting();
-
-    });
-
-    //获取今天 明天 后天
-    function GetDateStr(AddDayCount) {
-        var dd = new Date();
-        dd.setDate(dd.getDate()+AddDayCount);//获取AddDayCount天后的日期
-        var y = dd.getFullYear();//获取当前年份的日期
-        var m = dd.getMonth()+1;//获取当前月份的日期
-        var d = dd.getDate();//获取当前天数的日期
-        var h = dd.getHours(); //获取当前小时数
-        var mm = dd.getMinutes(); //获取当前分钟数
-        var s = dd.getSeconds(); //获取当前描述
-        if(d >= 10){
-            //return y + "-" + m + "-" + d + " " + h + ":" + mm + ":" + s;
-            //if(AddDayCount == 0 ){
-            //	return y + "-" + m + "-" + d + " " +  h + ":" + mm + ":" + s;
-            //}
-            return y + "-" + m + "-" + d + " " +  h + ":" + mm + ":" + s ;
-        }else{
-            //if(AddDayCount == 0 ){
-            //	return y + "-" + m + "-" + d + " " +  h + ":" + mm + ":" + s;
-            //}
-            return y + "-" + m + "-0" + d + " " +  h + ":" + mm + ":" + s;
-        }
-
+    //隐藏弹出框
+    function closeMsg() {
+        $(this).parents('.js_dialog').fadeOut(200);
+        location.reload();
     }
 
-    // 获取周
-    function getNowFormatDate() {
-        var date1 = new Date();
-        var month1 = date1.getMonth() + 1;
-        var strDate1 = date1.getDate();
-        var time1 =  month1 +"月"+ strDate1+"日";
-        var day1 = date1.getDay();
-        var weekday=new Array(7)
-        weekday[0]="周日";
-        weekday[1]="周一";
-        weekday[2]="周二";
-        weekday[3]="周三";
-        weekday[4]="周四";
-        weekday[5]="周五";
-        weekday[6]="周六";
-        var week1 = weekday[day1];
-
-        var date2 = new Date(date1);
-        date2.setDate(date1.getDate()+1);
-        var month2 = date2.getMonth() + 1;
-        var strDate2 = date2.getDate();
-        var time2 =  month2 +"月"+ strDate2+"日";
-        var day2 = date2.getDay();
-        var date3 = new Date(date1);
-        date3.setDate(date1.getDate()+2);
-        var month3 = date3.getMonth() + 1;
-        var strDate3 = date3.getDate();
-        var time3 =  month3 +"月"+ strDate3+"日";
-        var day3 = date3.getDay();
-        var week2 = weekday[day2];
-        var week3 = weekday[day3];
-        $("#time1").text(time1);
-        $("#time2").text(time2);
-        $("#time3").text(time3);
-        $("#week1").text(week1);
-        $("#week2").text(week2);
-        $("#week3").text(week3);
+    //显示弹出框
+    function showMsg(msg) {
+        var $iosDialog2 = $('#iosDialog2');
+        $(".js_dialog .weui-dialog .weui-dialog__bd").html(msg);
+        $iosDialog2.fadeIn(200);
     }
-    getNowFormatDate();
-
-    jQuery(document).ready(function(){
-        getDefaultSetting();
-    });
+    
+    //撤单
+    function cancelApp(appointmentId) {
+        $.ajax({
+            type:"post",
+            url:path + "/provider/cancelApponitment.do",
+            dataType:"json",
+            data:{
+                "appointmentId":appointmentId
+            },
+            success:function (data) {
+                showMsg(data.msg);
+            }
+        });
+    }
 
     //完成服务
     function doneApp(openid,formId,appointmentId) {
-        alert("完成服务：" + openid + formId + appointmentId);
+        var shopId = $("#shopId").val();
+        $.ajax({
+            type:"post",
+            url:path + "/provider/doneApponitment.do",
+            dataType:"json",
+            data:{
+                "shopId":shopId,
+                "openid":openid,
+                "formId":formId,
+                "appointmentId":appointmentId
+            },
+            success:function (data) {
+                console.log(data);
+                showMsg(data.msg);
+            }
+
+        });
     }
 
-    //撤单
-    function cancelApp(appointmentId) {
-        alert("撤单：" + appointmentId);
-    }
 
     // 获取默认设置
     function getDefaultSetting() {
@@ -247,6 +219,12 @@
                                 case 2:
                                     _html += '<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default">已完成</a>';
                                     break;
+                                case 3:
+                                    _html += '<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default">已撤单</a>';
+                                    break;
+                                case 4:
+                                    _html += '<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default">已爽约</a>';
+                                    break;
                             }
                             _html += '</div>';
                             _html += '</div>';
@@ -263,6 +241,84 @@
     function dealDate(date) {
         return date.substring(1,11)+"T"+date.substring(12,17);
     }
+
+    // 点击时间按钮
+    $('.weui-navbar__item').on('click', function () {
+        $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
+        var _date = $(".weui-tab .weui-navbar .weui-bar__item_on .item-t").text();
+        $("#time_hidden").val(_date);
+        getDefaultSetting();
+
+    });
+
+    //获取今天 明天 后天
+    function GetDateStr(AddDayCount) {
+        var dd = new Date();
+        dd.setDate(dd.getDate()+AddDayCount);//获取AddDayCount天后的日期
+        var y = dd.getFullYear();//获取当前年份的日期
+        var m = dd.getMonth()+1;//获取当前月份的日期
+        var d = dd.getDate();//获取当前天数的日期
+        var h = dd.getHours(); //获取当前小时数
+        var mm = dd.getMinutes(); //获取当前分钟数
+        var s = dd.getSeconds(); //获取当前描述
+        if(d >= 10){
+            //return y + "-" + m + "-" + d + " " + h + ":" + mm + ":" + s;
+            //if(AddDayCount == 0 ){
+            //	return y + "-" + m + "-" + d + " " +  h + ":" + mm + ":" + s;
+            //}
+            return y + "-" + m + "-" + d + " " +  h + ":" + mm + ":" + s ;
+        }else{
+            //if(AddDayCount == 0 ){
+            //	return y + "-" + m + "-" + d + " " +  h + ":" + mm + ":" + s;
+            //}
+            return y + "-" + m + "-0" + d + " " +  h + ":" + mm + ":" + s;
+        }
+
+    }
+
+    // 获取周
+    function getNowFormatDate() {
+        var date1 = new Date();
+        var month1 = date1.getMonth() + 1;
+        var strDate1 = date1.getDate();
+        var time1 =  month1 +"月"+ strDate1+"日";
+        var day1 = date1.getDay();
+        var weekday=new Array(7)
+        weekday[0]="周日";
+        weekday[1]="周一";
+        weekday[2]="周二";
+        weekday[3]="周三";
+        weekday[4]="周四";
+        weekday[5]="周五";
+        weekday[6]="周六";
+        var week1 = weekday[day1];
+
+        var date2 = new Date(date1);
+        date2.setDate(date1.getDate()+1);
+        var month2 = date2.getMonth() + 1;
+        var strDate2 = date2.getDate();
+        var time2 =  month2 +"月"+ strDate2+"日";
+        var day2 = date2.getDay();
+        var date3 = new Date(date1);
+        date3.setDate(date1.getDate()+2);
+        var month3 = date3.getMonth() + 1;
+        var strDate3 = date3.getDate();
+        var time3 =  month3 +"月"+ strDate3+"日";
+        var day3 = date3.getDay();
+        var week2 = weekday[day2];
+        var week3 = weekday[day3];
+        $("#time1").text(time1);
+        $("#time2").text(time2);
+        $("#time3").text(time3);
+        $("#week1").text(week1);
+        $("#week2").text(week2);
+        $("#week3").text(week3);
+    }
+    getNowFormatDate();
+
+    jQuery(document).ready(function(){
+        getDefaultSetting();
+    });
 </script>
 </body>
 </html>

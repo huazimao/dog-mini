@@ -87,7 +87,7 @@ public class ProviderController {
      */
     @ResponseBody
     @RequestMapping(value = "doneApponitment.do",produces = {"application/json;charset=UTF-8"})
-    public String doneApponitment(@RequestBody CustomerAppointment customerAppointment){
+    public String doneApponitment(CustomerAppointment customerAppointment){
         Gson gson = new Gson();
         String ret = "fail";
         Map<String, Object> map = new HashMap<String, Object>();
@@ -100,13 +100,14 @@ public class ProviderController {
             ret = CoreApi.sendTemplateMessage(dealMsg(customerAppointment));
             if (ret.equals("success")) {
                 map.put("type", 1);
+                map.put("msg", "订单已完成，并成功通知客户！");
             } else {
                 map.put("type", 2);
-                map.put("msg", "发送通知失败，请人工联系客户。");
+                map.put("msg", "订单通知失败，请人工联系客户！");
             }
         } else {
             map.put("type", 0);
-            map.put("msg", "更改洗护状态失败，请人工联系客户。");
+            map.put("msg", "订单状态改变失败，请人工联系客户！");
         }
 
         return gson.toJson(map);
@@ -119,7 +120,7 @@ public class ProviderController {
      */
     @ResponseBody
     @RequestMapping(value = "cancelApponitment.do",produces = {"application/json;charset=UTF-8"})
-    public String cancelApponitment(@RequestBody CustomerAppointment customerAppointment){
+    public String cancelApponitment(CustomerAppointment customerAppointment){
         Gson gson = new Gson();
         Map<String, Object> map = new HashMap<String, Object>();
         customerAppointment.setAppointmentState(3);
@@ -127,6 +128,7 @@ public class ProviderController {
         boolean flag = customerService.cancelOrDoneApponitment(customerAppointment);
         if (flag) {
             map.put("type", 1);
+            map.put("msg","撤单成功！");
         }else {
             map.put("type", 0);
             map.put("msg","撤单失败，请人工标注！");
