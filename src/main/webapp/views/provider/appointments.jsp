@@ -11,75 +11,79 @@
     <link rel="stylesheet" href="${context}/css/example.css">
     <link rel="stylesheet" href="${context}/css/common.css">
     <link rel="stylesheet" href="${context}/css/lists.css">
+    <link rel="stylesheet" href="${context}/css/info.css">
     <script type="text/javascript" src="${context}/js/jquery-2.1.1.min.js"></script>
     <script>
         var path = '${context}';
+        var arry = new Array();
     </script>
-
 </head>
 <body>
-<div class="weui-tab">
-    <div class="weui-navbar">
-        <input type="hidden" id="time_hidden" name="workTime" value="今天">
-        <input type="hidden" id="shopId" name="shopId" value="${shopId}">
+    <div class="weui-tab">
+        <div class="weui-navbar">
+            <input type="hidden" id="time_hidden" name="workTime" value="今天">
+            <input type="hidden" id="shopId" name="shopId" value="${shopId}">
 
-        <div class="weui-navbar__item weui-bar__item_on">
-            <div class="item-t">今天</div>
-            <div class="item-b">
-                <span class="item-date" id="time1"></span>
-                (<span class="item-day" id="week1"></span>)
+            <div class="weui-navbar__item weui-bar__item_on">
+                <div class="item-t">今天</div>
+                <div class="item-b">
+                    <span class="item-date" id="time1"></span>
+                    (<span class="item-day" id="week1"></span>)
+                </div>
+            </div>
+            <div class="weui-navbar__item">
+                <div class="item-t">明天</div>
+                <div class="item-b">
+                    <span class="item-date" id="time2"></span>
+                    (<span class="item-day" id="week2"></span>)
+                </div>
+            </div>
+            <div class="weui-navbar__item">
+                <div class="item-t">后天</div>
+                <div class="item-b">
+                    <span class="item-date" id="time3"></span>
+                    (<span class="item-day" id="week3"></span>)
+                </div>
             </div>
         </div>
-        <div class="weui-navbar__item">
-            <div class="item-t">明天</div>
-            <div class="item-b">
-                <span class="item-date" id="time2"></span>
-                (<span class="item-day" id="week2"></span>)
-            </div>
+        <div class="address-name">
+            <c:if test="${shopId == 'lj'}">
+                龙江店
+            </c:if>
+            <c:if test="${shopId == 'ls'}">
+                龙山店
+            </c:if>
+            <c:if test="${shopId == 'rg'}">
+                容桂店
+            </c:if>
         </div>
-        <div class="weui-navbar__item">
-            <div class="item-t">后天</div>
-            <div class="item-b">
-                <span class="item-date" id="time3"></span>
-                (<span class="item-day" id="week3"></span>)
-            </div>
+        <div class="button-sp-area">
+            <a href="${context}/provider/go2defaultSettingPage.do?shopId=${shopId}" class="weui-btn weui-btn_mini weui-btn_default">系统设置</a>
         </div>
-    </div>
-    <div class="address-name">
-        <c:if test="${shopId == 'lj'}">
-            龙江店
-        </c:if>
-        <c:if test="${shopId == 'ls'}">
-            龙山店
-        </c:if>
-        <c:if test="${shopId == 'rg'}">
-            容桂店
-        </c:if>
-    </div>
-    <div class="weui-tab__bd">
-        <div id="tab1" class="weui-tab__bd-item">
-            <div class="lists">
-                <div class="weui-cells">
+        <div class="weui-tab__bd">
+            <div id="tab1" class="weui-tab__bd-item">
+                <div class="lists">
+                    <div class="weui-cells">
 
 
 
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<!--BEGIN dialog2-->
-<div class="js_dialog" id="iosDialog2" style="display: none;">
-    <div class="weui-mask"></div>
-    <div class="weui-dialog">
-        <div class="weui-dialog__bd">弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内</div>
-        <div class="weui-dialog__ft">
-            <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" onclick="closeMsg()">知道了</a>
+    <!--BEGIN dialog2-->
+    <div class="js_dialog" id="iosDialog2" style="display: none;">
+        <div class="weui-mask"></div>
+        <div class="weui-dialog">
+            <div class="weui-dialog__bd"></div>
+            <div class="weui-dialog__ft">
+                <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" onclick="closeMsg()">知道了</a>
+            </div>
         </div>
     </div>
-</div>
-<!--END dialog2-->
+    <!--END dialog2-->
 <script src="${context}/js/zepto.min.js"></script>
 <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script src="https://res.wx.qq.com/open/libs/weuijs/1.0.0/weui.min.js"></script>
@@ -87,6 +91,11 @@
 <script src="${context}/js/sysetting.js"></script>
 <script type="text/javascript">
 
+    //显示客户详情
+    function showInfo(i) {
+        var app = arry[i];
+        alert(app.nickName);
+    }
     //隐藏弹出框
     function closeMsg() {
         $(this).parents('.js_dialog').fadeOut(200);
@@ -136,7 +145,6 @@
         });
     }
 
-
     // 获取默认设置
     function getDefaultSetting() {
         var workTime = $("#time_hidden").val();
@@ -159,19 +167,20 @@
             },
             success:function (data) {
                 console.log(data.list);
+                arry = (data.list);
                 $(".lists").text("");
                 if (data.type == 1){
                     for (var i = 0;i<data.list.length;i++){
                         var app = data.list[i];
                         var _html = '<div class="weui-cell">';
-                            _html += '<div class="weui-cell__hd">';
+                            _html += '<div class="weui-cell__hd" onclick="showInfo('+i+')">';
                             _html += '<img src='+app.wxImg+'>';
                             // _html += '<span class="weui-badge">3</span>';
                             _html += '</div>';
                             _html += '<div class="weui-cell__bd">';
-                            _html += '<p class="customer-name">'+app.nickName+'</p>';
-                            _html += '<p class="customer-start-time">预约时间：'+app.appStr+'</p>';
-                            _html += '<p class="customer-end-time">完成时间：'+app.accStr+'</p>';
+                            _html += '<p class="customer-name" onclick="showInfo('+i+')">'+app.nickName+'</p>';
+                            _html += '<p class="customer-start-time" onclick="showInfo('+i+')">预约时间：'+app.appStr+'</p>';
+                            _html += '<p class="customer-end-time" onclick="showInfo('+i+')">完成时间：'+app.accStr+'</p>';
                             _html += '</div>';
                             _html += '<div class="weui-cell__ft">';
                             for (var x = 0;x<app.petLists.length;x++){
@@ -235,8 +244,6 @@
         });
     }
 
-
-
     // 转换成带T的时间
     function dealDate(date) {
         return date.substring(1,11)+"T"+date.substring(12,17);
@@ -248,7 +255,6 @@
         var _date = $(".weui-tab .weui-navbar .weui-bar__item_on .item-t").text();
         $("#time_hidden").val(_date);
         getDefaultSetting();
-
     });
 
     //获取今天 明天 后天
@@ -273,7 +279,6 @@
             //}
             return y + "-" + m + "-0" + d + " " +  h + ":" + mm + ":" + s;
         }
-
     }
 
     // 获取周
@@ -292,7 +297,6 @@
         weekday[5]="周五";
         weekday[6]="周六";
         var week1 = weekday[day1];
-
         var date2 = new Date(date1);
         date2.setDate(date1.getDate()+1);
         var month2 = date2.getMonth() + 1;
