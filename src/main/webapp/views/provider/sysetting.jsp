@@ -13,14 +13,12 @@
     <script>
         var path = '${context}';
     </script>
-
 </head>
 <body>
     <div class="weui-tab">
         <div class="weui-navbar">
             <input type="hidden" id="time_hidden" name="workTime" value="今天">
             <input type="hidden" id="systemSettingId" name="systemSettingId" value="">
-
             <div class="weui-navbar__item weui-bar__item_on">
                 <div class="item-t">今天</div>
                 <div class="item-b">
@@ -151,7 +149,7 @@
         var serviceStartTime = renderTime($("#serviceStartTime").val());
         var serviceEndTime = renderTime($("#serviceEndTime").val());
         var shopName = document.getElementById("shopId").innerText.trim();
-        var board = $("#board").val();
+        var board = $("#board").val().trim();
         //isAppTow = $("#isAppTow").val();
 
         //switchStatue = $("#switchStatue").val();
@@ -189,10 +187,57 @@
             }
 
         });
-
-        
     }
 
+    // 获取默认设置
+    function getDefaultSetting() {
+        $("#board").val("");
+        var workTime = $("#time_hidden").val();
+        var date = null;
+        if (workTime == "今天"){
+            date = GetDateStr(0);
+        }else if (workTime == "明天"){
+            date = GetDateStr(1);
+        }else {
+            date = GetDateStr(2);
+        }
+        var shopName = document.getElementById("shopId").innerText.trim();
+        var shopId = "";
+        if (shopName == "龙江店"){
+            shopId = 'lj';
+        }else if (shopName == "龙山店"){
+            shopId = "ls";
+        }else if(shopName == "容桂店"){
+            shopId = 'rg';
+        }
+        $.ajax({
+            type:"post",
+            url:path + "/provider/getSySettingByShopIdAndTime.do",
+            dataType:"json",
+            data:{
+                "shopId":shopId,
+                "workTime":date
+            },
+            success:function (data) {
+                console.log(data.systemSetting);
+                var systemSetting = data.systemSetting;
+                $("#systemSettingId").val(systemSetting.id);
+                var start = dealDate(systemSetting.startStr);
+                var end = dealDate(systemSetting.endStr);
+                $("#board").val(systemSetting.board);
+                $("#serviceStartTime").val(start);
+                $("#serviceEndTime").val(end);
+                var switchStatue = systemSetting.switchStatue;
+                var isAppTow = systemSetting.isAppTow;
+                if (switchStatue == 1){
+                    $("#switchStatue").prop("checked", true);
+                }else {
+                    $("#switchStatue").prop("checked", false);
+                }
+            }
+
+        });
+    }
 
     // 带T时间的转换
     function renderTime(date) {
@@ -271,84 +316,18 @@
         $("#week2").text(week2);
         $("#week3").text(week3);
     }
+
     getNowFormatDate();
-    /*$.fn.serializeObject = function () {
-        var o = {};
-        var a = this.serializeArray();
-        $.each(a, function () {
-            if (o[this.name] !== undefined) {
-                o[this.name]+= ',' + this.value;
-            } else {
-                o[this.name] = this.value || '';
-            }
-        });
-        var $radio = $('input[type=radio],input[type=checkbox]',this);
-        $.each($radio,function(){
-            if(!o.hasOwnProperty(this.name)){
-                o[this.name] = '';
-            }
-        });
-        return o;
-    };*/
 
     jQuery(document).ready(function(){
         getDefaultSetting();
     });
 
-    // 获取默认设置
-    function getDefaultSetting() {
-        $("#board").val("");
-        var workTime = $("#time_hidden").val();
-        var date = null;
-        if (workTime == "今天"){
-            date = GetDateStr(0);
-        }else if (workTime == "明天"){
-            date = GetDateStr(1);
-        }else {
-            date = GetDateStr(2);
-        }
-        var shopName = document.getElementById("shopId").innerText.trim();
-        var shopId = "";
-        if (shopName == "龙江店"){
-            shopId = 'lj';
-        }else if (shopName == "龙山店"){
-            shopId = "ls";
-        }else if(shopName == "容桂店"){
-            shopId = 'rg';
-        }
-        $.ajax({
-            type:"post",
-            url:path + "/provider/getSySettingByShopIdAndTime.do",
-            dataType:"json",
-            data:{
-                "shopId":shopId,
-                "workTime":date
-            },
-            success:function (data) {
-                console.log(data.systemSetting);
-                var systemSetting = data.systemSetting;
-                $("#systemSettingId").val(systemSetting.id);
-                var start = dealDate(systemSetting.startStr);
-                var end = dealDate(systemSetting.endStr);
-                $("#board").val(systemSetting.board);
-                $("#serviceStartTime").val(start);
-                $("#serviceEndTime").val(end);
-                var switchStatue = systemSetting.switchStatue;
-                var isAppTow = systemSetting.isAppTow;
-                if (switchStatue == 1){
-                    $("#switchStatue").prop("checked", true);
-                }else {
-                    $("#switchStatue").prop("checked", false);
-                }
-            }
-
-        });
-    }
-
     // 转换成带T的时间
     function dealDate(date) {
         return date.substring(1,11)+"T"+date.substring(12,17);
     }
+
 </script>
 </body>
 </html>

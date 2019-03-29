@@ -23,7 +23,7 @@
         <div class="weui-navbar">
             <input type="hidden" id="time_hidden" name="workTime" value="今天">
             <input type="hidden" id="shopId" name="shopId" value="${shopId}">
-
+            <input type="hidden" id="level" name="level" value="${level}">
             <div class="weui-navbar__item weui-bar__item_on">
                 <div class="item-t">今天</div>
                 <div class="item-b">
@@ -57,7 +57,7 @@
                 容桂店
             </c:if>
         </div>
-        <div class="button-sp-area">
+        <div class="button-sp-area" style="display: none">
             <a href="${context}/provider/go2defaultSettingPage.do?shopId=${shopId}" class="weui-btn weui-btn_mini weui-btn_default">系统设置</a>
         </div>
         <div class="weui-tab__bd">
@@ -96,6 +96,7 @@
         var app = arry[i];
         alert(app.nickName);
     }
+
     //隐藏弹出框
     function closeMsg() {
         $(this).parents('.js_dialog').fadeOut(200);
@@ -318,11 +319,19 @@
         $("#week2").text(week2);
         $("#week3").text(week3);
     }
+
     getNowFormatDate();
 
     jQuery(document).ready(function(){
         getDefaultSetting();
+        var level = $("#level").val();
+        console.log(level);
+        if (level == 2){
+            //显示设置按钮
+            $(".button-sp-area").attr("style", "display:block");
+        }
     });
+
 </script>
 </body>
 </html>

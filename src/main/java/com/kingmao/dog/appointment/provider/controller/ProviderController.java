@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
@@ -38,6 +39,11 @@ public class ProviderController {
     @Autowired
     private CustomerService customerService;
 
+    /**
+     *店铺后台中间页
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "go2appointmentPage.do")
     public String go2appointmentPage(HttpServletRequest request) {
         request.setAttribute("shopId",request.getParameter("shopId"));

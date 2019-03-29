@@ -57,7 +57,7 @@ public class AdminController {
             Cookie username_cookie = new Cookie("username", URLEncoder.encode(username));
             username_cookie.setMaxAge(7*24*60*60);
             Cookie password_cookie  = new Cookie("password", URLEncoder.encode(password));
-            password_cookie .setMaxAge(7*24*60*60);
+            password_cookie.setMaxAge(7*24*60*60);
             response.addCookie(username_cookie);
             response.addCookie(password_cookie);
 
@@ -66,6 +66,7 @@ public class AdminController {
             map.put("msg", "普通员工登陆成功");
         } else if (sysUser.getLevel() == 2) {
             request.getSession().setAttribute("sysUser", sysUser);
+            request.getSession().setAttribute("level", sysUser.getLevel());
             Cookie username_cookie = new Cookie("username", URLEncoder.encode(username));
             username_cookie.setMaxAge(7*24*60*60);
             Cookie password_cookie  = new Cookie("password", URLEncoder.encode(password));
@@ -91,6 +92,7 @@ public class AdminController {
         Cookie[] cookie = request.getCookies();
         if (cookie != null) {
             for (Cookie c : cookie) {
+                log.info("name:" + c.getName() + "===" + "value:" + c.getValue());
                 if (c.getName().equals("username")) {
                     username = c.getValue();
                 }
