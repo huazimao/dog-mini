@@ -1,7 +1,6 @@
 package com.kingmao.dog.appointment.cacha;
 
 import com.kingmao.dog.appointment.provider.entity.SystemEntity;
-import com.kingmao.dog.appointment.timer.AccessTokenApi;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 

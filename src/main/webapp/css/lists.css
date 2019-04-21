@@ -1,20 +1,28 @@
 .weui-navbar {
 	position: static;
 }
-.address-name {
-	text-align: right;
-	height:50px;
+.name-btn {
 	width: 100%;
-	line-height: 50px;
-	padding-right:30px;
+	overflow: hidden;
 	border-bottom: 1px solid #ddd;
 }
+.setting-btn {
+	float: right;
+	margin-right:10px;
+
+}
+.address-name {
+	float: left;
+	height:30px;
+	line-height: 30px;
+	padding-left:30px;
+}
 .lists .weui-cell {
-	padding:10px;
+	padding:5px 10px;
 }
 .lists .weui-cell .weui-cell__hd {
-	width: 80px;
-	height: 80px;
+	width: 60px;
+	height: 60px;
 	overflow: hidden;
 	margin-right: 10px;
 }
@@ -23,7 +31,7 @@
 	height: 100%;
 }
 .lists .weui-cell .weui-cell__bd .customer-name {
-	font-size:18px;
+	font-size:16px;
 }
 .lists .weui-cell .weui-cell__bd .customer-start-time {
 	font-size:14px;
@@ -48,4 +56,10 @@
 	position: absolute;
 	right:0.5px;
 	top:0.5px;
+}
+.weui-btn-orange {
+	background-color: orange!important;
+}
+.weui-btn-blue {
+	background-color: #007DDB!important;
 }

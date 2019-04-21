@@ -12,6 +12,73 @@
     <link rel="stylesheet" href="${context}/css/common.css">
     <link rel="stylesheet" href="${context}/css/lists.css">
     <link rel="stylesheet" href="${context}/css/info.css">
+    <style>
+        .hide {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            position: fixed;
+            left:0;
+            top:0;
+            background-color: rgba(0,0,0,.4);
+            z-index:99;
+            display: none;
+        }
+        .hide .hide-div {
+            display: none;
+            width: 300px;
+            overflow: hidden;
+            background-color: #fff;
+            border-radius: 10px;
+            position: absolute;
+            left:50%;
+            top:50%;
+            transform: translate(-50%,-50%);
+            padding:15px;
+        }
+        .hide .hide-close {
+            width: 20px;
+            height: 20px;
+            background-color: #e5e5e5;
+            text-align: center;
+            line-height: 20px;
+            border-radius: 100%;
+            position: absolute;
+            right:10px;
+            top:10px;
+            color: #555;
+        }
+        .hide .div-box {
+            width: 100%;
+            overflow: hidden;
+            margin-top: 30px;
+        }
+        .hide .div-box-item {
+            width: 100%;
+            overflow: hidden;
+            border-bottom: 1px solid #eee;
+            font-size: 16px;
+            padding: 10px 0;
+        }
+        .hide .box-item-left {
+            float: left;
+        }
+        .hide .box-item-right {
+            float: left;
+        }
+        .hide .box-item-list {
+            width: 100%;
+            overflow: hidden;
+        }
+        .hide .box-item-list ul {
+            width: 100%;
+            overflow: hidden;
+            padding-left:33px;
+        }
+        .weui-btn-blue {
+            background-color: #87CEFA!important;
+        }
+    </style>
     <script type="text/javascript" src="${context}/js/jquery-2.1.1.min.js"></script>
     <script>
         var path = '${context}';
@@ -19,7 +86,34 @@
     </script>
 </head>
 <body>
+
     <div class="weui-tab">
+        <div class="hide">
+            <div class="hide-div">
+                <div class="div-box">
+                    <div class="div-box-item">
+                        <p class="box-item-left">昵称：</p>
+                        <p class="box-item-right nickName">王毛</p>
+                    </div>
+                    <div class="div-box-item">
+                        <p class="box-item-left">电话：</p>
+                        <p class="box-item-right tel">123123123</p>
+                    </div>
+                    <div class="div-box-item">
+                        <p class="box-item-left">预约时间：</p>
+                        <p class="box-item-right appTime"></p>
+                    </div>
+                    <div class="div-box-item">
+                        <p class="box-item-title">预约列表：</p>
+                        <div class="box-item-list">
+                            <ul class="item-list">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="hide-close">x</div>
+            </div>
+        </div>
         <div class="weui-navbar">
             <input type="hidden" id="time_hidden" name="workTime" value="今天">
             <input type="hidden" id="shopId" name="shopId" value="${shopId}">
@@ -46,20 +140,23 @@
                 </div>
             </div>
         </div>
-        <div class="address-name">
-            <c:if test="${shopId == 'lj'}">
-                龙江店
-            </c:if>
-            <c:if test="${shopId == 'ls'}">
-                龙山店
-            </c:if>
-            <c:if test="${shopId == 'rg'}">
-                容桂店
-            </c:if>
+        <div class="name-btn">
+            <div class="address-name">
+                <c:if test="${shopId == 'lj'}">
+                    龙江店
+                </c:if>
+                <c:if test="${shopId == 'ls'}">
+                    龙山店
+                </c:if>
+                <c:if test="${shopId == 'rg'}">
+                    容桂店
+                </c:if>
+            </div>
+            <%--<div class="button-sp-area" style="display: none">--%>
+                <a href="${context}/provider/go2defaultSettingPage.do?shopId=${shopId}" class="weui-btn weui-btn_mini weui-btn_default setting-btn" style="display: none;">系统设置</a>
+            <%--</div>--%>
         </div>
-        <div class="button-sp-area" style="display: none">
-            <a href="${context}/provider/go2defaultSettingPage.do?shopId=${shopId}" class="weui-btn weui-btn_mini weui-btn_default">系统设置</a>
-        </div>
+
         <div class="weui-tab__bd">
             <div id="tab1" class="weui-tab__bd-item">
                 <div class="lists">
@@ -90,11 +187,73 @@
 <script src="${context}/js/example.js"></script>
 <script src="${context}/js/sysetting.js"></script>
 <script type="text/javascript">
+    $(".hide .hide-close").click(function () {
+        $(".hide-div").hide();
+        $(".hide").hide();
+    });
+    $(".hide").click(function () {
+       $(".hide-div").hide();
+       $(".hide").hide();
+    });
+    $(".hide .hide-div").click(function (e) {
+       e.stopPropagation();
+    });
 
     //显示客户详情
     function showInfo(i) {
         var app = arry[i];
-        alert(app.nickName);
+        $(".hide").show();
+        $(".hide-div").show();
+
+        $(".hide .nickName").text(app.nickName);
+        $(".hide .tel").text(app.phone);
+        $(".hide .appTime").text(app.oppointmentTime);
+        // $(".hide .item-list").text(app.petLists);
+        $(".item-list").html('')
+        for(var i=0;i<app.petLists.length;i++){
+            var likindPet = app.petLists[i].kindPet;
+            var lisize = app.petLists[i].size;
+            var likindService = app.petLists[i].kindService;
+            if(likindPet!=undefined&&lisize!=undefined&&likindService!=undefined){
+                var _likindPet = "";
+                var _lisize = "";
+                var _likindService ="";
+                switch (likindPet) {
+                    case "dog" :
+                        _likindPet = "狗";
+                        break;
+                    case "cat" :
+                        _likindPet = "猫";
+                        break;
+                }
+                switch (lisize) {
+                    case "mini" :
+                        _lisize = "小型";
+                        break;
+                    case "normal" :
+                        _lisize = "中型";
+                        break;
+                    case "large" :
+                        _lisize = "大型";
+                        break;
+                }
+                switch (likindService) {
+                    case "wash" :
+                        _likindService = "洗护";
+                        break;
+                    case "modeling" :
+                        _likindService = "造型";
+                        break;
+                    case "large" :
+                        _likindService = "SPA";
+                        break;
+                }
+                var litext = ' <li>'+_lisize+' '+ _likindPet+' '+_likindService +'</li>';
+                //console.log(litext);
+                $(".item-list").append(litext);
+            }
+
+        }
     }
 
     //隐藏弹出框
@@ -227,13 +386,16 @@
                                     _html += '<a href="javascript:cancelApp('+app.appointmentId +')" class="weui-btn weui-btn_mini weui-btn_warn">撤单</a>';
                                     break;
                                 case 2:
-                                    _html += '<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default">已完成</a>';
+                                    _html += '<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn-blue">已完成</a>';
                                     break;
                                 case 3:
-                                    _html += '<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default">已撤单</a>';
+                                    _html += '<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn-orange">已撤单</a>';
                                     break;
                                 case 4:
-                                    _html += '<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default">已爽约</a>';
+                                    _html += '<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn-orange">已爽约</a>';
+                                    break;
+                                case 5:
+                                    _html += '<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn-orange">通知失败</a>';
                                     break;
                             }
                             _html += '</div>';
@@ -328,7 +490,7 @@
         console.log(level);
         if (level == 2){
             //显示设置按钮
-            $(".button-sp-area").attr("style", "display:block");
+            $(".setting-btn").show();
         }
     });
 

@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
 
 /**
  * Paceage:com.kingmao.dog.appointment.timer
@@ -19,11 +18,10 @@ public class ScheduleTask{
     @Autowired
     private AccessTokenApi accessTokenApi;
 
-
+    //每天下午3点执行一次
     @Scheduled(cron = "0 0 15 * * ?")
 //    @Scheduled(fixedRate = 60 * 1000 * 60)
     public void firstScheduledTasks(){
-        System.out.println("开始执行店铺设置任务。");
         scheduleApi.getSchedul();
     }
 

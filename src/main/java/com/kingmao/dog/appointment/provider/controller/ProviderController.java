@@ -108,7 +108,7 @@ public class ProviderController {
                 map.put("type", 1);
                 map.put("msg", "订单已完成，并成功通知客户！");
             } else {
-                map.put("type", 2);
+                map.put("type", 5);
                 map.put("msg", "订单通知失败，请人工联系客户！");
             }
         } else {
