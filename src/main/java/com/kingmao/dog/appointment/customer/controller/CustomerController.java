@@ -56,8 +56,17 @@ public class CustomerController {
         //查询当日该店总开关
         SystemSetting systemSetting = systemSettingService.getSySettingByShopIdAndTime(shopId, workTime);
         int sysStatue = systemSetting.getSwitchStatue();
-        map.put("sysStatue",sysStatue);
+        String board = systemSetting.getBoard();
+
         if (sysStatue == 1) {
+            if(new Date().before(systemSetting.getServiceStartTime())){
+                sysStatue = 0;
+                board = "预约系统暂未开放，请稍后再试！";
+            }
+            if (new Date().after(systemSetting.getServiceEndTime())){
+                sysStatue = 0;
+                board = "预约系统已关闭，请明日再试！";
+            }
             //查询客户是否预约和预约详情
             customerAppointment = customerService.getAppInfo(customerAppointment);
             if (null != customerAppointment) {
@@ -67,6 +76,8 @@ public class CustomerController {
                 map.put("isApp",0);
             }
         }
+        map.put("sysStatue",sysStatue);
+        map.put("board",board);
 
         return gson.toJson(map);
     }
@@ -80,7 +91,6 @@ public class CustomerController {
     @RequestMapping(value = "appointment.do" ,produces = {"application/json;charset=UTF-8"})
     public String getAppointment(CustomerAppointment customerAppointment){
         log.info("客户预约接收到的参数为：" + customerAppointment.toString());
-        customerAppointment.setOpenid("aaaaaaa");
         customerAppointment.setOppointmentTime(new Date());
         Gson gson = new Gson();
         Map<String, Object> map = new HashMap<String, Object>();
