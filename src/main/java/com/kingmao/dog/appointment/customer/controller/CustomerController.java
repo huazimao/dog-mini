@@ -5,6 +5,7 @@ import com.kingmao.dog.appointment.customer.model.CustomerAppointment;
 import com.kingmao.dog.appointment.customer.service.CustomerService;
 import com.kingmao.dog.appointment.provider.model.SystemSetting;
 import com.kingmao.dog.appointment.provider.service.SystemSettingService;
+import com.kingmao.dog.utils.DateUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -59,11 +60,14 @@ public class CustomerController {
         String board = systemSetting.getBoard();
 
         if (sysStatue == 1) {
-            if(new Date().before(systemSetting.getServiceStartTime())){
+            log.info(DateUtil.getYMD2HMS(new Date()));
+            log.info(DateUtil.getYMD2HMS(systemSetting.getServiceStartTime()));
+            log.info(DateUtil.getYMD2HMS(systemSetting.getServiceEndTime()));
+            if(DateUtil.getYMD2HMS(new Date()).before(DateUtil.getYMD2HMS(systemSetting.getServiceStartTime()))){
                 sysStatue = 0;
                 board = "预约系统暂未开放，请稍后再试！";
             }
-            if (new Date().after(systemSetting.getServiceEndTime())){
+            if (DateUtil.getYMD2HMS(new Date()).after(DateUtil.getYMD2HMS(systemSetting.getServiceEndTime()))){
                 sysStatue = 0;
                 board = "预约系统已关闭，请明日再试！";
             }

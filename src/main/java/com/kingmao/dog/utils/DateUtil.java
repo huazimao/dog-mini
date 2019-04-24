@@ -72,6 +72,23 @@ public class DateUtil {
     }
 
     /**
+     * 获取时分秒
+     * @param date
+     * @return
+     */
+    public static Date getYMD2HMS(Date date){
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        String str = sdf.format(date);
+        Date date1 = null;
+        try {
+            date1 =  sdf.parse(str);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date1;
+    }
+
+    /**
      * 返回字符串类型日期，
      * @param date
      * @return
@@ -129,6 +146,23 @@ public class DateUtil {
         c.setTime(date);
 
         c.add(Calendar.DATE, 3);
+
+        return c.getTime();
+    }
+
+    /**
+     * 计算N天后的时间
+     * @param date
+     * @param day
+     * @return
+     */
+    public static Date getDatePlusInt(Date date,int day){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Calendar c = Calendar.getInstance();
+
+        c.setTime(date);
+
+        c.add(Calendar.DATE, day);
 
         return c.getTime();
     }
