@@ -26,6 +26,9 @@ public interface CustomerAppointmentMapper {
     // 根据客户openId，店铺ID，工作日查询详情
     CustomerAppointment getAppInfo(CustomerAppointment customerAppointment);
 
+    // 根据客户openId，店铺ID，工作日查询详情
+    CustomerAppointment getAppInfo2(CustomerAppointment customerAppointment);
+
     List<CustomerAppointment> showAppointmentByTimeAndShop(@Param("shopId") String shopId, @Param("workTime")Date workTime);
 
     //查询最后一次预约记录

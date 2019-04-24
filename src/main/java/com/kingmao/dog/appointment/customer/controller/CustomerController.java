@@ -10,7 +10,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -60,9 +59,6 @@ public class CustomerController {
         String board = systemSetting.getBoard();
 
         if (sysStatue == 1) {
-            log.info(DateUtil.getYMD2HMS(new Date()));
-            log.info(DateUtil.getYMD2HMS(systemSetting.getServiceStartTime()));
-            log.info(DateUtil.getYMD2HMS(systemSetting.getServiceEndTime()));
             if(DateUtil.getYMD2HMS(new Date()).before(DateUtil.getYMD2HMS(systemSetting.getServiceStartTime()))){
                 sysStatue = 0;
                 board = "预约系统暂未开放，请稍后再试！";
@@ -72,7 +68,7 @@ public class CustomerController {
                 board = "预约系统已关闭，请明日再试！";
             }
             //查询客户是否预约和预约详情
-            customerAppointment = customerService.getAppInfo(customerAppointment);
+            customerAppointment = customerService.getAppInfo2(customerAppointment);
             if (null != customerAppointment) {
                 map.put("isApp",1); //isApp 是否预约过
                 map.put("CustomerAppointment",customerAppointment);

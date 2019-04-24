@@ -107,6 +107,17 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
 
+    /**
+     * 查询客户是否预约和预约详情
+     * @param customerAppointment
+     * @return
+     */
+    @Override
+    public CustomerAppointment getAppInfo2(CustomerAppointment customerAppointment) {
+        return customerAppointmentMapper.getAppInfo2(customerAppointment);
+    }
+
+
     @Override
     public List<CustomerAppointment> showAppointmentByTimeAndShop(String shopId, Date workTime) {
         return customerAppointmentMapper.showAppointmentByTimeAndShop(shopId, workTime);

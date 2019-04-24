@@ -248,6 +248,12 @@
     where c.openid = #{openid,jdbcType=VARCHAR} and c.shop_id = #{shopId,jdbcType=VARCHAR} and c.work_time = #{workTime,jdbcType=DATE}
   </select>
 
+  <select id="getAppInfo2" parameterType="com.kingmao.dog.appointment.customer.model.CustomerAppointment" resultMap="BaseResultMap">
+    SELECT c.*,p.*
+    FROM customer_appointment c LEFT JOIN pet_appointment p ON c.appointment_id = p.appointment_id
+    where c.openid = #{openid,jdbcType=VARCHAR} and c.shop_id = #{shopId,jdbcType=VARCHAR} and c.work_time = #{workTime,jdbcType=DATE} and c.enabled = 1
+  </select>
+
   <select id="showAppointmentByTimeAndShop" resultMap="BaseResultMap">
      SELECT c.*,p.*
       FROM (SELECT c1.*,c2.wx_img,c2.nick_name FROM customer_appointment c1 LEFT JOIN client c2 ON c1.openid = c2.openid ) c
