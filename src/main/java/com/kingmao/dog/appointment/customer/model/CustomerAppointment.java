@@ -28,6 +28,8 @@ public class CustomerAppointment {
 
     private Date oppointmentTime;
 
+    private String oppointmentTimeStr;
+
     private Date countFinishedTime;
 
     private Integer appointmentState;
@@ -45,6 +47,14 @@ public class CustomerAppointment {
     private String appStr;
 
     private String accStr;
+
+    public String getOppointmentTimeStr() {
+        return oppointmentTimeStr;
+    }
+
+    public void setOppointmentTimeStr(String oppointmentTimeStr) {
+        this.oppointmentTimeStr = oppointmentTimeStr;
+    }
 
     public String getAppStr() {
         return appStr;

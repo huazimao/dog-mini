@@ -75,7 +75,8 @@ public class ProviderController {
                 } else {
                     c.setAccStr(DateUtil.getStrMS(c.getAccFinishedTime()));
                 }
-                c.setFormId("df2dfg4dfg42");
+                c.setOppointmentTimeStr(DateUtil.date2Str(c.getOppointmentTime()));
+                //log.info( "++++++++++++++++++++++"+ new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm").create().toJson(c.getOppointmentTime()));
             }
             map.put("type", 1);
             map.put("list", customerAppointmentList);
@@ -160,11 +161,11 @@ public class ProviderController {
                 shopName = "容桂店";
                 break;
         }
-
+        // dtype 替代formId
         String msg = "{\n" +
                 "\t\"touser\": "+customerAppointment.getOpenid()+",\n" +
                 "\t\"template_id\": "+templateId+",\n" +
-                "\t\"form_id\": "+customerAppointment.getFormId()+",\n" +
+                "\t\"form_id\": "+customerAppointment.getDtype()+",\n" +
                 "\t\"data\": {\n" +
                 "\t\t\"keyword1\": {\n" +
                 "\t\t\t\"value\": \"洗护服务已完成！\",\n" +
@@ -175,7 +176,7 @@ public class ProviderController {
                 "\t\t\t\"color\": \"#9b9b9b\"\n" +
                 "\t\t},\n" +
                 "\t\t\"keyword3\": {\n" +
-                "\t\t\t\"value\": "+new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm").create().toJson(new Date())+",\n" +
+                "\t\t\t\"value\": "+DateUtil.date2Str(new Date())+",\n" +
                 "\t\t\t\"color\": \"#9b9b9b\"\n" +
                 "\t\t}\n" +
                 "\t}\n" +

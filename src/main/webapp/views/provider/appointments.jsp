@@ -93,11 +93,13 @@
                 <div class="div-box">
                     <div class="div-box-item">
                         <p class="box-item-left">昵称：</p>
-                        <p class="box-item-right nickName">王毛</p>
+                        <p class="box-item-right nickName"></p>
                     </div>
                     <div class="div-box-item">
                         <p class="box-item-left">电话：</p>
-                        <p class="box-item-right tel">123123123</p>
+                        <p class="box-item-right tel">
+                            <a  href = " tell : //15823456789 " >15823456789 </a>
+                        </p>
                     </div>
                     <div class="div-box-item">
                         <p class="box-item-left">预约时间：</p>
@@ -206,8 +208,8 @@
         $(".hide-div").show();
 
         $(".hide .nickName").text(app.nickName);
-        $(".hide .tel").text(app.phone);
-        $(".hide .appTime").text(app.oppointmentTime);
+        //$(".hide .tel").text('<a> href = ' + " tell : //+'app.phone'+  > " + app.phone + '</a>');
+        $(".hide .appTime").text(app.oppointmentTimeStr);
         // $(".hide .item-list").text(app.petLists);
         $(".item-list").html('')
         for(var i=0;i<app.petLists.length;i++){
@@ -221,25 +223,33 @@
                 switch (likindPet) {
                     case "dog" :
                         _likindPet = "狗";
+                        switch (lisize) {
+                            case "mini" :
+                                _lisize = "小型";
+                                break;
+                            case "normal" :
+                                _lisize = "中型";
+                                break;
+                            case "large" :
+                                _lisize = "大型";
+                                break;
+                        }
                         break;
                     case "cat" :
                         _likindPet = "猫";
-                        break;
-                }
-                switch (lisize) {
-                    case "mini" :
-                        _lisize = "小型";
-                        break;
-                    case "normal" :
-                        _lisize = "中型";
-                        break;
-                    case "large" :
-                        _lisize = "大型";
+                        switch (lisize) {
+                            case "mini" :
+                                _lisize = "幼年";
+                                break;
+                            case "normal" :
+                                _lisize = "成年";
+                                break;
+                        }
                         break;
                 }
                 switch (likindService) {
                     case "wash" :
-                        _likindService = "洗护";
+                        _likindService = "洗澡";
                         break;
                     case "modeling" :
                         _likindService = "造型";
@@ -346,22 +356,30 @@
                             for (var x = 0;x<app.petLists.length;x++){
                                 var pets = app.petLists[x];
                                 var _pets = '';
-                                switch (pets.size){
-                                    case 'mini':
-                                        _pets +="小型"
-                                        break;
-                                    case 'normal':
-                                        _pets +="中型"
-                                        break;
-                                    case 'large':
-                                        _pets +="大型"
-                                }
                                 switch (pets.kindPet){
                                     case 'cat':
-                                        _pets +="猫"
+                                        _pets +="猫";
+                                        switch (pets.size){
+                                            case 'mini':
+                                                _pets +="幼年"
+                                                break;
+                                            case 'normal':
+                                                _pets +="成年"
+                                                break;
+                                        }
                                         break;
                                     case 'dog':
-                                        _pets +="犬"
+                                        _pets +="犬";
+                                        switch (pets.size){
+                                            case 'mini':
+                                                _pets +="小型"
+                                                break;
+                                            case 'normal':
+                                                _pets +="中型"
+                                                break;
+                                            case 'large':
+                                                _pets +="大型"
+                                        }
                                         break;
                                 }
                                 switch (pets.kindService){

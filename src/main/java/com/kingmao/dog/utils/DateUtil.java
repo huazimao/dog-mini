@@ -82,6 +82,12 @@ public class DateUtil {
         return str;
     }
 
+    public static String date2StrCN(Date date){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
+        String str = sdf.format(date);
+        return str;
+    }
+
     /**
      * str -->date
      * @param str
