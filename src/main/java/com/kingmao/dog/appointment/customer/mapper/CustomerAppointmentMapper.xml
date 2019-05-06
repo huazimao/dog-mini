@@ -165,6 +165,9 @@
         #{enabled,jdbcType=INTEGER},
       </if>
     </trim>
+    <selectKey resultType="java.lang.Integer" keyProperty="appointmentId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.kingmao.dog.appointment.customer.model.CustomerAppointment">
     update customer_appointment
@@ -251,7 +254,7 @@
   <select id="getAppInfo2" parameterType="com.kingmao.dog.appointment.customer.model.CustomerAppointment" resultMap="BaseResultMap">
     SELECT c.*,p.*
     FROM customer_appointment c LEFT JOIN pet_appointment p ON c.appointment_id = p.appointment_id
-    where c.openid = #{openid,jdbcType=VARCHAR} and c.shop_id = #{shopId,jdbcType=VARCHAR} and c.work_time = #{workTime,jdbcType=DATE} and c.enabled = 1
+    where c.openid = #{openid,jdbcType=VARCHAR} and c.shop_id = #{shopId,jdbcType=VARCHAR} and c.work_time = #{workTime,jdbcType=DATE} and c.appointment_state = 1
   </select>
 
   <select id="showAppointmentByTimeAndShop" resultMap="BaseResultMap">

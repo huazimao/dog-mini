@@ -83,6 +83,7 @@
     <script>
         var path = '${context}';
         var arry = new Array();
+        var cancelId = '';
     </script>
 </head>
 <body>
@@ -172,6 +173,20 @@
         </div>
     </div>
 
+    <!--BEGIN dialog1-->
+    <div class="js_dialog" id="iosDialog1" style="display: none;">
+        <div class="weui-mask"></div>
+        <div class="weui-dialog">
+            <div class="weui-dialog__hd"><strong class="weui-dialog__title">撤单操作</strong></div>
+            <div class="weui-dialog__bd">撤单后将不再为该客户服务，您可以在详情中查看客户电话与客户沟通。</div>
+            <div class="weui-dialog__ft">
+                <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_default" onclick="closeMsg()">取消</a>
+                <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" onclick="cancelApp()">撤单</a>
+            </div>
+        </div>
+    </div>
+    <!--END dialog1-->
+
     <!--BEGIN dialog2-->
     <div class="js_dialog" id="iosDialog2" style="display: none;">
         <div class="weui-mask"></div>
@@ -189,6 +204,32 @@
 <script src="${context}/js/example.js"></script>
 <script src="${context}/js/sysetting.js"></script>
 <script type="text/javascript">
+
+    $(function(){
+        var $iosDialog1 = $('#iosDialog1'),
+            $iosDialog2 = $('#iosDialog2'),
+            $androidDialog1 = $('#androidDialog1'),
+            $androidDialog2 = $('#androidDialog2');
+
+        $('#dialogs').on('click', '.weui-dialog__btn', function(){
+            $(this).parents('.js_dialog').fadeOut(200);
+        });
+
+        $('#showIOSDialog1').on('click', function(){
+            $iosDialog1.fadeIn(200);
+        });
+        $('#showIOSDialog2').on('click', function(){
+            $iosDialog2.fadeIn(200);
+        });
+        $('#showAndroidDialog1').on('click', function(){
+            $androidDialog1.fadeIn(200);
+        });
+        $('#showAndroidDialog2').on('click', function(){
+            $androidDialog2.fadeIn(200);
+        });
+    });
+
+
     $(".hide .hide-close").click(function () {
         $(".hide-div").hide();
         $(".hide").hide();
@@ -254,7 +295,7 @@
                     case "modeling" :
                         _likindService = "造型";
                         break;
-                    case "large" :
+                    case "SPA" :
                         _likindService = "SPA";
                         break;
                 }
@@ -279,17 +320,24 @@
         $iosDialog2.fadeIn(200);
     }
     
+    //显示撤单弹框
+    function showCancelApp(appointmentId) {
+        var $iosDialog1 = $('#iosDialog1');
+        $iosDialog1.fadeIn(200);
+        cancelId = appointmentId;
+    }
+
     //撤单
-    function cancelApp(appointmentId) {
+    function cancelApp() {
         $.ajax({
             type:"post",
             url:path + "/provider/cancelApponitment.do",
             dataType:"json",
             data:{
-                "appointmentId":appointmentId
+                "appointmentId":cancelId
             },
             success:function (data) {
-                showMsg(data.msg);
+                location.reload();
             }
         });
     }
@@ -401,7 +449,7 @@
                             switch (app.appointmentState){
                                 case 1:
                                     _html += '<a href="javascript:doneApp(\''+app.openid+'\',\''+app.formId+'\',\''+app.appointmentId+'\')" class="weui-btn weui-btn_mini weui-btn_primary">去完成</a>';
-                                    _html += '<a href="javascript:cancelApp('+app.appointmentId +')" class="weui-btn weui-btn_mini weui-btn_warn">撤单</a>';
+                                    _html += '<a href="javascript:showCancelApp('+app.appointmentId +')" class="weui-btn weui-btn_mini weui-btn_warn">撤单</a>';
                                     break;
                                 case 2:
                                     _html += '<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn-blue">已完成</a>';

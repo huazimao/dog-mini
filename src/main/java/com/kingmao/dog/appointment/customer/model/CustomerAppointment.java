@@ -1,9 +1,11 @@
 package com.kingmao.dog.appointment.customer.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class CustomerAppointment {
+public class CustomerAppointment implements Serializable{
+
     private Integer appointmentId;
 
     private String shopId;
@@ -242,17 +244,23 @@ public class CustomerAppointment {
                 ", workTime=" + workTime +
                 ", serviceEndTime=" + serviceEndTime +
                 ", serviceStartTime=" + serviceStartTime +
+                ", nickName='" + nickName + '\'' +
+                ", wxImg='" + wxImg + '\'' +
                 ", openid='" + openid + '\'' +
                 ", phone='" + phone + '\'' +
                 ", address='" + address + '\'' +
                 ", ispickup=" + ispickup +
                 ", oppointmentTime=" + oppointmentTime +
+                ", oppointmentTimeStr='" + oppointmentTimeStr + '\'' +
                 ", countFinishedTime=" + countFinishedTime +
                 ", appointmentState=" + appointmentState +
                 ", consumeTime=" + consumeTime +
                 ", dtype='" + dtype + '\'' +
                 ", accFinishedTime=" + accFinishedTime +
                 ", enabled=" + enabled +
+                ", formId='" + formId + '\'' +
+                ", appStr='" + appStr + '\'' +
+                ", accStr='" + accStr + '\'' +
                 ", petLists=" + petLists +
                 '}';
     }

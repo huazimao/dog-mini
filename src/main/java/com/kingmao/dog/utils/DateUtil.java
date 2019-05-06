@@ -120,6 +120,17 @@ public class DateUtil {
         }
         return date;
     }
+
+    public static Date str3Date(String str){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+        Date date = null;
+        try {
+            date = sdf.parse(str);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
+    }
     /**
      * str -->date
      * @param str

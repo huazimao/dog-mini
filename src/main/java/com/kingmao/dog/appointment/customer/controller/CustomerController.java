@@ -1,22 +1,25 @@
 package com.kingmao.dog.appointment.customer.controller;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.kingmao.dog.appointment.customer.model.CustomerAppointment;
+import com.kingmao.dog.appointment.customer.model.PetAppointment;
 import com.kingmao.dog.appointment.customer.service.CustomerService;
 import com.kingmao.dog.appointment.provider.model.SystemSetting;
 import com.kingmao.dog.appointment.provider.service.SystemSettingService;
 import com.kingmao.dog.utils.DateUtil;
+import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Type;
+import java.util.*;
 
 /**
  * Paceage:com.kingmao.dog.appointment.customer.controller
@@ -84,24 +87,47 @@ public class CustomerController {
 
     /**
      * 客户预约/修改洗护服务
-     * @param customerAppointment
+     * @param
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "appointment.do" ,produces = {"application/json;charset=UTF-8"})
-    public String getAppointment(CustomerAppointment customerAppointment){
-        log.info("客户预约接收到的参数为：" + customerAppointment.toString());
-        customerAppointment.setOppointmentTime(new Date());
+    public String getAppointment(HttpServletRequest request){
+        CustomerAppointment customerAppointment = new CustomerAppointment();
+        customerAppointment.setShopId(request.getParameter("shopId"));
+        customerAppointment.setOpenid(request.getParameter("openid"));
+        customerAppointment.setPhone(request.getParameter("mobile"));
+        customerAppointment.setDtype(request.getParameter("dtype"));
+        String appIdStr = request.getParameter("appointmentId");
+        if (appIdStr != null && !appIdStr.equals(" ") && !appIdStr.equals("") && !appIdStr.equals("null")){
+            customerAppointment.setAppointmentId(Integer.parseInt(appIdStr));
+        }
+        //customerAppointment.setWorkTime(DateUtil.str2Date(request.getParameter("workTime")));
+        String paramList = request.getParameter("petLists");
+        List<PetAppointment> petList = new Gson().fromJson(paramList,new TypeToken<List<PetAppointment>>() {}.getType());
+        /*for (int x = 0;x<petList.size();x++) {
+            if (petList.get(x).getSize().trim().isEmpty()) {
+                log.info("=======" + petList.get(x).getSize());
+                petList.remove(x);
+            }
+        }*/
+
+        Iterator<PetAppointment> it = petList.iterator();
+        while(it.hasNext()){
+            PetAppointment x = it.next();
+            if(x.getKindPet().isEmpty()){
+                it.remove();
+            }
+        }
+
+        customerAppointment.setPetLists(petList);
+        log.info("最终参数：" + customerAppointment.toString());
         Gson gson = new Gson();
         Map<String, Object> map = new HashMap<String, Object>();
-        if (customerAppointment.getAppointmentId() != null) {
-            if (customerService.insertAppointment(customerAppointment)){
-                map.put("type", 1);
-            }
+        if (customerService.insertAppointment(customerAppointment)){
+            map.put("type", 1);
         }else {
-            if (customerService.updateAppointment(customerAppointment)) {
-                map.put("type", 1);
-            }
+            map.put("type", 1);
         }
 
         return gson.toJson(map);

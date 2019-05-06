@@ -34,5 +34,6 @@ public interface CustomerService {
 
     boolean insertClient(Client client);
 
+    //更新记录
     boolean updateAppointment(CustomerAppointment customerAppointment);
 }

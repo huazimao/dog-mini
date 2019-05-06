@@ -25,7 +25,7 @@
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from pet_appointment
-    where id = #{id,jdbcType=INTEGER}
+    where appointment_id = #{appointmentId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.kingmao.dog.appointment.customer.model.PetAppointment">
     insert into pet_appointment (id, appointment_id, openid, 

@@ -1,6 +1,9 @@
 package com.kingmao.dog.appointment.customer.model;
 
-public class PetAppointment {
+import java.io.Serializable;
+
+public class PetAppointment implements Serializable{
+
     private Integer id;
 
     private Integer appointmentId;
