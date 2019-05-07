@@ -99,7 +99,7 @@
                     <div class="div-box-item">
                         <p class="box-item-left">电话：</p>
                         <p class="box-item-right tel">
-                            <a  href = " tell : //15823456789 " >15823456789 </a>
+                            <a href = "tel:15823456789" >15823456789 </a>
                         </p>
                     </div>
                     <div class="div-box-item">
@@ -249,7 +249,14 @@
         $(".hide-div").show();
 
         $(".hide .nickName").text(app.nickName);
-        //$(".hide .tel").text('<a> href = ' + " tell : //+'app.phone'+  > " + app.phone + '</a>');
+
+
+
+        // $(".hide .tel").html('<a> href = ' + " tel : +'app.phone'+  > " + app.phone + '</a>');
+        $(".hide .tel").html('<a href ="tel:'+app.phone+'">'+app.phone+'</a>');
+
+
+
         $(".hide .appTime").text(app.oppointmentTimeStr);
         // $(".hide .item-list").text(app.petLists);
         $(".item-list").html('')
@@ -343,7 +350,7 @@
     }
 
     //完成服务
-    function doneApp(openid,formId,appointmentId) {
+    function doneApp(openid,dtype,appointmentId) {
         var shopId = $("#shopId").val();
         $.ajax({
             type:"post",
@@ -352,7 +359,7 @@
             data:{
                 "shopId":shopId,
                 "openid":openid,
-                "formId":formId,
+                "dtype":dtype,
                 "appointmentId":appointmentId
             },
             success:function (data) {
@@ -448,7 +455,7 @@
                             _html += '<div class="weui-cell__ft">';
                             switch (app.appointmentState){
                                 case 1:
-                                    _html += '<a href="javascript:doneApp(\''+app.openid+'\',\''+app.formId+'\',\''+app.appointmentId+'\')" class="weui-btn weui-btn_mini weui-btn_primary">去完成</a>';
+                                    _html += '<a href="javascript:doneApp(\''+app.openid+'\',\''+app.dtype+'\',\''+app.appointmentId+'\')" class="weui-btn weui-btn_mini weui-btn_primary">去完成</a>';
                                     _html += '<a href="javascript:showCancelApp('+app.appointmentId +')" class="weui-btn weui-btn_mini weui-btn_warn">撤单</a>';
                                     break;
                                 case 2:

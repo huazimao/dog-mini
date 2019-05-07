@@ -176,13 +176,33 @@ public class ProviderController {
                 "\t\t\t\"color\": \"#9b9b9b\"\n" +
                 "\t\t},\n" +
                 "\t\t\"keyword3\": {\n" +
-                "\t\t\t\"value\": "+DateUtil.date2Str(new Date())+",\n" +
+                "\t\t\t\"value\": "+DateUtil.date2StrCN(new Date())+",\n" +
                 "\t\t\t\"color\": \"#9b9b9b\"\n" +
                 "\t\t}\n" +
                 "\t}\n" +
                 "}";
-
-        return msg;
+        String msg2 = "{\n" +
+                "  \"touser\": \""+customerAppointment.getOpenid()+"\", \n" +
+                "  \"template_id\": \""+templateId+"\",\n" +
+                "  \"form_id\": \""+customerAppointment.getDtype()+"\",        \n" +
+                "  \"data\": {\n" +
+                "      \"keyword1\": {\n" +
+                "          \"value\": \"洗护服务已完成！\", \n" +
+                "          \"color\": \"#173177\"\n" +
+                "      }, \n" +
+                "      \"keyword2\": {\n" +
+                "          \"value\": \""+shopName+"\", \n" +
+                "          \"color\": \"#173177\"\n" +
+                "      }, \n" +
+                "      \"keyword3\": {\n" +
+                "          \"value\": \""+DateUtil.date2StrCN(new Date())+"\", \n" +
+                "          \"color\": \"#173177\"\n" +
+                "      } \n" +
+                "  },\n" +
+                "  \"emphasis_keyword\": \"keyword1.DATA\"\n" +
+                "}";
+        log.info("发送的内容：======" + msg2);
+        return msg2;
     }
 
 

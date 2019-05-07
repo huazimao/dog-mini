@@ -7,6 +7,7 @@ import com.kingmao.dog.appointment.cacha.SysCacha;
 import com.kingmao.dog.appointment.customer.model.Client;
 import com.kingmao.dog.appointment.customer.service.CustomerService;
 import com.kingmao.dog.utils.CoreUrl;
+import com.kingmao.dog.utils.DateUtil;
 import com.kingmao.dog.utils.HttpUtil;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -72,12 +74,14 @@ public class CoreApi {
      * @return
      */
     public static String sendTemplateMessage(String textMsg){
+        log.info("进入到发送模板消息方法");
         String jsonStr = "";
         try {
             jsonStr = HttpUtil.executeJsonParamHttpPost(CoreUrl.sendTemplateMessageURL() + SysCacha.getAccessToken(), textMsg);
             JsonParser jsonParser = new JsonParser();
             JsonObject jsonObject = jsonParser.parse(jsonStr).getAsJsonObject();
             //System.out.println(new GsonBuilder().serializeNulls().setPrettyPrinting().create().toJson(jsonObject));
+            log.info("返回消息:" + jsonStr);
             if (jsonObject.get("errcode").getAsString().equals("0")) {
                 log.info("发送模板消息成功！：");
                 return "success";
