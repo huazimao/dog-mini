@@ -62,13 +62,16 @@ public class CustomerController {
         String board = systemSetting.getBoard();
 
         if (sysStatue == 1) {
-            if(DateUtil.getYMD2HMS(new Date()).before(DateUtil.getYMD2HMS(systemSetting.getServiceStartTime()))){
-                sysStatue = 0;
-                board = "预约系统暂未开放，请稍后再试！";
-            }
-            if (DateUtil.getYMD2HMS(new Date()).after(DateUtil.getYMD2HMS(systemSetting.getServiceEndTime()))){
-                sysStatue = 0;
-                board = "预约系统已关闭，请明日再试！";
+            //只对今天的预约时间做判断
+            if (systemSetting.getWorkTime().toString().equals(DateUtil.getYMD2(new Date()).toString())){
+                if(DateUtil.getYMD2HMS(new Date()).before(DateUtil.getYMD2HMS(systemSetting.getServiceStartTime()))){
+                    sysStatue = 0;
+                    board = "今日预约系统暂未开放，请稍后再试。";
+                }
+                if (DateUtil.getYMD2HMS(new Date()).after(DateUtil.getYMD2HMS(systemSetting.getServiceEndTime()))){
+                    sysStatue = 0;
+                    board = "今日预约系统已关闭，请选择其他时间。";
+                }
             }
             //查询客户是否预约和预约详情
             customerAppointment = customerService.getAppInfo2(customerAppointment);

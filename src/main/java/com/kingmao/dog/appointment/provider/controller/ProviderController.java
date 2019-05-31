@@ -75,8 +75,7 @@ public class ProviderController {
                 } else {
                     c.setAccStr(DateUtil.getStrMS(c.getAccFinishedTime()));
                 }
-                c.setOppointmentTimeStr(DateUtil.date2Str(c.getOppointmentTime()));
-                //log.info( "++++++++++++++++++++++"+ new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm").create().toJson(c.getOppointmentTime()));
+                c.setOppointmentTimeStr(DateUtil.date2StrCN(c.getOppointmentTime()));
             }
             map.put("type", 1);
             map.put("list", customerAppointmentList);
