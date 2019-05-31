@@ -74,6 +74,8 @@ public class CustomerController {
             customerAppointment = customerService.getAppInfo2(customerAppointment);
             if (null != customerAppointment) {
                 map.put("isApp",1); //isApp 是否预约过
+                //转换时间
+                customerAppointment.setOppointmentTimeStr(DateUtil.date2StrCN(customerAppointment.getOppointmentTime()));
                 map.put("CustomerAppointment",customerAppointment);
             } else {
                 map.put("isApp",0);
@@ -93,11 +95,13 @@ public class CustomerController {
     @ResponseBody
     @RequestMapping(value = "appointment.do" ,produces = {"application/json;charset=UTF-8"})
     public String getAppointment(HttpServletRequest request){
+        Date workTime = DateUtil.str3Date(request.getParameter("workTime"));
         CustomerAppointment customerAppointment = new CustomerAppointment();
         customerAppointment.setShopId(request.getParameter("shopId"));
         customerAppointment.setOpenid(request.getParameter("openid"));
         customerAppointment.setPhone(request.getParameter("mobile"));
         customerAppointment.setDtype(request.getParameter("dtype"));
+        customerAppointment.setWorkTime(workTime);
         String appIdStr = request.getParameter("appointmentId");
         if (appIdStr != null && !appIdStr.equals(" ") && !appIdStr.equals("") && !appIdStr.equals("null")){
             customerAppointment.setAppointmentId(Integer.parseInt(appIdStr));

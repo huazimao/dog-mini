@@ -287,7 +287,7 @@ public class DateUtil {
     }
 
     public static void main(String[] args) {
-        String str = "2019-03-22 11:36:00";
+        String str = "2019/05/07 12:45:12";
         Date date = str2Date(str);
         System.out.println(getPlusByTime(date,10));
     }
