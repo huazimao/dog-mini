@@ -444,7 +444,7 @@
                                     case 'modeling':
                                         _pets +="造型"
                                         break;
-                                    case 'spa':
+                                    case 'SPA':
                                         _pets +="SPA"
                                         break;
                                 }

@@ -155,6 +155,7 @@ public class CustomerController {
         if (history.size() > 0) {
             map.put("historyState", 1);
             map.put("pets", history.get(0).getPetLists());
+            map.put("phone", history.get(0).getPhone());
         } else {
             map.put("historyState", 0);
         }
