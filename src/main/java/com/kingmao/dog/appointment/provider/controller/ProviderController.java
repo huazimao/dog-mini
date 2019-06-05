@@ -47,6 +47,7 @@ public class ProviderController {
     @RequestMapping(value = "go2appointmentPage.do")
     public String go2appointmentPage(HttpServletRequest request) {
         request.setAttribute("shopId",request.getParameter("shopId"));
+        request.setAttribute("level",request.getSession().getAttribute("level"));
         return "/provider/appointments";
     }
 

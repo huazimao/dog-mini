@@ -286,10 +286,10 @@
                     case "cat" :
                         _likindPet = "猫";
                         switch (lisize) {
-                            case "mini" :
+                            case "normal" :
                                 _lisize = "幼年";
                                 break;
-                            case "normal" :
+                            case "large" :
                                 _lisize = "成年";
                                 break;
                         }
@@ -415,10 +415,10 @@
                                     case 'cat':
                                         _pets +="猫";
                                         switch (pets.size){
-                                            case 'mini':
+                                            case 'normal':
                                                 _pets +="幼年"
                                                 break;
-                                            case 'normal':
+                                            case 'large':
                                                 _pets +="成年"
                                                 break;
                                         }
@@ -558,13 +558,14 @@
     getNowFormatDate();
 
     jQuery(document).ready(function(){
+        $(".setting-btn").show();
         getDefaultSetting();
         var level = $("#level").val();
         console.log(level);
-        if (level == 2){
+        //alert(level);
+        /*if (level == 2){
             //显示设置按钮
-            $(".setting-btn").show();
-        }
+        }*/
     });
 
 </script>
