@@ -107,6 +107,10 @@
                         <p class="box-item-right appTime"></p>
                     </div>
                     <div class="div-box-item">
+                        <p class="box-item-left">服务时间：</p>
+                        <p class="box-item-right quantum"></p>
+                    </div>
+                    <div class="div-box-item">
                         <p class="box-item-title">预约列表：</p>
                         <div class="box-item-list">
                             <ul class="item-list">
@@ -259,7 +263,7 @@
 
         $(".hide .appTime").text(app.oppointmentTimeStr);
         // $(".hide .item-list").text(app.petLists);
-        $(".item-list").html('')
+        $(".item-list").html('');
         for(var i=0;i<app.petLists.length;i++){
             var likindPet = app.petLists[i].kindPet;
             var lisize = app.petLists[i].size;
@@ -312,6 +316,39 @@
             }
 
         }
+        //转化服务区间
+        var _quantum = '';
+        switch (app.quantum){
+            case 0:
+                _quantum = '9:00 - 10:00';
+                break;
+            case 1:
+                _quantum = '10:00 - 11:00';
+                break;
+            case 2:
+                _quantum = '11:00 - 12:00';
+                break;
+            case 3:
+                _quantum = '12:00 - 13:00';
+                break;
+            case 4:
+                _quantum = '13:00 - 14:00';
+                break;
+            case 5:
+                _quantum = '14:00 - 15:00';
+                break;
+            case 6:
+                _quantum = '15:00 - 16:00';
+                break;
+            case 7:
+                _quantum = '16:00 - 17:00';
+                break;
+            case 8:
+                _quantum = '17:00 - 18:00';
+                break;
+        }
+        $(".hide .quantum").text(_quantum);
+
     }
 
     //隐藏弹出框

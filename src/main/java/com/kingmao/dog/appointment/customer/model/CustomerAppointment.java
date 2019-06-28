@@ -50,6 +50,16 @@ public class CustomerAppointment implements Serializable{
 
     private String accStr;
 
+    private Integer quantum;
+
+    public Integer getQuantum() {
+        return quantum;
+    }
+
+    public void setQuantum(Integer quantum) {
+        this.quantum = quantum;
+    }
+
     public String getOppointmentTimeStr() {
         return oppointmentTimeStr;
     }

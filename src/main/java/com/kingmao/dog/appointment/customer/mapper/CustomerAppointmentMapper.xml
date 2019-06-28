@@ -20,6 +20,7 @@
     <result column="dtype" jdbcType="VARCHAR" property="dtype" />
     <result column="acc_finished_time" jdbcType="TIMESTAMP" property="accFinishedTime" />
     <result column="enabled" jdbcType="INTEGER" property="enabled" />
+    <result column="quantum" jdbcType="INTEGER" property="quantum" />
     <collection property="petLists" ofType="com.kingmao.dog.appointment.customer.model.PetAppointment"
                 javaType="java.util.ArrayList">
       <id column="id" jdbcType="INTEGER" property="id" />
@@ -37,7 +38,7 @@
   <sql id="Base_Column_List">
     appointment_id, shop_id, work_time, service_end_time, service_start_time, openid, 
     phone, address, ispickup, oppointment_time, count_finished_time, appointment_state,
-    consume_time, dtype, acc_finished_time, enabled
+    consume_time, dtype, acc_finished_time, enabled ,quantum
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
@@ -55,13 +56,13 @@
     phone, address, ispickup,
     oppointment_time, count_finished_time,
     appointment_state, consume_time, dtype,
-    acc_finished_time, enabled)
+    acc_finished_time, enabled, quantum)
     values (#{appointmentId,jdbcType=INTEGER}, #{shopId,jdbcType=VARCHAR}, #{workTime,jdbcType=DATE},
     #{serviceEndTime,jdbcType=TIMESTAMP}, #{serviceStartTime,jdbcType=TIMESTAMP}, #{openid,jdbcType=VARCHAR},
     #{phone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{ispickup,jdbcType=INTEGER},
     #{oppointmentTime,jdbcType=TIMESTAMP}, #{countFinishedTime,jdbcType=TIMESTAMP},
     #{appointmentState,jdbcType=INTEGER}, #{consumeTime,jdbcType=INTEGER}, #{dtype,jdbcType=VARCHAR},
-    #{accFinishedTime,jdbcType=TIMESTAMP}, #{enabled,jdbcType=INTEGER})
+    #{accFinishedTime,jdbcType=TIMESTAMP}, #{enabled,jdbcType=INTEGER},#{quantum,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.kingmao.dog.appointment.customer.model.CustomerAppointment">
     insert into customer_appointment
@@ -114,6 +115,9 @@
       <if test="enabled != null">
         enabled,
       </if>
+      <if test="quantum != null">
+        quantum,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="appointmentId != null">
@@ -163,6 +167,9 @@
       </if>
       <if test="enabled != null">
         #{enabled,jdbcType=INTEGER},
+      </if>
+      <if test="quantum != null">
+        #{quantum,jdbcType=INTEGER},
       </if>
     </trim>
     <selectKey resultType="java.lang.Integer" keyProperty="appointmentId" order="AFTER" >
@@ -217,6 +224,9 @@
       <if test="enabled != null">
         enabled = #{enabled,jdbcType=INTEGER},
       </if>
+      <if test="quantum != null">
+        quantum = #{quantum,jdbcType=INTEGER},
+      </if>
     </set>
     where appointment_id = #{appointmentId,jdbcType=INTEGER}
   </update>
@@ -236,7 +246,8 @@
       consume_time = #{consumeTime,jdbcType=INTEGER},
       dtype = #{dtype,jdbcType=VARCHAR},
       acc_finished_time = #{accFinishedTime,jdbcType=TIMESTAMP},
-      enabled = #{enabled,jdbcType=INTEGER}
+      enabled = #{enabled,jdbcType=INTEGER},
+      quantum = #{quantum,jdbcType=INTEGER}
     where appointment_id = #{appointmentId,jdbcType=INTEGER}
   </update>
 

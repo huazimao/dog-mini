@@ -8,17 +8,14 @@ import com.kingmao.dog.appointment.customer.service.CustomerService;
 import com.kingmao.dog.appointment.provider.model.SystemSetting;
 import com.kingmao.dog.appointment.provider.service.SystemSettingService;
 import com.kingmao.dog.utils.DateUtil;
-import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.lang.reflect.Type;
 import java.util.*;
 
 /**
@@ -50,7 +47,7 @@ public class CustomerController {
     @ResponseBody
     @RequestMapping("appointmentPage.do")
     public String appointmentPage(CustomerAppointment customerAppointment) {
-        log.info("进入到客户预约界面，收到参数为：" + "shopId=" + customerAppointment.getShopId() + "workTime=" + customerAppointment.getWorkTime() + "openid=" + customerAppointment.getOpenid());
+        log.info("进入到客户预约界面，收到参数为：" + "quantum=" + customerAppointment.getQuantum() + "shopId=" + customerAppointment.getShopId() + "workTime=" + customerAppointment.getWorkTime() + "openid=" + customerAppointment.getOpenid());
         String shopId = customerAppointment.getShopId();
         Date workTime = customerAppointment.getWorkTime();
         Gson gson = new Gson();
@@ -105,6 +102,7 @@ public class CustomerController {
         customerAppointment.setPhone(request.getParameter("mobile"));
         customerAppointment.setDtype(request.getParameter("dtype"));
         customerAppointment.setWorkTime(workTime);
+        customerAppointment.setQuantum(Integer.parseInt(request.getParameter("quantum")));
         String appIdStr = request.getParameter("appointmentId");
         if (appIdStr != null && !appIdStr.equals(" ") && !appIdStr.equals("") && !appIdStr.equals("null")){
             customerAppointment.setAppointmentId(Integer.parseInt(appIdStr));
@@ -156,6 +154,7 @@ public class CustomerController {
             map.put("historyState", 1);
             map.put("pets", history.get(0).getPetLists());
             map.put("phone", history.get(0).getPhone());
+            map.put("quantum", history.get(0).getQuantum());
         } else {
             map.put("historyState", 0);
         }
